@@ -9,7 +9,7 @@
 [![Coverage Status][badge-coverage]][coverage]
 [![Total Downloads][badge-downloads]][downloads]
 
-ramsey/collection is a PHP 5.5+ collections framework for representing and manipulating collections.
+ramsey/collection is a PHP 5.6+ collections framework for representing and manipulating collections.
 
 This project adheres to a [Contributor Code of Conduct][conduct]. By participating in this project and its community, you are expected to uphold this code.
 
