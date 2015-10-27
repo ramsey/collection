@@ -78,7 +78,6 @@ interface MapInterface extends ArrayInterface
      * Removes the mapping for a key from this map if it is present
      *
      * @param mixed $key
-     * @param mixed $value
      * @return mixed the previous value associated with key, or null if there was no mapping for key
      */
     public function remove($key);

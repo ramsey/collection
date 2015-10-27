@@ -56,7 +56,7 @@ class NamedParameterMap extends AbstractMap
             );
         }
 
-        if (!$this->checkType($this->namedParameters[$offset], $value)) {
+        if ($this->checkType($this->namedParameters[$offset], $value) === false) {
             throw new \InvalidArgumentException(
                 'Value for \'' . $offset . '\' must be of type '
                 . $this->namedParameters[$offset] . '; value is '
@@ -105,58 +105,45 @@ class NamedParameterMap extends AbstractMap
         switch ($type) {
             case 'array':
                 return is_array($value);
-                break;
 
             case 'bool':
             case 'boolean':
                 return is_bool($value);
-                break;
 
             case 'callable':
                 return is_callable($value);
-                break;
 
             case 'float':
             case 'double':
                 return is_float($value);
-                break;
 
             case 'int':
             case 'integer':
                 return is_int($value);
-                break;
 
             case 'null':
                 return is_null($value);
-                break;
 
             case 'numeric':
                 return is_numeric($value);
-                break;
 
             case 'object':
                 return is_object($value);
-                break;
 
             case 'resource':
                 return is_resource($value);
-                break;
 
             case 'scalar':
                 return is_scalar($value);
-                break;
 
             case 'string':
                 return is_string($value);
-                break;
 
             case 'mixed':
                 return true;
-                break;
 
             default:
                 return ($value instanceof $type);
-                break;
         }
     }
 }
