@@ -1,0 +1,40 @@
+{
+    "name": "ramsey/collection",
+    "description": "A collections framework for representing and manipulating collections.",
+    "type": "library",
+    "keywords": ["array", "collection", "hash", "map"],
+    "homepage": "https://github.com/ramsey/collection",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ben Ramsey",
+            "email": "ben@benramsey.com",
+            "homepage": "http://benramsey.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/ramsey/collection/issues",
+        "source": "https://github.com/ramsey/collection"
+    },
+    "require": {
+        "php": ">=5.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.0",
+        "squizlabs/php_codesniffer": "^2.3",
+        "jakub-onderka/php-parallel-lint": "^0.9.0",
+        "satooshi/php-coveralls": "^0.6.1",
+        "apigen/apigen": "^4.1",
+        "fzaninotto/faker": "^1.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ramsey\\Collection\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ramsey\\Collection\\Test\\": "tests/src/"
+        }
+    }
+}
