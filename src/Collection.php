@@ -54,7 +54,7 @@ namespace Ramsey\Collection;
  * $fooCollection = new \My\Foo\FooCollection();
  * $fooCollection->add(new \My\Foo());
  * $fooCollection->add(new \My\Foo());
- * 
+ *
  * foreach ($fooCollection as $foo) {
  *     // Do something with $foo
  * }
