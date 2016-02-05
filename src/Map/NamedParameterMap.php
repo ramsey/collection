@@ -14,12 +14,16 @@
 
 namespace Ramsey\Collection\Map;
 
+use Ramsey\Collection\Tool\TypeTrait;
+
 /**
  * NamedParameterMap represents a mapping of values to a set of named keys
  * that may optionally be typed
  */
 class NamedParameterMap extends AbstractMap
 {
+    use TypeTrait;
+
     /**
      * @var array
      */
@@ -67,7 +71,6 @@ class NamedParameterMap extends AbstractMap
         $this->data[$offset] = $value;
     }
 
-
     /**
      * Given an array of named parameters, constructs a proper mapping of
      * named parameters to types
@@ -91,59 +94,5 @@ class NamedParameterMap extends AbstractMap
         }
 
         return array_combine($names, $types);
-    }
-
-    /**
-     * Returns `true` if value is of the specified type
-     *
-     * @param string $type
-     * @param mixed $value
-     * @return bool
-     */
-    protected function checkType($type, $value)
-    {
-        switch ($type) {
-            case 'array':
-                return is_array($value);
-
-            case 'bool':
-            case 'boolean':
-                return is_bool($value);
-
-            case 'callable':
-                return is_callable($value);
-
-            case 'float':
-            case 'double':
-                return is_float($value);
-
-            case 'int':
-            case 'integer':
-                return is_int($value);
-
-            case 'null':
-                return is_null($value);
-
-            case 'numeric':
-                return is_numeric($value);
-
-            case 'object':
-                return is_object($value);
-
-            case 'resource':
-                return is_resource($value);
-
-            case 'scalar':
-                return is_scalar($value);
-
-            case 'string':
-                return is_string($value);
-
-            case 'mixed':
-                return true;
-
-            default:
-                return ($value instanceof $type);
-        }
     }
 }
