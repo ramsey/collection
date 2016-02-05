@@ -1,5 +1,11 @@
 # ramsey/collection Changelog
 
+## 0.2.0
+
+_Released: 2016-02-05_
+
+* Add support for typed collections
+
 ## 0.1.0
 
 _Released: 2015-10-27_
