@@ -53,9 +53,9 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         return true;
     }
 
-    public function contains($element)
+    public function contains($element, $strict = true)
     {
-        return in_array($element, $this->data, true);
+        return in_array($element, $this->data, $strict);
     }
 
     public function getType()

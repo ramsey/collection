@@ -79,6 +79,24 @@ class CollectionTest extends TestCase
         $this->assertFalse($collection->contains($obj2));
     }
 
+    public function testContainsNonStrict()
+    {
+        $name = $this->faker->name();
+
+        $obj1 = new \stdClass();
+        $obj1->name = $name;
+
+        // Object with same properties but different identity
+        $obj2 = new \stdClass();
+        $obj2->name = $name;
+
+        $collection = new Collection('stdClass');
+        $collection->add($obj1);
+
+        $this->assertTrue($collection->contains($obj1, false));
+        $this->assertTrue($collection->contains($obj2, false));
+    }
+
     public function testRemove()
     {
         $obj1 = new \stdClass();

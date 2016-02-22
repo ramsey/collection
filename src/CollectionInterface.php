@@ -47,12 +47,11 @@ interface CollectionInterface extends ArrayInterface
     /**
      * Returns `true` if this collection contains the specified element
      *
-     * This performs a strict type check on the value.
-     *
      * @param mixed $element
+     * @param bool $strict Whether to perform a strict type check on the value.
      * @return bool
      */
-    public function contains($element);
+    public function contains($element, $strict = true);
 
     /**
      * Returns the type associated with this collection
