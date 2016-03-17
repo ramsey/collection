@@ -61,7 +61,7 @@ The ramsey/collection library is copyright © [Ben Ramsey](https://benramsey.com
 
 
 
-[conduct]: https://github.com/ramsey/collection/blob/master/CONDUCT.md
+[conduct]: https://github.com/ramsey/collection/blob/master/CODE_OF_CONDUCT.md
 [java]: http://docs.oracle.com/javase/8/docs/technotes/guides/collections/index.html
 [packagist]: https://packagist.org/packages/ramsey/collection
 [composer]: http://getcomposer.org/
