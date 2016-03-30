@@ -54,6 +54,6 @@ The following tests must pass before we will accept a pull request. If any of th
 
 ```
 ./vendor/bin/parallel-lint src tests
+./vendor/bin/phpcs src tests --standard=psr2 -sp
 ./vendor/bin/phpunit --coverage-text
-./vendor/bin/phpcs src --standard=psr2 -sp
 ```
