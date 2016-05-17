@@ -24,28 +24,6 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
 {
     use TypeTrait;
 
-    /**
-     * The type of elements stored in this collection
-     *
-     * A collection's type is immutable once it is set. For this reason, this
-     * property is set private, and it is set in the abstract's constructor.
-     * To create typed collections, override the constructor in your subclass
-     * and pass the collection type to the parent constructor.
-     *
-     * @var string
-     */
-    private $collectionType;
-
-    /**
-     * Constructs a collection object of the specified type
-     *
-     * @param string $collectionType
-     */
-    public function __construct($collectionType)
-    {
-        $this->collectionType = $collectionType;
-    }
-
     public function add($element)
     {
         $this[] = $element;
@@ -58,10 +36,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         return in_array($element, $this->data, $strict);
     }
 
-    public function getType()
-    {
-        return $this->collectionType;
-    }
+    abstract public function getType();
 
     public function offsetSet($offset, $value)
     {
