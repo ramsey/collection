@@ -5,8 +5,8 @@ use Ramsey\Collection\AbstractCollection;
 
 class FooCollection extends AbstractCollection
 {
-    public function __construct()
+    public function getType()
     {
-        parent::__construct(Foo::class);
+        return Foo::class;
     }
 }
