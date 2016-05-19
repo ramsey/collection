@@ -100,4 +100,14 @@ class NamedParameterMapTest extends TestCase
         $namedParameterMap = new NamedParameterMap(['foo' => 'int']);
         $namedParameterMap['foo'] = $this->faker->text();
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Value for 'foo' must be of type int
+     */
+    public function testNamedParameterWithNoStringValue()
+    {
+        $namedParameterMap = new NamedParameterMap(['foo' => 'int']);
+        $namedParameterMap['foo'] = new \DateTime();
+    }
 }
