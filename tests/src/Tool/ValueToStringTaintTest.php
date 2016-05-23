@@ -42,9 +42,6 @@ class ValueToStringTraintTest extends TestCase
             // Object with __toString()
             ['BAZ', new Mock\ObjectWithToString()],
             
-            // Object with __toString() out of scope
-            ['(' . Mock\ObjectWithToStringProtected::class . ' Object)', new Mock\ObjectWithToStringProtected()],
-            
             // Object with invoke()
             ['(' . Mock\ObjectWithInvoke::class . ' Object)', new Mock\ObjectWithInvoke()],
             
