@@ -7,7 +7,7 @@ use Ramsey\Collection\Tool\ValueToStringTrait;
 /**
  * Tests for ValueToStringTraint
  */
-class ValueToStringTraintTest extends TestCase
+class ValueToStringTraitTest extends TestCase
 {
     
     use ValueToStringTrait;
