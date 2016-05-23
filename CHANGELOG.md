@@ -4,7 +4,7 @@
 
 _Released: 2016-05-23_
 
-* BREAKING: Add `AbstractCollection::getType()` abstract method and remove constructor from the abstract class. Children must now implement `getType()`, which should return a string value naming the data type of items for the collection.
+* BREAKING: Remove `getType()` and constructor from AbstractCollection. Children must now implement `getType()`, which should return a string value naming the data type of items for the collection.
 * NEW: Add `MapInterface::keys()` method to return the keys from a MapInterface object. Also added to the AbstractMap class.
 * Improve error messages in exceptions when Collection and NamedParameterMap items fail type checks.
 
