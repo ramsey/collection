@@ -38,8 +38,6 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         return in_array($element, $this->data, $strict);
     }
 
-    abstract public function getType();
-
     public function offsetSet($offset, $value)
     {
         if ($this->checkType($this->getType(), $value) === false) {
