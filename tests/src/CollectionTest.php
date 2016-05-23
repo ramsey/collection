@@ -18,6 +18,13 @@ class CollectionTest extends TestCase
         $this->assertEquals('string', $collection->getType());
     }
 
+    public function testContructorWithData()
+    {
+        $collection = new Collection('string', ['foo', 'bar']);
+
+        $this->assertCount(2, $collection);
+    }
+
     public function testOffsetSet()
     {
         $collection = new Collection('integer');

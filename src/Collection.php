@@ -33,7 +33,7 @@ namespace Ramsey\Collection;
  * }
  * ```
  *
- * It is preferrable to subclass AbstractCollection to create your own typed
+ * It is preferable to subclass AbstractCollection to create your own typed
  * collections. For example:
  *
  * ``` php
@@ -41,9 +41,9 @@ namespace Ramsey\Collection;
  *
  * class FooCollection extends \Ramsey\Collection\AbstractCollection
  * {
- *     public function __construct()
+ *     public function getType()
  *     {
- *         parent::__construct('My\\Foo');
+ *         return 'My\\Foo';
  *     }
  * }
  * ```
@@ -64,11 +64,43 @@ namespace Ramsey\Collection;
  * collection object:
  *
  * ``` php
- * if ($collection instancof \My\Foo\FooCollection) {
+ * if ($collection instanceof \My\Foo\FooCollection) {
  *     // the collection is a collection of My\Foo objects
  * }
  * ```
  */
 class Collection extends AbstractCollection
 {
+    /**
+     * The type of elements stored in this collection
+     *
+     * A collection's type is immutable once it is set. For this reason, this
+     * property is set private
+     *
+     * @var string
+     */
+    private $collectionType;
+
+    /**
+     * Constructs a collection object of the specified type,
+     * optionally with the specified data
+     *
+     * @param string $collectionType
+     * @param array $data
+     */
+    public function __construct($collectionType, array $data = [])
+    {
+        $this->collectionType = $collectionType;
+        parent::__construct($data);
+    }
+
+    /**
+     * Returns the type associated with this collection
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->collectionType;
+    }
 }
