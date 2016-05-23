@@ -15,6 +15,7 @@
 namespace Ramsey\Collection;
 
 use Ramsey\Collection\Tool\TypeTrait;
+use Ramsey\Collection\Tool\ValueToStringTrait;
 
 /**
  * This class provides an implementation of the CollectionInterface, to
@@ -23,6 +24,7 @@ use Ramsey\Collection\Tool\TypeTrait;
 abstract class AbstractCollection extends AbstractArray implements CollectionInterface
 {
     use TypeTrait;
+    use ValueToStringTrait;
 
     public function add($element)
     {
@@ -43,7 +45,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         if ($this->checkType($this->getType(), $value) === false) {
             throw new \InvalidArgumentException(
                 'Value must be of type ' . $this->getType() . '; value is '
-                . var_export($value, true)
+                . $this->toolValueToString($value)
             );
         }
 

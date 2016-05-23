@@ -15,6 +15,7 @@
 namespace Ramsey\Collection\Map;
 
 use Ramsey\Collection\Tool\TypeTrait;
+use Ramsey\Collection\Tool\ValueToStringTrait;
 
 /**
  * NamedParameterMap represents a mapping of values to a set of named keys
@@ -23,6 +24,7 @@ use Ramsey\Collection\Tool\TypeTrait;
 class NamedParameterMap extends AbstractMap
 {
     use TypeTrait;
+    use ValueToStringTrait;
 
     /**
      * @var array
@@ -64,7 +66,7 @@ class NamedParameterMap extends AbstractMap
             throw new \InvalidArgumentException(
                 'Value for \'' . $offset . '\' must be of type '
                 . $this->namedParameters[$offset] . '; value is '
-                . (string) $value
+                . $this->toolValueToString($value)
             );
         }
 
