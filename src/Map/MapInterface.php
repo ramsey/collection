@@ -42,11 +42,19 @@ interface MapInterface extends ArrayInterface
     public function containsValue($value);
 
     /**
+     * Return an array of the keys contained in this map
+     *
+     * @return array
+     */
+    public function keys();
+
+    /**
      * Returns the value to which the specified key is mapped, `null` if this
      * map contains no mapping for the key, or (optionally) `$defaultValue` if
      * this map contains no mapping for the key
      *
      * @param mixed $key
+     * @param mixed $defaultValue
      * @return mixed|null
      */
     public function get($key, $defaultValue = null);

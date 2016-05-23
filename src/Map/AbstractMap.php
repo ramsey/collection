@@ -44,6 +44,11 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
         return in_array($value, $this->data, true);
     }
 
+    public function keys()
+    {
+        return array_keys($this->data);
+    }
+
     public function get($key, $defaultValue = null)
     {
         if (!$this->containsKey($key)) {

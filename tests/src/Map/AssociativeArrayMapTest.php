@@ -11,7 +11,7 @@ use Ramsey\Collection\Test\TestCase;
 class AssociativeArrayMapTest extends TestCase
 {
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Map elements are key/value pairs; a key must be provided for value 123
      */
     public function testOffsetSetWithEmptyOffsetThrowsException()
@@ -38,6 +38,19 @@ class AssociativeArrayMapTest extends TestCase
         $this->assertTrue($associativeArrayMapObject->containsKey('foo'));
         $this->assertTrue($associativeArrayMapObject->containsKey('bar'));
         $this->assertFalse($associativeArrayMapObject->containsKey('baz'));
+    }
+
+    public function testKeys()
+    {
+        $associativeArrayMapObject = new AssociativeArrayMap();
+        
+        // empty map returns empty array
+        $this->assertEquals([], $associativeArrayMapObject->keys());
+        $associativeArrayMapObject['foo'] = null;
+        $associativeArrayMapObject['bar'] = 321;
+        
+        // array with key-value entries return array containing keys
+        $this->assertEquals(['foo', 'bar'], $associativeArrayMapObject->keys());
     }
 
     public function testContainsValue()
@@ -80,7 +93,7 @@ class AssociativeArrayMapTest extends TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Map elements are key/value pairs; a key must be provided for value 123
      */
     public function testPutWithNullKeyThrowsException()
@@ -105,7 +118,7 @@ class AssociativeArrayMapTest extends TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Map elements are key/value pairs; a key must be provided for value 123
      */
     public function testPutIfAbsentWithNullKeyThrowsException()
