@@ -5,7 +5,7 @@ use Ramsey\Collection\Test\TestCase;
 use Ramsey\Collection\Tool\ValueToStringTrait;
 
 /**
- * Tests for ValueToStringTraint
+ * Tests for ValueToStringTrait
  */
 class ValueToStringTraitTest extends TestCase
 {
