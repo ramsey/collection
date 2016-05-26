@@ -14,7 +14,6 @@
 
 namespace Ramsey\Collection;
 
-
 interface QueueInterface extends ArrayInterface
 {
     /**
