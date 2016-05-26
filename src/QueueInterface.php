@@ -84,4 +84,11 @@ interface QueueInterface extends ArrayInterface
      * @throws \Ramsey\Collection\Exception\NoSuchElementException
      */
     public function remove();
+    
+    /**
+     * Returns the type associated with this collection
+     *
+     * @return string
+     */
+    public function getType();
 }
