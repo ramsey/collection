@@ -53,7 +53,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     public function remove($element)
     {
         if (($position = array_search($element, $this->data, true)) !== false) {
-            $this->offsetUnset($position);
+            unset($this->data[$position]);
 
             return true;
         }

@@ -55,7 +55,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
             return $defaultValue;
         }
 
-        return $this->offsetGet($key);
+        return $this[$key];
     }
 
     public function put($key, $value)
