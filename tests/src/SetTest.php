@@ -5,6 +5,7 @@ namespace Ramsey\Collection\Test;
 use Ramsey\Collection\AbstractSet;
 use Ramsey\Collection\CollectionInterface;
 use Ramsey\Collection\Set;
+use Ramsey\Collection\Test\Mock\Foo;
 
 /**
  * Tests for Set class.
@@ -52,5 +53,24 @@ class SetTest extends \PHPUnit_Framework_TestCase
         $this->set[] = 100;
         $this->set[] = 100;
         $this->assertSame([100], $this->set->toArray());
+    }
+
+    public function testUsingEqualButNotIdentical()
+    {
+        $uniqueFoos = new Set(Foo::class);
+
+        // the comparisons are identical (===), not equal(==)
+        $this->assertTrue($uniqueFoos->add(new Foo()));
+        $this->assertTrue($uniqueFoos->add(new Foo()));
+    }
+
+    public function testUsingIdentical()
+    {
+        $uniqueFoos = new Set(Foo::class);
+
+        // the comparisons are identical (===), not equal(==)
+        $identical = new Foo();
+        $this->assertTrue($uniqueFoos->add($identical));
+        $this->assertFalse($uniqueFoos->add($identical));
     }
 }
