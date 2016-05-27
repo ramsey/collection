@@ -23,7 +23,7 @@ class SetTest extends \PHPUnit_Framework_TestCase
         $this->set = new Set('int');
     }
 
-    public function testConstructorInherithance()
+    public function testConstructorInheritance()
     {
         $this->assertInstanceOf(CollectionInterface::class, $this->set);
         $this->assertInstanceOf(AbstractSet::class, $this->set);
