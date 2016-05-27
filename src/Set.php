@@ -9,7 +9,18 @@ namespace Ramsey\Collection;
  * The behavior of a Set is not specified if the value of an object is changed in a manner
  * that affects equals comparisons while the object is an element in the set.
  *
- * @package Ramsey\Collection
+ * Example usage:
+ *
+ * ``` php
+ * $foo = new \My\Foo();
+ * $set = new Set(\My\Foo::class);
+ *
+ * $set->add($foo); // returns TRUE, the element don't exists
+ * $set->add($foo); // returns FALSE, the element already exists
+ *
+ * $bar = new \My\Foo();
+ * $set->add($bar); // returns TRUE, $bar !== $foo
+ * ```
  */
 class Set extends AbstractSet
 {
