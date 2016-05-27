@@ -13,7 +13,7 @@
  * @link https://github.com/ramsey/collection GitHub
  */
 
-namespace Ramsey\Collection\TypedMap;
+namespace Ramsey\Collection\Map;
 
 use Ramsey\Collection\Tool\TypeTrait;
 

@@ -13,9 +13,8 @@
  * @link https://github.com/ramsey/collection GitHub
  */
 
-namespace Ramsey\Collection\TypedMap;
+namespace Ramsey\Collection\Map;
 
-use Ramsey\Collection\Map\AbstractMap;
 use Ramsey\Collection\Tool\TypeTrait;
 use Ramsey\Collection\Tool\ValueToStringTrait;
 

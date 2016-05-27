@@ -1,8 +1,8 @@
 <?php
 namespace Ramsey\Collection\Test\Map;
 
-use Ramsey\Collection\TypedMap\TypedMap;
-use Ramsey\Collection\TypedMap\TypedMapInterface;
+use Ramsey\Collection\Map\TypedMap;
+use Ramsey\Collection\Map\TypedMapInterface;
 use Ramsey\Collection\Test\TestCase;
 
 /**

@@ -13,9 +13,7 @@
  * @link https://github.com/ramsey/collection GitHub
  */
 
-namespace Ramsey\Collection\TypedMap;
-
-use Ramsey\Collection\Map\MapInterface;
+namespace Ramsey\Collection\Map;
 
 /**
  * A `TypedMap` represent a Map of elements where key and value are typed.
