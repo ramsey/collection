@@ -1,0 +1,56 @@
+<?php
+
+namespace Ramsey\Collection\Test;
+
+use Ramsey\Collection\AbstractSet;
+use Ramsey\Collection\CollectionInterface;
+use Ramsey\Collection\Set;
+
+/**
+ * Tests for Set class.
+ *
+ * As Set is a Collection with no duplicated elements
+ * it only test the expected behavior.
+ */
+class SetTest extends \PHPUnit_Framework_TestCase
+{
+    /** @var Set */
+    private $set;
+
+    protected function setUp()
+    {
+        $this->set = new Set('int');
+    }
+
+    public function testConstructorInherithance()
+    {
+        $this->assertInstanceOf(CollectionInterface::class, $this->set);
+        $this->assertInstanceOf(AbstractSet::class, $this->set);
+    }
+
+    public function testConstructGetType()
+    {
+        $this->assertSame('int', $this->set->getType());
+    }
+
+    public function testConstructWithValues()
+    {
+        $expected = [2, 4, 6, 8];
+        $localSet = new Set('int', $expected);
+        $this->assertEquals($expected, $localSet->toArray());
+    }
+
+    public function testAddDuplicates()
+    {
+        $this->assertTrue($this->set->add(100));
+        $this->assertFalse($this->set->add(100));
+        $this->assertSame([100], $this->set->toArray());
+    }
+
+    public function testOffsetSetDuplicates()
+    {
+        $this->set[] = 100;
+        $this->set[] = 100;
+        $this->assertSame([100], $this->set->toArray());
+    }
+}
