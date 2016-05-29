@@ -112,7 +112,9 @@ class Queue extends AbstractArray implements QueueInterface
      */
     public function offer($element)
     {
-        // TODO: Implement offer() method.
+        $this[] = $element;
+
+        return true;
     }
 
     /**
