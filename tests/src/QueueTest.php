@@ -88,6 +88,19 @@ class QueueTest extends TestCase
         $this->assertCount($expectedCount, $queue2);
     }
 
+    public function testOfferAddsElement()
+    {
+        $queue = new Queue(\stdClass::class);
+
+        $object = new \stdClass();
+        $object->name = $this->faker->name();
+
+        $queue->offer($object);
+
+        $this->assertSame(1, $queue->count());
+        $this->assertSame($object, $queue->poll());
+    }
+
     public function testIterateOverQueue()
     {
         $queue = new Queue(\stdClass::class);
@@ -148,6 +161,13 @@ class QueueTest extends TestCase
         $this->assertSame($object1, $queue->peek());
     }
 
+    public function testPeekReturnsNullIfEmpty()
+    {
+        $queue = new Queue('bool');
+
+        $this->assertNull($queue->peek());
+    }
+
     public function testPollRemovesTheHead()
     {
         $queue = new Queue('string');
@@ -166,7 +186,7 @@ class QueueTest extends TestCase
     {
         $queue = new Queue(\stdClass::class);
 
-        $this->assertSame(null, $queue->peek());
+        $this->assertSame(null, $queue->poll());
     }
 
     public function testRemove()
@@ -222,7 +242,7 @@ class QueueTest extends TestCase
         $this->assertSame('Bar', $queue->peek());
         $this->assertSame('Bar', $queue->poll());
 
-        $queue->add('FooBar');
+        $queue->offer('FooBar');
 
         $this->assertSame('Foo', $queue->remove());
 
