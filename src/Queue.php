@@ -14,8 +14,46 @@
 
 namespace Ramsey\Collection;
 
+use Ramsey\Collection\Exception\NoSuchElementException;
+use Ramsey\Collection\Tool\TypeTrait;
+use Ramsey\Collection\Tool\ValueToStringTrait;
+
 class Queue extends AbstractArray implements QueueInterface
 {
+    use TypeTrait;
+    use ValueToStringTrait;
+
+    /**
+     * @var string
+     */
+    private $queueType;
+
+    /**
+     * @var int
+     */
+    private $index = 0;
+
+    /**
+     * Queue constructor.
+     */
+    public function __construct($type, array $data = [])
+    {
+        $this->queueType = $type;
+        parent::__construct($data);
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        if ($this->checkType($this->getType(), $value) === false) {
+            throw new \InvalidArgumentException(
+                'Value must be of type ' . $this->getType() . '; value is '
+                . $this->toolValueToString($value)
+            );
+        }
+        
+        $this->data[] = $value;
+    }
+
 
     /**
      * Ensures that this queue contains the specified element (optional
@@ -40,7 +78,9 @@ class Queue extends AbstractArray implements QueueInterface
      */
     public function add($element)
     {
-        // TODO: Implement add() method.
+        $this[] = $element;
+
+        return true;
     }
 
     /**
@@ -48,11 +88,17 @@ class Queue extends AbstractArray implements QueueInterface
      * differs from peek only in that it throws an exception if this queue is empty.
      *
      * @return mixed the head of this queue
-     * @throws \Ramsey\Collection\Exception\NoSuchElementException
+     * @throws NoSuchElementException
      */
     public function element()
     {
-        // TODO: Implement element() method.
+        if ($this->count() === 0) {
+            throw new NoSuchElementException(
+                'Can\'t return element from Queue. Queue is empty.'
+            );
+        }
+
+        return $this[$this->index];
     }
 
     /**
@@ -77,7 +123,11 @@ class Queue extends AbstractArray implements QueueInterface
      */
     public function peek()
     {
-        // TODO: Implement peek() method.
+        if ($this->count() === 0) {
+            return null;
+        }
+
+        return $this[$this->index];
     }
 
     /**
@@ -88,7 +138,16 @@ class Queue extends AbstractArray implements QueueInterface
      */
     public function poll()
     {
-        // TODO: Implement poll() method.
+        if ($this->count() === 0) {
+            return null;
+        }
+
+        $head = $this[$this->index];
+
+        unset($this[$this->index]);
+        $this->index++;
+
+        return $head;
     }
 
     /**
@@ -97,11 +156,19 @@ class Queue extends AbstractArray implements QueueInterface
      * exception if this queue is empty.
      *
      * @return mixed the head of this queue
-     * @throws \Ramsey\Collection\Exception\NoSuchElementException
+     * @throws NoSuchElementException
      */
     public function remove()
     {
-        // TODO: Implement remove() method.
+        if ($this->count() === 0) {
+            throw new NoSuchElementException('Can\'t return element from Queue. Queue is empty.');
+        }
+        $head = $this[$this->index];
+
+        unset($this[$this->index]);
+        $this->index++;
+
+        return $head;
     }
 
     /**
@@ -111,6 +178,6 @@ class Queue extends AbstractArray implements QueueInterface
      */
     public function getType()
     {
-        // TODO: Implement getType() method.
+        return $this->queueType;
     }
 }
