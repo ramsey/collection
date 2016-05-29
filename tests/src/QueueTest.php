@@ -50,9 +50,10 @@ class QueueTest extends TestCase
     {
         $queue = new Queue('string');
 
+        $number = $this->faker->numberBetween();
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectException('Unable to add a integer to the queue. Only strings allowed.');
-        $queue[] = $this->faker->numberBetween();
+        $this->expectExceptionMessage('Value must be of type string; value is ' . $number);
+        $queue[] = $number;
     }
 
     public function testValuesCanAdded()
@@ -60,6 +61,7 @@ class QueueTest extends TestCase
         $queue = new Queue('string');
         
         $this->assertTrue($queue->add('Foo'));
+        $this->assertSame(1, $queue->count());
     }
 
     public function testAddMayAddSameObjectMultipleTimes()
@@ -138,29 +140,32 @@ class QueueTest extends TestCase
         $object2 = new \stdClass();
         $object2->name = $this->faker->name();
 
-        $queue = new Queue();
+        $queue = new Queue(\stdClass::class);
         $queue->add($object1);
         $queue->add($object2);
 
         $this->assertSame($object1, $queue->peek());
-        $this->assertSame($object2, $queue->peek());
-        $this->assertFalse($queue->peek());
+        $this->assertSame($object1, $queue->peek());
+    }
+
+    public function testPollRemovesTheHead()
+    {
+        $queue = new Queue('string');
+
+        $queue->add('Foo');
+        $queue->add('Bar');
+
+        $this->assertSame(2, $queue->count());
+        $this->assertSame('Foo', $queue->poll());
+        $this->assertSame(1, $queue->count());
+        $this->assertSame('Bar', $queue->poll());
+        $this->assertSame(0, $queue->count());
     }
 
     public function testPollReturnsNullIfEmpty()
     {
-        $object1 = new \stdClass();
-        $object1->name = $this->faker->name();
+        $queue = new Queue(\stdClass::class);
 
-        $object2 = new \stdClass();
-        $object2->name = $this->faker->name();
-
-        $queue = new Queue();
-        $queue->add($object1);
-        $queue->add($object2);
-
-        $this->assertSame($object1, $queue->peek());
-        $this->assertSame($object2, $queue->peek());
         $this->assertSame(null, $queue->peek());
     }
 
@@ -177,7 +182,7 @@ class QueueTest extends TestCase
         $queue->add($obj1);
 
         $this->assertSame(3, $queue->count());
-        $this->assertTrue($queue->remove($obj1));
+        $this->assertSame($obj1, $queue->remove());
         $this->assertSame(2, $queue->count());
     }
 
@@ -200,5 +205,27 @@ class QueueTest extends TestCase
         $this->expectExceptionMessage('Can\'t return element from Queue. Queue is empty.');
 
         $queue->remove();
+    }
+
+    public function testMixedUsageOfAllMethods()
+    {
+        $queue = new Queue('string');
+
+        $queue->add('Foo');
+        $queue->add('Bar');
+
+        $this->assertSame('Foo', $queue->peek());
+        $this->assertSame('Foo', $queue->remove());
+
+        $queue->add('Foo');
+
+        $this->assertSame('Bar', $queue->peek());
+        $this->assertSame('Bar', $queue->poll());
+
+        $queue->add('FooBar');
+
+        $this->assertSame('Foo', $queue->remove());
+
+        $this->assertSame(1, $queue->count());
     }
 }
