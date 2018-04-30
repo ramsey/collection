@@ -6,6 +6,7 @@ use Ramsey\Collection\AbstractSet;
 use Ramsey\Collection\CollectionInterface;
 use Ramsey\Collection\Set;
 use Ramsey\Collection\Test\Mock\Foo;
+use PHPUnit\Framework\TestCase as PhpUnitTestCase;
 
 /**
  * Tests for Set class.
@@ -13,7 +14,7 @@ use Ramsey\Collection\Test\Mock\Foo;
  * As Set is a Collection with no duplicated elements
  * it only test the expected behavior.
  */
-class SetTest extends \PHPUnit_Framework_TestCase
+class SetTest extends PhpUnitTestCase
 {
     /** @var Set */
     private $set;

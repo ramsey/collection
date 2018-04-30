@@ -10,13 +10,12 @@ use Ramsey\Collection\Test\TestCase;
  */
 class AssociativeArrayMapTest extends TestCase
 {
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Map elements are key/value pairs; a key must be provided for value 123
-     */
     public function testOffsetSetWithEmptyOffsetThrowsException()
     {
         $associativeArrayMapObject = new AssociativeArrayMap();
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Map elements are key/value pairs; a key must be provided for value 123');
         $associativeArrayMapObject[] = 123;
     }
 
@@ -92,13 +91,12 @@ class AssociativeArrayMapTest extends TestCase
         $this->assertEquals(456, $associativeArrayMapObject->get('foo'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Map elements are key/value pairs; a key must be provided for value 123
-     */
     public function testPutWithNullKeyThrowsException()
     {
         $associativeArrayMapObject = new AssociativeArrayMap();
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Map elements are key/value pairs; a key must be provided for value 123');
         $previousValue = $associativeArrayMapObject->put(null, 123);
     }
 
@@ -117,13 +115,12 @@ class AssociativeArrayMapTest extends TestCase
         $this->assertEquals(123, $associativeArrayMapObject->get('foo'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Map elements are key/value pairs; a key must be provided for value 123
-     */
     public function testPutIfAbsentWithNullKeyThrowsException()
     {
         $associativeArrayMapObject = new AssociativeArrayMap();
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Map elements are key/value pairs; a key must be provided for value 123');
         $previousValue = $associativeArrayMapObject->putIfAbsent(null, 123);
     }
 
