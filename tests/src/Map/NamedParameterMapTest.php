@@ -81,33 +81,30 @@ class NamedParameterMapTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Attempting to set value for unconfigured parameter 'bar'
-     */
     public function testNamedParametersWithUnnamedParameterThrowException()
     {
         $namedParameterMap = new NamedParameterMap(['foo']);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Attempting to set value for unconfigured parameter \'bar\'');
         $namedParameterMap['bar'] = 123;
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Value for 'foo' must be of type int
-     */
     public function testNamedParametersWithWrongTypeThrowsException()
     {
         $namedParameterMap = new NamedParameterMap(['foo' => 'int']);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Value for \'foo\' must be of type int');
         $namedParameterMap['foo'] = $this->faker->text();
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Value for 'foo' must be of type int
-     */
     public function testNamedParameterWithNoStringValue()
     {
         $namedParameterMap = new NamedParameterMap(['foo' => 'int']);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Value for \'foo\' must be of type int');
         $namedParameterMap['foo'] = new \DateTime();
     }
 }

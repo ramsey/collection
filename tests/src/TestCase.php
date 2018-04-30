@@ -1,7 +1,9 @@
 <?php
 namespace Ramsey\Collection\Test;
 
-class TestCase extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase as PhpUnitTestCase;
+
+class TestCase extends PhpUnitTestCase
 {
     protected $faker;
 

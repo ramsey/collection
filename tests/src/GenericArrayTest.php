@@ -31,7 +31,7 @@ class GenericArrayTest extends TestCase
     {
         $genericArrayObject = new GenericArray();
 
-        $this->assertInstanceOf('ArrayIterator', $genericArrayObject->getIterator());
+        $this->assertInstanceOf(\ArrayIterator::class, $genericArrayObject->getIterator());
     }
 
     public function testArrayAccess()
@@ -79,7 +79,7 @@ class GenericArrayTest extends TestCase
         $genericArrayObjectSerialized = serialize($genericArrayObject);
         $genericArrayObject2 = unserialize($genericArrayObjectSerialized);
 
-        $this->assertInstanceOf('Ramsey\\Collection\\ArrayInterface', $genericArrayObject2);
+        $this->assertInstanceOf(\Ramsey\Collection\ArrayInterface::class, $genericArrayObject2);
         $this->assertEquals($genericArrayObject, $genericArrayObject2);
     }
 
