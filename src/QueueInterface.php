@@ -57,7 +57,7 @@ interface QueueInterface extends ArrayInterface
      * which can fail to insert an element only by throwing an exception.
      *
      * @param mixed $element
-     * @return mixed true if the element was added to this queue, else false
+     * @return bool true if the element was added to this queue, else false
      */
     public function offer($element): bool;
 
