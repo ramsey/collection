@@ -38,18 +38,18 @@
         }
     },
     "scripts": {
-       "lint": "parallel-lint src tests",
-       "phpcs": "phpcs src tests --standard=psr2 -sp --colors",
-       "phpstan": [
-           "phpstan analyse src --level max --no-progress",
-           "phpstan analyse tests --level 4 --no-progress"
-       ],
-       "phpunit": "phpunit --verbose --colors=always",
-       "test": [
-           "@lint",
-           "@phpstan",
-           "@phpunit",
-           "@phpcs"
+        "lint": "parallel-lint src tests",
+        "phpcs": "phpcs src tests --standard=psr2 -sp --colors",
+        "phpstan": [
+            "phpstan analyse src --level max --no-progress",
+            "phpstan analyse tests --level 4 --no-progress"
+        ],
+        "phpunit": "phpunit --verbose --colors=always",
+        "test": [
+            "@lint",
+            "@phpstan",
+            "@phpunit",
+            "@phpcs"
        ]
    }
 }
