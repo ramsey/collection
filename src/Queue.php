@@ -50,7 +50,7 @@ class Queue extends AbstractArray implements QueueInterface
                 . $this->toolValueToString($value)
             );
         }
-        
+
         $this->data[] = $value;
     }
 
@@ -107,8 +107,8 @@ class Queue extends AbstractArray implements QueueInterface
      * capacity-restricted queue, this method is generally preferable to add(E),
      * which can fail to insert an element only by throwing an exception.
      *
-     * @param $element
-     * @return mixed true if the element was added to this queue, else false
+     * @param mixed $element
+     * @return bool true if the element was added to this queue, else false
      */
     public function offer($element)
     {
