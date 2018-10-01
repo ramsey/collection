@@ -35,5 +35,15 @@
         "psr-4": {
             "Ramsey\\Collection\\Test\\": "tests/src/"
         }
+    },
+    "scripts": {
+        "lint": "parallel-lint src tests",
+        "phpcs": "phpcs src tests --standard=psr2 -sp --colors",
+        "phpunit": "phpunit --verbose --colors=always",
+        "test": [
+            "@lint",
+            "@phpunit",
+            "@phpcs"
+        ]
     }
 }
