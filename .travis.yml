@@ -1,11 +1,7 @@
 language: php
 
 php:
-  - 5.6
-  - 7.0
-  - 7.1
   - 7.2
-  - hhvm
   - nightly
 
 matrix:
@@ -22,7 +18,7 @@ script:
   - mkdir -p build/logs
   - ./vendor/bin/parallel-lint src tests
   - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
-  - ./vendor/bin/phpcs src --standard=psr2 -sp
+  - ./vendor/bin/phpcs src --standard=psr12 -sp
   - ant phpstan
 
 after_script:
