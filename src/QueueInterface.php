@@ -56,7 +56,7 @@ interface QueueInterface extends ArrayInterface
      * capacity-restricted queue, this method is generally preferable to add(E),
      * which can fail to insert an element only by throwing an exception.
      *
-     * @param $element
+     * @param mixed $element
      * @return mixed true if the element was added to this queue, else false
      */
     public function offer($element): bool;
@@ -86,7 +86,7 @@ interface QueueInterface extends ArrayInterface
      * @throws \Ramsey\Collection\Exception\NoSuchElementException
      */
     public function remove();
-    
+
     /**
      * Returns the type associated with this collection
      *

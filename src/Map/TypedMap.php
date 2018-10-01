@@ -85,7 +85,7 @@ use Ramsey\Collection\Tool\TypeTrait;
  */
 class TypedMap extends AbstractTypedMap
 {
-    
+
     use TypeTrait;
 
     /**
@@ -107,13 +107,13 @@ class TypedMap extends AbstractTypedMap
      * @var string type of the map value
      */
     private $valueType;
-    
+
     /**
      * Constructs a map object of the specified key and value types,
      * optionally with the specified data
      *
-     * @param string $keyType
-     * @param string $valueType
+     * @param mixed $keyType
+     * @param mixed $valueType
      * @param array $data
      */
     public function __construct(string $keyType, string $valueType, array $data = [])

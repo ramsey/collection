@@ -42,7 +42,7 @@ trait ValueToStringTrait
         if (is_null($value)) {
             return 'NULL';
         }
-        
+
         // boolean constants
         if (is_bool($value)) {
             return ($value) ? 'TRUE' : 'FALSE';
@@ -60,7 +60,7 @@ trait ValueToStringTrait
 
         // resource
         if (is_resource($value)) {
-            return '(' . get_resource_type($value) . ' resource #' . (int) $value . ')';
+            return '(' . get_resource_type($value) . ' resource #' . intval($value) . ')';
         }
 
         // after this line $value is an object since is not null, scalar, array or resource

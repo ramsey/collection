@@ -145,7 +145,7 @@ abstract class AbstractArray implements ArrayInterface
 
     public function toArray(): array
     {
-        return (array) $this->data;
+        return $this->data;
     }
 
     public function isEmpty(): bool

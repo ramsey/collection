@@ -92,7 +92,7 @@ class NamedParameterMap extends AbstractMap
                 $names[] = (string) $value;
                 $types[] = 'mixed';
             } else {
-                $names[] = (string) $key;
+                $names[] = $key;
                 $types[] = (string) $value;
             }
         }

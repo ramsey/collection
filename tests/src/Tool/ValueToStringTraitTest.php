@@ -11,7 +11,7 @@ use Ramsey\Collection\Tool\ValueToStringTrait;
  */
 class ValueToStringTraitTest extends TestCase
 {
-    
+
     use ValueToStringTrait;
 
     public function testValueNull()
@@ -41,7 +41,7 @@ class ValueToStringTraitTest extends TestCase
     {
         // get_resource_type behaves different on php and hhvm
         $resource = opendir(__DIR__);
-        $expected = '(' . get_resource_type($resource) . ' resource #' . (int) $resource . ')';
+        $expected = '(' . get_resource_type($resource) . ' resource #' . intval($resource) . ')';
 
         $this->assertEquals($expected, $this->toolValueToString($resource));
     }
