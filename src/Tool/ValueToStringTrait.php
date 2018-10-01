@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -34,7 +36,7 @@ trait ValueToStringTrait
      * @param mixed $value
      * @return string
      */
-    protected function toolValueToString($value)
+    protected function toolValueToString($value): string
     {
         // null
         if (is_null($value)) {

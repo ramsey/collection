@@ -1,10 +1,11 @@
 <?php
+declare(strict_types=1);
+
 namespace Ramsey\Collection\Test;
 
 use Ramsey\Collection\Collection;
 use Ramsey\Collection\Test\Mock\Foo;
 use Ramsey\Collection\Test\Mock\FooCollection;
-use Ramsey\Collection\Test\TestCase;
 
 /**
  * Tests for Collection, as well as coverage for AbstractCollection

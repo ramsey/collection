@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of the ramsey/collection library
@@ -27,12 +28,12 @@ interface TypedMapInterface extends MapInterface
      *
      * @return string
      */
-    public function getKeyType();
+    public function getKeyType(): string;
 
     /**
      * Return the type forced on the values
      *
-     * @return mixed
+     * @return string
      */
-    public function getValueType();
+    public function getValueType(): string;
 }
