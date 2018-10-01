@@ -62,6 +62,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         if (($position = array_search($element, $this->data, true)) !== false) {
             unset($this->data[$position]);
 
+
             return true;
         }
 
@@ -245,5 +246,4 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
 
         return new static(array_merge(...$temp));
     }
-
 }

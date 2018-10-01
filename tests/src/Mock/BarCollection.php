@@ -5,7 +5,7 @@ use Ramsey\Collection\AbstractCollection;
 
 class BarCollection extends AbstractCollection
 {
-    public function getType()
+    public function getType(): string
     {
         return Bar::class;
     }

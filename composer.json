@@ -25,7 +25,8 @@
         "jakub-onderka/php-parallel-lint": "^1.0",
         "satooshi/php-coveralls": "^0.6.1",
         "fzaninotto/faker": "^1.5",
-        "phpstan/phpstan": "^0.10.3"
+        "phpstan/phpstan": "^0.10.3",
+        "jangregor/phpstan-prophecy": "^0.2.0"
     },
     "autoload": {
         "psr-4": {
@@ -41,8 +42,8 @@
         "lint": "parallel-lint src tests",
         "phpcs": "phpcs src tests --standard=psr2 -sp --colors",
         "phpstan": [
-            "phpstan analyse src --level max --no-progress",
-            "phpstan analyse tests --level 4 --no-progress"
+            "phpstan analyse src -c phpstan.neon --level max --no-progress",
+            "phpstan analyse tests -c phpstan.neon --level 4 --no-progress"
         ],
         "phpunit": "phpunit --verbose --colors=always",
         "test": [

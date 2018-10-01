@@ -1,4 +1,5 @@
 <?php
+
 namespace Ramsey\Collection\Test\Mock;
 
 class Bar
@@ -17,7 +18,8 @@ class Bar
         return $this->id;
     }
 
-    public function getName(): string {
+    public function getName(): string
+    {
         return $this->name;
     }
 }
