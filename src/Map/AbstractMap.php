@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -22,29 +24,29 @@ use Ramsey\Collection\AbstractArray;
  */
 abstract class AbstractMap extends AbstractArray implements MapInterface
 {
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if ($offset === null) {
             throw new \InvalidArgumentException(
                 'Map elements are key/value pairs; a key must be provided for '
-                . 'value ' . (string) $value
+                . 'value ' . $value
             );
         }
 
         $this->data[$offset] = $value;
     }
 
-    public function containsKey($key)
+    public function containsKey($key): bool
     {
         return array_key_exists($key, $this->data);
     }
 
-    public function containsValue($value)
+    public function containsValue($value): bool
     {
         return in_array($value, $this->data, true);
     }
 
-    public function keys()
+    public function keys(): array
     {
         return array_keys($this->data);
     }
@@ -85,7 +87,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
         return $previousValue;
     }
 
-    public function removeIf($key, $value)
+    public function removeIf($key, $value): bool
     {
         if ($this->get($key) === $value) {
             unset($this[$key]);
@@ -107,7 +109,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
         return $currentValue;
     }
 
-    public function replaceIf($key, $oldValue, $newValue)
+    public function replaceIf($key, $oldValue, $newValue): bool
     {
         if ($this->get($key) === $oldValue) {
             $this[$key] = $newValue;

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -26,7 +28,7 @@ abstract class AbstractSet extends AbstractCollection
      * @param mixed $element
      * @return bool true if this set did not already contain the specified element
      */
-    public function add($element)
+    public function add($element): bool
     {
         if ($this->contains($element)) {
             return false;
@@ -34,7 +36,7 @@ abstract class AbstractSet extends AbstractCollection
         return parent::add($element);
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if ($this->contains($value)) {
             return;

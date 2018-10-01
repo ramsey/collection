@@ -1,8 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace Ramsey\Collection\Test;
 
 use Ramsey\Collection\GenericArray;
-use Ramsey\Collection\Test\TestCase;
 
 /**
  * Tests for GenericArray, as well as coverage for AbstractArray

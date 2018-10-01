@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -26,7 +28,7 @@ trait TypeTrait
      * @param mixed $value
      * @return bool
      */
-    protected function checkType($type, $value)
+    protected function checkType($type, $value): bool
     {
         switch ($type) {
             case 'array':

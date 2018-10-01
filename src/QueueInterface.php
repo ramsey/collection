@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -37,7 +39,7 @@ interface QueueInterface extends ArrayInterface
      * @param mixed $element
      * @return bool true if this queue changed as a result of the call
      */
-    public function add($element);
+    public function add($element): bool;
 
     /**
      * Retrieves, but does not remove, the head of this queue. This method
@@ -57,7 +59,7 @@ interface QueueInterface extends ArrayInterface
      * @param mixed $element
      * @return mixed true if the element was added to this queue, else false
      */
-    public function offer($element);
+    public function offer($element): bool;
 
     /**
      * Retrieves, but does not remove, the head of this queue, or returns null
@@ -90,5 +92,5 @@ interface QueueInterface extends ArrayInterface
      *
      * @return string
      */
-    public function getType();
+    public function getType(): string;
 }

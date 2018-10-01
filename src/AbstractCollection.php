@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -26,19 +28,19 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     use TypeTrait;
     use ValueToStringTrait;
 
-    public function add($element)
+    public function add($element): bool
     {
         $this[] = $element;
 
         return true;
     }
 
-    public function contains($element, $strict = true)
+    public function contains($element, bool $strict = true): bool
     {
         return in_array($element, $this->data, $strict);
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if ($this->checkType($this->getType(), $value) === false) {
             throw new \InvalidArgumentException(
@@ -50,7 +52,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         $this->data[] = $value;
     }
 
-    public function remove($element)
+    public function remove($element): bool
     {
         if (($position = array_search($element, $this->data, true)) !== false) {
             unset($this->data[$position]);

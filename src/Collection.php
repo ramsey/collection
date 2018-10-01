@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -99,7 +101,7 @@ class Collection extends AbstractCollection
      *
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->collectionType;
     }

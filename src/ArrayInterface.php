@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -25,18 +27,18 @@ interface ArrayInterface extends \IteratorAggregate, \ArrayAccess, \Serializable
      *
      * @return void
      */
-    public function clear();
+    public function clear(): void;
 
     /**
      * Returns a native PHP array containing all of the elements in this array
      * object
      */
-    public function toArray();
+    public function toArray(): array;
 
     /**
      * Returns `true` if this array object contains no elements
      *
      * @return bool
      */
-    public function isEmpty();
+    public function isEmpty(): bool;
 }

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -45,7 +47,7 @@ abstract class AbstractArray implements ArrayInterface
      * @return \ArrayIterator
      * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
      */
-    public function getIterator()
+    public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->data);
     }
@@ -57,7 +59,7 @@ abstract class AbstractArray implements ArrayInterface
      * @return bool
      * @link http://php.net/manual/en/arrayaccess.offsetexists.php
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->data[$offset]);
     }
@@ -71,7 +73,7 @@ abstract class AbstractArray implements ArrayInterface
      */
     public function offsetGet($offset)
     {
-        return isset($this->data[$offset]) ? $this->data[$offset] : null;
+        return $this->data[$offset] ?? null;
     }
 
     /**
@@ -82,7 +84,7 @@ abstract class AbstractArray implements ArrayInterface
      * @throws \InvalidArgumentException
      * @link http://php.net/manual/en/arrayaccess.offsetset.php
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if ($offset === null) {
             $this->data[] = $value;
@@ -97,7 +99,7 @@ abstract class AbstractArray implements ArrayInterface
      * @param mixed $offset
      * @link http://php.net/manual/en/arrayaccess.offsetunset.php
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->data[$offset]);
     }
@@ -109,7 +111,7 @@ abstract class AbstractArray implements ArrayInterface
      * @return string
      * @link http://php.net/manual/en/class.serializable.php
      */
-    public function serialize()
+    public function serialize(): string
     {
         return serialize($this->data);
     }
@@ -120,7 +122,7 @@ abstract class AbstractArray implements ArrayInterface
      * @param string $serialized
      * @link http://php.net/manual/en/serializable.unserialize.php
      */
-    public function unserialize($serialized)
+    public function unserialize($serialized): void
     {
         $this->data = unserialize($serialized);
     }
@@ -131,22 +133,22 @@ abstract class AbstractArray implements ArrayInterface
      * @return int
      * @link http://php.net/manual/en/countable.count.php
      */
-    public function count()
+    public function count(): int
     {
         return count($this->data);
     }
 
-    public function clear()
+    public function clear(): void
     {
         $this->data = [];
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return $this->data;
     }
 
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return empty($this->data);
     }
