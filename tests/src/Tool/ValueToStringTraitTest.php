@@ -37,7 +37,6 @@ class ValueToStringTraitTest extends TestCase
 
     public function testValueResource()
     {
-        // get_resource_type behaves different on php and hhvm
         $resource = opendir(__DIR__);
         $expected = '(' . get_resource_type($resource) . ' resource #' . (int) $resource . ')';
 
