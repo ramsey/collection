@@ -18,7 +18,7 @@ script:
   - mkdir -p build/logs
   - ./vendor/bin/parallel-lint src tests
   - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
-  - ./vendor/bin/phpcs src --standard=psr2 -sp
+  - ./vendor/bin/phpcs src --standard=psr12 -sp
 
 after_script:
   - php vendor/bin/coveralls
