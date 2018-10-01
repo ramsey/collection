@@ -112,14 +112,14 @@ class TypedMap extends AbstractTypedMap
      * Constructs a map object of the specified key and value types,
      * optionally with the specified data
      *
-     * @param mixed $keyType
-     * @param mixed $valueType
+     * @param string $keyType
+     * @param string $valueType
      * @param array $data
      */
     public function __construct(string $keyType, string $valueType, array $data = [])
     {
-        $this->keyType = (string) $keyType;
-        $this->valueType = (string) $valueType;
+        $this->keyType = $keyType;
+        $this->valueType = $valueType;
         parent::__construct($data);
     }
 
