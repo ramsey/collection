@@ -4,7 +4,6 @@
 [![Latest Version][badge-release]][release]
 [![Software License][badge-license]][license]
 [![Build Status][badge-build]][build]
-[![HHVM Status][badge-hhvm]][hhvm]
 [![Scrutinizer][badge-quality]][quality]
 [![Coverage Status][badge-coverage]][coverage]
 [![Total Downloads][badge-downloads]][downloads]
@@ -115,7 +114,6 @@ The ramsey/collection library is copyright © [Ben Ramsey](https://benramsey.com
 [badge-release]: https://img.shields.io/github/release/ramsey/collection.svg?style=flat-square
 [badge-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
 [badge-build]: https://img.shields.io/travis/ramsey/collection/master.svg?style=flat-square
-[badge-hhvm]: https://img.shields.io/hhvm/ramsey/collection.svg?style=flat-square
 [badge-quality]: https://img.shields.io/scrutinizer/g/ramsey/collection/master.svg?style=flat-square
 [badge-coverage]: https://img.shields.io/coveralls/ramsey/collection/master.svg?style=flat-square
 [badge-downloads]: https://img.shields.io/packagist/dt/ramsey/collection.svg?style=flat-square
@@ -124,7 +122,6 @@ The ramsey/collection library is copyright © [Ben Ramsey](https://benramsey.com
 [release]: https://github.com/ramsey/collection/releases
 [license]: https://github.com/ramsey/collection/blob/master/LICENSE
 [build]: https://travis-ci.org/ramsey/collection
-[hhvm]: http://hhvm.h4cc.de/package/ramsey/collection
 [quality]: https://scrutinizer-ci.com/g/ramsey/collection/
 [coverage]: https://coveralls.io/r/ramsey/collection?branch=master
 [downloads]: https://packagist.org/packages/ramsey/collection
