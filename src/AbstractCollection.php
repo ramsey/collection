@@ -16,7 +16,11 @@ declare(strict_types=1);
 
 namespace Ramsey\Collection;
 
+use Ramsey\Collection\Exception\DiverseCollectionException;
+use Ramsey\Collection\Exception\InvalidSortOrderException;
+use Ramsey\Collection\Exception\OutOfBoundsException;
 use Ramsey\Collection\Tool\TypeTrait;
+use Ramsey\Collection\Tool\ValueExtractorTrait;
 use Ramsey\Collection\Tool\ValueToStringTrait;
 
 /**
@@ -27,6 +31,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
 {
     use TypeTrait;
     use ValueToStringTrait;
+    use ValueExtractorTrait;
 
     public function add($element): bool
     {
@@ -62,4 +67,183 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
 
         return false;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function column(string $propertyOrMethod): array
+    {
+        $temp = [];
+
+        foreach ($this->data as $item) {
+            $temp[] = $this->extractValue($item, $propertyOrMethod);
+        }
+
+        return $temp;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function first()
+    {
+        if (empty($this->data)) {
+            throw new OutOfBoundsException('Can\'t determine first item. Collection is empty');
+        }
+
+        $temp = array_merge([], $this->data);
+
+        return array_shift($temp);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function last()
+    {
+        if (empty($this->data)) {
+            throw new OutOfBoundsException('Can\'t determine last item. Collection is empty');
+        }
+
+        $temp = array_merge([], $this->data);
+
+        return array_pop($temp);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function sort(string $propertyOrMethod, string $order = self::SORT_ASC): CollectionInterface
+    {
+        if (!\in_array($order, [self::SORT_ASC, self::SORT_DESC], true)) {
+            throw new InvalidSortOrderException('Invalid sort order given: ' . $order);
+        }
+
+        $collection = clone $this;
+        usort($collection->data, function ($a, $b) use ($propertyOrMethod, $order) {
+            $aValue = $this->extractValue($a, $propertyOrMethod);
+            $bValue = $this->extractValue($b, $propertyOrMethod);
+
+            return ($aValue <=> $bValue) * ($order === self::SORT_DESC ? -1 : 1);
+        });
+
+        return $collection;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function filter(callable $callback): CollectionInterface
+    {
+        $collection = clone $this;
+        $collection->data = array_merge([], array_filter($collection->data, $callback));
+
+        return $collection;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function where(string $propertyOrMethod, $value): CollectionInterface
+    {
+        return $this->filter(function ($item) use ($propertyOrMethod, $value) {
+            $accessorValue = $this->extractValue($item, $propertyOrMethod);
+
+            return $accessorValue === $value;
+        });
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function map(callable $callback): CollectionInterface
+    {
+        $collection = clone $this;
+        \array_map($callback, $collection->data);
+
+        return $collection;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function diff(CollectionInterface $other): CollectionInterface
+    {
+        if (!$other instanceof static) {
+            throw new DiverseCollectionException('Collection must be of type ' . static::class);
+        }
+
+        $comparator = function ($a, $b) {
+            return $a === $b ? 0 : -1;
+        };
+
+        $diffAtoB = array_udiff($this->data, $other->data, $comparator);
+        $diffBtoA = array_udiff($other->data, $this->data, $comparator);
+
+        return new static(array_merge($diffAtoB, $diffBtoA));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function intersect(CollectionInterface $other): CollectionInterface
+    {
+        if (!$other instanceof static) {
+            throw new DiverseCollectionException('Collection must be of type ' . static::class);
+        }
+
+        $intersect = array_uintersect($this->data, $other->data, function ($a, $b) {
+            return $a === $b ? 0 : -1;
+        });
+
+        return new static($intersect);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function unique(string $propertyOrMethod = null): CollectionInterface
+    {
+        $temp = [];
+
+        if ($propertyOrMethod === null) {
+            foreach ($this->data as $item) {
+                if (!\in_array($item, $temp, true)) {
+                    $temp[] = $item;
+                }
+            }
+
+            return new static($temp);
+        }
+
+        foreach ($this->data as $item) {
+            $itemValue = $this->extractValue($item, $propertyOrMethod);
+            if (!\array_key_exists($itemValue, $temp)) {
+                $temp[$itemValue] = $item;
+            }
+        }
+
+        return new static(array_values($temp));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function merge(...$collections): CollectionInterface
+    {
+        $temp = [$this->data];
+
+        foreach ($collections as $index => $collection) {
+            if (!$collection instanceof static) {
+                throw new DiverseCollectionException(
+                    sprintf('Collection with index %d must be of type %s', $index, static::class)
+                );
+            }
+
+            $temp[] = $collection->toArray();
+        }
+
+        return new static(array_merge(...$temp));
+    }
+
 }

@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace Ramsey\Collection\Exception;
 
-class NoSuchElementException extends \Exception
+class NoSuchElementException extends \RuntimeException
 {
 
 }
