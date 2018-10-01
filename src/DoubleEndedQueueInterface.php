@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -17,7 +19,7 @@ namespace Ramsey\Collection;
 interface DoubleEndedQueueInterface extends QueueInterface
 {
     /**
-     * Ensures that the specified element in inserted at the front of this queue.
+     * Ensures that the specified element is inserted at the front of this queue.
      * Returns true if this queue changed as a result of the call. (Returns
      * false if this queue does not permit duplicates and already contains the
      * specified element.)
@@ -37,7 +39,7 @@ interface DoubleEndedQueueInterface extends QueueInterface
      * @param mixed $element
      * @return bool true if this queue changed as a result of the call
      */
-    public function addFirst($element);
+    public function addFirst($element): bool;
 
     /**
      * Ensures that the specified element in inserted at the end of this queue.
@@ -60,7 +62,7 @@ interface DoubleEndedQueueInterface extends QueueInterface
      * @param mixed $element
      * @return bool true if this queue changed as a result of the call
      */
-    public function addLast($element);
+    public function addLast($element): bool;
 
     /**
      * Inserts the specified element at the front this queue if it is possible
