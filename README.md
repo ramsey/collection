@@ -5,7 +5,6 @@
 [![Software License][badge-license]][license]
 [![Build Status][badge-build]][build]
 [![HHVM Status][badge-hhvm]][hhvm]
-[![Scrutinizer][badge-quality]][quality]
 [![Coverage Status][badge-coverage]][coverage]
 [![Total Downloads][badge-downloads]][downloads]
 
