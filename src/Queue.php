@@ -33,7 +33,7 @@ class Queue extends AbstractArray implements QueueInterface
     /**
      * @var int
      */
-    private $index = 0;
+    protected $index = 0;
 
     /**
      * Queue constructor.
@@ -55,7 +55,6 @@ class Queue extends AbstractArray implements QueueInterface
 
         $this->data[] = $value;
     }
-
 
     /**
      * Ensures that this queue contains the specified element (optional
