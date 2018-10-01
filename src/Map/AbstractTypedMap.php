@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of the ramsey/collection library
@@ -27,7 +28,7 @@ abstract class AbstractTypedMap extends AbstractMap implements TypedMapInterface
     use TypeTrait;
     use ValueToStringTrait;
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (false === $this->checkType($this->getKeyType(), $offset)) {
             throw new \InvalidArgumentException(

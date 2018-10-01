@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of the ramsey/collection library
@@ -115,19 +116,19 @@ class TypedMap extends AbstractTypedMap
      * @param string $valueType
      * @param array $data
      */
-    public function __construct($keyType, $valueType, array $data = [])
+    public function __construct(string $keyType, string $valueType, array $data = [])
     {
         $this->keyType = (string) $keyType;
         $this->valueType = (string) $valueType;
         parent::__construct($data);
     }
 
-    public function getKeyType()
+    public function getKeyType(): string
     {
         return $this->keyType;
     }
     
-    public function getValueType()
+    public function getValueType(): string
     {
         return $this->valueType;
     }

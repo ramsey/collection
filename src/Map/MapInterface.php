@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -29,7 +31,7 @@ interface MapInterface extends ArrayInterface
      * @param mixed $key
      * @return bool
      */
-    public function containsKey($key);
+    public function containsKey($key): bool;
 
     /**
      * Returns `true` if this map maps one or more keys to the specified value
@@ -39,14 +41,14 @@ interface MapInterface extends ArrayInterface
      * @param mixed $value
      * @return bool
      */
-    public function containsValue($value);
+    public function containsValue($value): bool;
 
     /**
      * Return an array of the keys contained in this map
      *
      * @return array
      */
-    public function keys();
+    public function keys(): array;
 
     /**
      * Returns the value to which the specified key is mapped, `null` if this
@@ -100,7 +102,7 @@ interface MapInterface extends ArrayInterface
      * @param mixed $value
      * @return bool true if the value was removed
      */
-    public function removeIf($key, $value);
+    public function removeIf($key, $value): bool;
 
     /**
      * Replaces the entry for the specified key only if it is currently mapped
@@ -123,5 +125,5 @@ interface MapInterface extends ArrayInterface
      * @param mixed $newValue
      * @return bool true if the value was replaced
      */
-    public function replaceIf($key, $oldValue, $newValue);
+    public function replaceIf($key, $oldValue, $newValue): bool;
 }

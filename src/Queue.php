@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -42,7 +44,7 @@ class Queue extends AbstractArray implements QueueInterface
         parent::__construct($data);
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if ($this->checkType($this->getType(), $value) === false) {
             throw new \InvalidArgumentException(
@@ -76,7 +78,7 @@ class Queue extends AbstractArray implements QueueInterface
      * @param mixed $element
      * @return bool true if this queue changed as a result of the call
      */
-    public function add($element)
+    public function add($element): bool
     {
         $this[] = $element;
 
@@ -110,7 +112,7 @@ class Queue extends AbstractArray implements QueueInterface
      * @param $element
      * @return mixed true if the element was added to this queue, else false
      */
-    public function offer($element)
+    public function offer($element): bool
     {
         $this[] = $element;
 
@@ -178,7 +180,7 @@ class Queue extends AbstractArray implements QueueInterface
      *
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->queueType;
     }

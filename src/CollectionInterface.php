@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -42,7 +44,7 @@ interface CollectionInterface extends ArrayInterface
      * @param mixed $element
      * @return bool true if this collection changed as a result of the call
      */
-    public function add($element);
+    public function add($element): bool;
 
     /**
      * Returns `true` if this collection contains the specified element
@@ -51,14 +53,14 @@ interface CollectionInterface extends ArrayInterface
      * @param bool $strict Whether to perform a strict type check on the value.
      * @return bool
      */
-    public function contains($element, $strict = true);
+    public function contains($element, bool $strict = true): bool;
 
     /**
      * Returns the type associated with this collection
      *
      * @return string
      */
-    public function getType();
+    public function getType(): string;
 
     /**
      * Removes a single instance of the specified element from this collection,
@@ -67,5 +69,5 @@ interface CollectionInterface extends ArrayInterface
      * @param mixed $element
      * @return bool true if an element was removed as a result of this call
      */
-    public function remove($element);
+    public function remove($element): bool;
 }

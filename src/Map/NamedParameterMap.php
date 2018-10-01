@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -48,12 +50,12 @@ class NamedParameterMap extends AbstractMap
      *
      * @return array
      */
-    public function getNamedParameters()
+    public function getNamedParameters(): array
     {
         return $this->namedParameters;
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (!array_key_exists($offset, $this->namedParameters)) {
             throw new \InvalidArgumentException(
@@ -80,7 +82,7 @@ class NamedParameterMap extends AbstractMap
      * @param array $namedParameters
      * @return array
      */
-    protected function filterNamedParameters(array $namedParameters)
+    protected function filterNamedParameters(array $namedParameters): array
     {
         $names = [];
         $types = [];
