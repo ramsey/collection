@@ -19,6 +19,7 @@ script:
   - ./vendor/bin/parallel-lint src tests
   - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
   - ./vendor/bin/phpcs src --standard=psr12 -sp
+  - ./vendor/bin/phpstan analyse src tests --level=4
 
 after_script:
   - php vendor/bin/coveralls
