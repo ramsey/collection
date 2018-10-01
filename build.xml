@@ -1,0 +1,17 @@
+<project xmlns='antlib:org.apache.tools.ant'>
+    <target name="phpstan" description="PHP Static Analysis Tool - discover bugs in your code without running it">
+        <mkdir dir="${basedir}/build"/>
+        <get src="https://github.com/phpstan/phpstan/releases/download/0.10.3/phpstan.phar"
+             dest="${basedir}/build/phpstan.phar" skipexisting="true"/>
+        <exec executable="php" searchpath="true" resolveexecutable="true" failonerror="true">
+            <arg value="${basedir}/build/phpstan.phar"/>
+            <arg value="analyse"/>
+            <arg value="-l"/>
+            <arg value="5"/>
+            <arg value="${basedir}/src"/>
+            <arg value="${basedir}/tests"/>
+            <arg value="--no-interaction"/>
+            <arg value="--no-progress"/>
+        </exec>
+    </target>
+</project>
