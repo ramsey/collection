@@ -24,7 +24,7 @@ trait ValueExtractorTrait
         }
 
         throw new ValueExtractionException(
-            sprintf('Method or property "%s" not defined in %s', $propertyOrMethod, get_class($object))
+            sprintf('Method or property "%s" not defined in %s', $propertyOrMethod, \get_class($object))
         );
     }
 }

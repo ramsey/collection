@@ -42,7 +42,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
 
     public function contains($element, bool $strict = true): bool
     {
-        return in_array($element, $this->data, $strict);
+        return \in_array($element, $this->data, $strict);
     }
 
     public function offsetSet($offset, $value): void
@@ -122,6 +122,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         }
 
         $collection = clone $this;
+
         usort($collection->data, function ($a, $b) use ($propertyOrMethod, $order) {
             $aValue = $this->extractValue($a, $propertyOrMethod);
             $bValue = $this->extractValue($b, $propertyOrMethod);
@@ -161,7 +162,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     public function map(callable $callback): CollectionInterface
     {
         $collection = clone $this;
-        \array_map($callback, $collection->data);
+        array_map($callback, $collection->data);
 
         return $collection;
     }
