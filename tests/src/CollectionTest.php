@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace Ramsey\Collection\Test;
 
 use Ramsey\Collection\Collection;
-use Ramsey\Collection\Exception\DiverseCollectionException;
-use Ramsey\Collection\Exception\InvalidSortOrderException;
 use Ramsey\Collection\Exception\OutOfBoundsException;
 use Ramsey\Collection\Exception\ValueExtractionException;
 use Ramsey\Collection\Test\Mock\Bar;
@@ -18,21 +16,21 @@ use Ramsey\Collection\Test\Mock\FooCollection;
  */
 class CollectionTest extends TestCase
 {
-    public function testConstructorSetsType()
+    public function testConstructorSetsType(): void
     {
         $collection = new Collection('string');
 
         $this->assertEquals('string', $collection->getType());
     }
 
-    public function testConstructorWithData()
+    public function testConstructorWithData(): void
     {
         $collection = new Collection('string', ['foo', 'bar']);
 
         $this->assertCount(2, $collection);
     }
 
-    public function testOffsetSet()
+    public function testOffsetSet(): void
     {
         $collection = new Collection('integer');
         $collection[] = $this->faker->numberBetween();
@@ -44,14 +42,14 @@ class CollectionTest extends TestCase
         $collection[] = $this->faker->text();
     }
 
-    public function testAdd()
+    public function testAdd(): void
     {
         $collection = new Collection('integer');
 
         $this->assertTrue($collection->add($this->faker->numberBetween()));
     }
 
-    public function testAddMayAddSameObjectMultipleTimes()
+    public function testAddMayAddSameObjectMultipleTimes(): void
     {
         $expectedCount = 4;
 
@@ -75,7 +73,7 @@ class CollectionTest extends TestCase
         $this->assertCount($expectedCount, $collection2);
     }
 
-    public function testContains()
+    public function testContains(): void
     {
         $name = $this->faker->name();
 
@@ -93,7 +91,7 @@ class CollectionTest extends TestCase
         $this->assertFalse($collection->contains($obj2));
     }
 
-    public function testContainsNonStrict()
+    public function testContainsNonStrict(): void
     {
         $name = $this->faker->name();
 
@@ -111,7 +109,7 @@ class CollectionTest extends TestCase
         $this->assertTrue($collection->contains($obj2, false));
     }
 
-    public function testRemove()
+    public function testRemove(): void
     {
         $obj1 = new \stdClass();
         $obj1->name = $this->faker->name();
@@ -129,7 +127,7 @@ class CollectionTest extends TestCase
         $this->assertFalse($collection->remove($obj1));
     }
 
-    public function testSubclassBehavior()
+    public function testSubclassBehavior(): void
     {
         $fooCollection = new FooCollection();
 
@@ -142,7 +140,7 @@ class CollectionTest extends TestCase
         $fooCollection[] = new \stdClass();
     }
 
-    public function testColumnByProperty()
+    public function testColumnByProperty(): void
     {
         $bar1 = new Bar(1, 'a');
         $bar2 = new Bar(2, 'b');
@@ -152,7 +150,7 @@ class CollectionTest extends TestCase
         $this->assertEquals(['a', 'b', 'c'], $barCollection->column('name'));
     }
 
-    public function testColumnByMethod()
+    public function testColumnByMethod(): void
     {
         $bar1 = new Bar(1, 'a');
         $bar2 = new Bar(2, 'b');
@@ -162,7 +160,7 @@ class CollectionTest extends TestCase
         $this->assertEquals([1, 2, 3], $barCollection->column('getId'));
     }
 
-    public function testColumnShouldRaiseExceptionOnUndefinedPropertyOrMethod()
+    public function testColumnShouldRaiseExceptionOnUndefinedPropertyOrMethod(): void
     {
         $bar1 = new Bar(1, 'a');
         $barCollection = new BarCollection([$bar1]);
@@ -172,7 +170,7 @@ class CollectionTest extends TestCase
         $barCollection->column('fu');
     }
 
-    public function testFirstShouldRaiseExceptionOnEmptyCollection()
+    public function testFirstShouldRaiseExceptionOnEmptyCollection(): void
     {
         $barCollection = new BarCollection();
 
@@ -181,7 +179,7 @@ class CollectionTest extends TestCase
         $barCollection->first();
     }
 
-    public function testFirst()
+    public function testFirst(): void
     {
         $bar1 = new Bar(1, 'a');
         $bar2 = new Bar(2, 'b');
@@ -189,9 +187,11 @@ class CollectionTest extends TestCase
         $barCollection = new BarCollection([$bar1, $bar2, $bar3]);
 
         $this->assertSame($bar1, $barCollection->first());
+        // Make sure the collection stays unchanged
+        $this->assertEquals([$bar1, $bar2, $bar3], $barCollection->toArray());
     }
 
-    public function testLastShouldRaiseExceptionOnEmptyCollection()
+    public function testLastShouldRaiseExceptionOnEmptyCollection(): void
     {
         $barCollection = new BarCollection();
 
@@ -200,7 +200,7 @@ class CollectionTest extends TestCase
         $barCollection->last();
     }
 
-    public function testLast()
+    public function testLast(): void
     {
         $bar1 = new Bar(1, 'a');
         $bar2 = new Bar(2, 'b');
@@ -208,271 +208,7 @@ class CollectionTest extends TestCase
         $barCollection = new BarCollection([$bar1, $bar2, $bar3]);
 
         $this->assertSame($bar3, $barCollection->last());
-    }
-
-    public function testSortNameAscWithAscendingIdAndNames()
-    {
-        $bar1 = new Bar(1, 'a');
-        $bar2 = new Bar(2, 'b');
-        $bar3 = new Bar(3, 'c');
-        $barCollection = new BarCollection([$bar3, $bar2, $bar1]);
-
-        $sortedCollection = $barCollection->sort('name');
-
-        $this->assertNotSame($barCollection, $sortedCollection);
-        $this->assertEquals([$bar3, $bar2, $bar1], $barCollection->toArray());
-        $this->assertEquals([$bar1, $bar2, $bar3], $sortedCollection->toArray());
-    }
-
-    public function testSortNameAscWithDescendingNames()
-    {
-        $bar1 = new Bar(1, 'c');
-        $bar2 = new Bar(2, 'b');
-        $bar3 = new Bar(3, 'a');
-        $barCollection = new BarCollection([$bar1, $bar2, $bar3]);
-
-        $sortedCollection = $barCollection->sort('name');
-
-        $this->assertNotSame($barCollection, $sortedCollection);
+        // Make sure the collection stays unchanged
         $this->assertEquals([$bar1, $bar2, $bar3], $barCollection->toArray());
-        $this->assertEquals([$bar3, $bar2, $bar1], $sortedCollection->toArray());
-    }
-
-    public function testSortNameDescWithDescendingNames()
-    {
-        $bar1 = new Bar(1, 'c');
-        $bar2 = new Bar(2, 'b');
-        $bar3 = new Bar(3, 'a');
-        $barCollection = new BarCollection([$bar1, $bar2, $bar3]);
-
-        $sortedCollection = $barCollection->sort('name', 'desc');
-
-        $this->assertNotSame($barCollection, $sortedCollection);
-        $this->assertEquals([$bar1, $bar2, $bar3], $barCollection->toArray());
-        $this->assertEquals([$bar1, $bar2, $bar3], $sortedCollection->toArray());
-    }
-
-    public function testSortNameDescWithMethod()
-    {
-        $bar1 = new Bar(1, 'c');
-        $bar2 = new Bar(2, 'b');
-        $bar3 = new Bar(3, 'a');
-        $barCollection = new BarCollection([$bar1, $bar2, $bar3]);
-
-        $sortedCollection = $barCollection->sort('getName', 'desc');
-
-        $this->assertNotSame($barCollection, $sortedCollection);
-        $this->assertEquals([$bar1, $bar2, $bar3], $barCollection->toArray());
-        $this->assertEquals([$bar1, $bar2, $bar3], $sortedCollection->toArray());
-    }
-
-    public function testSortNameWithInvalidProperty()
-    {
-        $bar1 = new Bar(1, 'a');
-        $bar2 = new Bar(1, 'b');
-
-        $barCollection = new BarCollection([$bar1, $bar2]);
-
-        $this->expectException(ValueExtractionException::class);
-        $this->expectExceptionMessage('Method or property "unknown" not defined in Ramsey\Collection\Test\Mock\Bar');
-
-        $barCollection->sort('unknown');
-    }
-
-    public function testUnknownSortOrderShouldRaiseException()
-    {
-        $barCollection = new BarCollection();
-
-        $this->expectException(InvalidSortOrderException::class);
-        $this->expectExceptionMessage('Invalid sort order given: bar');
-        $barCollection->sort('fu', 'bar');
-    }
-
-    public function testFilter()
-    {
-        $bar1 = new Bar(1, 'a');
-        $bar2 = new Bar(2, 'b');
-        $barCollection = new BarCollection([$bar1, $bar2]);
-
-        $filteredCollection = $barCollection->filter(function ($item) {
-            return $item->name === 'a';
-        });
-
-        $this->assertNotSame($barCollection, $filteredCollection);
-        $this->assertEquals([$bar1], $filteredCollection->toArray());
-    }
-
-    public function testWhereWithTypeSafePropertyValue()
-    {
-        $bar1 = new Bar(1, 'a');
-        $bar2 = new Bar(2, 'b');
-        $barCollection = new BarCollection([$bar1, $bar2]);
-
-        $whereCollection = $barCollection->where('name', 'b');
-
-        $this->assertNotSame($barCollection, $whereCollection);
-        $this->assertEquals([$bar2], $whereCollection->toArray());
-    }
-
-    public function testWhereWithTypeUnsafePropertyValue()
-    {
-        $bar1 = new Bar(1, 'a');
-        $bar2 = new Bar(2, 'b');
-        $barCollection = new BarCollection([$bar1, $bar2]);
-
-        $whereCollection = $barCollection->where('id', '1');
-
-        $this->assertNotSame($barCollection, $whereCollection);
-        $this->assertEquals([], $whereCollection->toArray());
-    }
-
-    public function testWhereWithTypeSafeMethodValue()
-    {
-        $bar1 = new Bar(1, 'a');
-        $bar2 = new Bar(2, 'b');
-        $barCollection = new BarCollection([$bar1, $bar2]);
-
-        $whereCollection = $barCollection->where('getName', 'b');
-
-        $this->assertNotSame($barCollection, $whereCollection);
-        $this->assertEquals([$bar2], $whereCollection->toArray());
-    }
-
-    public function testMapShouldRunOverEachItem()
-    {
-        $bar1 = $this->prophesize(Bar::class);
-        $bar1->getName()->shouldBeCalled();
-        $bar2 = $this->prophesize(Bar::class);
-        $bar2->getName()->shouldBeCalled();
-
-        $barCollection = new BarCollection([$bar1->reveal(), $bar2->reveal()]);
-
-        $mapCollection = $barCollection->map(function (Bar $item) {
-            $item->getName();
-        });
-
-        $this->assertNotSame($barCollection, $mapCollection);
-    }
-
-    public function testDiffShouldRaiseExceptionOnDiverseCollections()
-    {
-        $barCollection = new BarCollection();
-
-        $this->expectException(DiverseCollectionException::class);
-        $this->expectExceptionMessage('Collection must be of type Ramsey\Collection\Test\Mock\BarCollection');
-
-        $barCollection->diff(new FooCollection());
-    }
-
-    public function testDiff()
-    {
-        $bar1 = new Bar(1, 'a');
-        $bar2 = new Bar(2, 'b');
-
-        $barCollection1 = new BarCollection([$bar1]);
-        $barCollection2 = new BarCollection([$bar1, $bar2]);
-
-        $diffCollection = $barCollection1->diff($barCollection2);
-
-        $this->assertNotSame($diffCollection, $barCollection1);
-        $this->assertNotSame($diffCollection, $barCollection2);
-        $this->assertEquals([$bar2], $diffCollection->toArray());
-    }
-
-    public function testIntersectShouldRaiseExceptionOnDiverseCollections()
-    {
-        $barCollection = new BarCollection();
-
-        $this->expectException(DiverseCollectionException::class);
-        $this->expectExceptionMessage('Collection must be of type Ramsey\Collection\Test\Mock\BarCollection');
-
-        $barCollection->intersect(new FooCollection());
-    }
-
-    public function testIntersect()
-    {
-        $bar1 = new Bar(1, 'a');
-        $bar2 = new Bar(2, 'b');
-
-        $barCollection1 = new BarCollection([$bar1]);
-        $barCollection2 = new BarCollection([$bar1, $bar2]);
-
-        $intersectCollection = $barCollection1->intersect($barCollection2);
-
-        $this->assertNotSame($intersectCollection, $barCollection1);
-        $this->assertNotSame($intersectCollection, $barCollection2);
-        $this->assertEquals([$bar1], $intersectCollection->toArray());
-    }
-
-    public function testUniqueByObject()
-    {
-        $bar1 = new Bar(1, 'a');
-        $bar2 = new Bar(2, 'b');
-
-        $barCollection = new BarCollection([$bar1, $bar2, $bar1]);
-
-        $uniqueCollection = $barCollection->unique();
-        $this->assertNotSame($uniqueCollection, $barCollection);
-        $this->assertEquals([$bar1, $bar2], $uniqueCollection->toArray());
-    }
-
-    public function testUniqueByProperty()
-    {
-        $bar1 = new Bar(1, 'a');
-        $bar2 = new Bar(2, 'b');
-        $bar3 = new Bar(3, 'b');
-
-        $barCollection = new BarCollection([$bar1, $bar2, $bar3]);
-
-        $uniqueCollection = $barCollection->unique('name');
-        $this->assertNotSame($uniqueCollection, $barCollection);
-        $this->assertEquals([$bar1, $bar2], $uniqueCollection->toArray());
-    }
-
-    public function testUniqueByMethod()
-    {
-        $bar1 = new Bar(1, 'a');
-        $bar2 = new Bar(2, 'b');
-        $bar3 = new Bar(1, 'c');
-
-        $barCollection = new BarCollection([$bar1, $bar2, $bar3]);
-
-        $uniqueCollection = $barCollection->unique('getId');
-        $this->assertNotSame($uniqueCollection, $barCollection);
-        $this->assertEquals([$bar1, $bar2], $uniqueCollection->toArray());
-    }
-
-    public function testUniqueEmptyData()
-    {
-        $barCollection = new BarCollection();
-
-        $this->assertNotSame($barCollection->unique(), $barCollection);
-    }
-
-    public function testMergeShouldRaiseExceptionOnDiverseCollection()
-    {
-        $barCollection = new BarCollection();
-
-        $this->expectException(DiverseCollectionException::class);
-        $this->expectExceptionMessage(
-            'Collection with index 1 must be of type Ramsey\Collection\Test\Mock\BarCollection'
-        );
-
-        $barCollection->merge(new BarCollection(), new FooCollection());
-    }
-
-    public function testMerge()
-    {
-        $bar1 = new Bar(1, 'a');
-        $bar2 = new Bar(2, 'b');
-        $bar3 = new Bar(3, 'c');
-
-        $barCollection1 = new BarCollection([$bar1]);
-        $barCollection2 = new BarCollection([$bar2]);
-        $barCollection3 = new BarCollection([$bar3]);
-
-        $mergeCollection = $barCollection1->merge($barCollection2, $barCollection3);
-        $this->assertNotSame($mergeCollection, $barCollection1);
-        $this->assertEquals([$bar1, $bar2, $bar3], $mergeCollection->toArray());
     }
 }
