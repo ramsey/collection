@@ -204,7 +204,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     /**
      * @inheritDoc
      */
-    public function merge(...$collections): CollectionInterface
+    public function merge(CollectionInterface ...$collections): CollectionInterface
     {
         $temp = [$this->data];
 

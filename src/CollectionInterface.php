@@ -172,10 +172,9 @@ interface CollectionInterface extends ArrayInterface
     /**
      * Merge current items and items of given collections into a new one
      *
-     * @param CollectionInterface[] ...$collections
+     * @param CollectionInterface ...$collections
      *
      * @return CollectionInterface
-     * @throws DiverseCollectionException Raised if one of the collection is not of same type
      */
-    public function merge(...$collections): self;
+    public function merge(CollectionInterface ...$collections): self;
 }
