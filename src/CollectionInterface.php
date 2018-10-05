@@ -170,16 +170,6 @@ interface CollectionInterface extends ArrayInterface
     public function intersect(CollectionInterface $other): self;
 
     /**
-     * Create a new collection with unique items.
-     *
-     * @param string|null $propertyOrMethod [Optional] If given, the property or method is used to declare uniqueness.
-     *                                      Otherwise object equality is used.
-     *
-     * @return CollectionInterface
-     */
-    public function unique(string $propertyOrMethod = null): self;
-
-    /**
      * Merge current items and items of given collections into a new one
      *
      * @param CollectionInterface[] ...$collections

@@ -204,33 +204,6 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     /**
      * @inheritDoc
      */
-    public function unique(string $propertyOrMethod = null): CollectionInterface
-    {
-        $temp = [];
-
-        if ($propertyOrMethod === null) {
-            foreach ($this->data as $item) {
-                if (!\in_array($item, $temp, true)) {
-                    $temp[] = $item;
-                }
-            }
-
-            return new static($temp);
-        }
-
-        foreach ($this->data as $item) {
-            $itemValue = $this->extractValue($item, $propertyOrMethod);
-            if (!\array_key_exists($itemValue, $temp)) {
-                $temp[$itemValue] = $item;
-            }
-        }
-
-        return new static(array_values($temp));
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function merge(...$collections): CollectionInterface
     {
         $temp = [$this->data];
