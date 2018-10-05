@@ -92,9 +92,9 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             throw new OutOfBoundsException('Can\'t determine first item. Collection is empty');
         }
 
-        $temp = array_merge([], $this->data);
+        reset($this->data);
 
-        return array_shift($temp);
+        return current($this->data);
     }
 
     /**
@@ -106,9 +106,10 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             throw new OutOfBoundsException('Can\'t determine last item. Collection is empty');
         }
 
-        $temp = array_merge([], $this->data);
+        $item = end($this->data);
+        reset($this->data);
 
-        return array_pop($temp);
+        return $item;
     }
 
     /**
