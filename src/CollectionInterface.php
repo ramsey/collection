@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace Ramsey\Collection;
 
-use Ramsey\Collection\Exception\DiverseCollectionException;
+use Ramsey\Collection\Exception\CollectionMismatchException;
 use Ramsey\Collection\Exception\InvalidSortOrderException;
 use Ramsey\Collection\Exception\ValueExtractionException;
 
@@ -155,7 +155,7 @@ interface CollectionInterface extends ArrayInterface
      * @param CollectionInterface $other
      *
      * @return CollectionInterface
-     * @throws DiverseCollectionException Raised if given collection is not of same type
+     * @throws CollectionMismatchException Raised if given collection is not of same type
      */
     public function diff(CollectionInterface $other): self;
 
@@ -165,7 +165,7 @@ interface CollectionInterface extends ArrayInterface
      * @param CollectionInterface $other
      *
      * @return CollectionInterface
-     * @throws DiverseCollectionException Raised if given collection is not of same type
+     * @throws CollectionMismatchException Raised if given collection is not of same type
      */
     public function intersect(CollectionInterface $other): self;
 

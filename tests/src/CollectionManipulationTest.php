@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Ramsey\Collection\Test;
 
-use Ramsey\Collection\Exception\DiverseCollectionException;
+use Ramsey\Collection\Exception\CollectionMismatchException;
 use Ramsey\Collection\Exception\InvalidSortOrderException;
 use Ramsey\Collection\Exception\ValueExtractionException;
 use Ramsey\Collection\Test\Mock\Bar;
@@ -181,7 +181,7 @@ class CollectionManipulationTest extends TestCase
     {
         $barCollection = new BarCollection();
 
-        $this->expectException(DiverseCollectionException::class);
+        $this->expectException(CollectionMismatchException::class);
         $this->expectExceptionMessage('Collection must be of type Ramsey\Collection\Test\Mock\BarCollection');
 
         $barCollection->diff(new FooCollection());
@@ -209,7 +209,7 @@ class CollectionManipulationTest extends TestCase
     {
         $barCollection = new BarCollection();
 
-        $this->expectException(DiverseCollectionException::class);
+        $this->expectException(CollectionMismatchException::class);
         $this->expectExceptionMessage('Collection must be of type Ramsey\Collection\Test\Mock\BarCollection');
 
         $barCollection->intersect(new FooCollection());
@@ -237,7 +237,7 @@ class CollectionManipulationTest extends TestCase
     {
         $barCollection = new BarCollection();
 
-        $this->expectException(DiverseCollectionException::class);
+        $this->expectException(CollectionMismatchException::class);
         $this->expectExceptionMessage(
             'Collection with index 1 must be of type Ramsey\Collection\Test\Mock\BarCollection'
         );

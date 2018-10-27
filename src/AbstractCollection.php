@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace Ramsey\Collection;
 
-use Ramsey\Collection\Exception\DiverseCollectionException;
+use Ramsey\Collection\Exception\CollectionMismatchException;
 use Ramsey\Collection\Exception\InvalidSortOrderException;
 use Ramsey\Collection\Exception\OutOfBoundsException;
 use Ramsey\Collection\Tool\TypeTrait;
@@ -173,7 +173,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     public function diff(CollectionInterface $other): CollectionInterface
     {
         if (!$other instanceof static) {
-            throw new DiverseCollectionException('Collection must be of type ' . static::class);
+            throw new CollectionMismatchException('Collection must be of type ' . static::class);
         }
 
         $comparator = function ($a, $b) {
@@ -192,7 +192,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     public function intersect(CollectionInterface $other): CollectionInterface
     {
         if (!$other instanceof static) {
-            throw new DiverseCollectionException('Collection must be of type ' . static::class);
+            throw new CollectionMismatchException('Collection must be of type ' . static::class);
         }
 
         $intersect = array_uintersect($this->data, $other->data, function ($a, $b) {
@@ -211,7 +211,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
 
         foreach ($collections as $index => $collection) {
             if (!$collection instanceof static) {
-                throw new DiverseCollectionException(
+                throw new CollectionMismatchException(
                     sprintf('Collection with index %d must be of type %s', $index, static::class)
                 );
             }
