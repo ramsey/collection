@@ -5,11 +5,11 @@ labels: bug
 assignees:
 ---
 
-### Describe the bug
+## Describe the bug
 
 A clear and concise description of what the bug is.
 
-### To Reproduce...
+## To Reproduce...
 
 Steps to reproduce the behavior (include code examples, if applicable):
 
@@ -36,20 +36,20 @@ Steps to reproduce the behavior (include code examples, if applicable):
     Error message or wrong output...
     ```
 
-### Expected behavior
+## Expected behavior
 
 A clear and concise description of what you expected to happen.
 
-### Screenshots or output
+## Screenshots or output
 
 If applicable, add screenshots or program output to help explain your problem.
 
-### Environment details
+## Environment details
 
  - OS: [e.g. Windows 10, Linux (Ubuntu 18.04.1), macOS Mojave (10.14.2)]
  - PHP version: [e.g. 7.1.25, 7.2.13]
  - ramsey/collection version: [e.g. 1.0.0, 1.0.1, 1.1.0]
 
-### Additional context
+## Additional context
 
 Add any other context about the problem here.
