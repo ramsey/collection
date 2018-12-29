@@ -1,6 +1,6 @@
 {
     "name": "ramsey/collection",
-    "description": "A collections framework for representing and manipulating collections.",
+    "description": "A PHP 7.2+ library for representing and manipulating collections.",
     "type": "library",
     "keywords": ["array", "collection", "hash", "map"],
     "homepage": "https://github.com/ramsey/collection",
@@ -9,7 +9,7 @@
         {
             "name": "Ben Ramsey",
             "email": "ben@benramsey.com",
-            "homepage": "http://benramsey.com"
+            "homepage": "https://benramsey.com"
         }
     ],
     "support": {
