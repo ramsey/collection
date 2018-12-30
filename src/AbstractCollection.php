@@ -221,4 +221,12 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
 
         return new static(array_merge(...$temp));
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function unserialize($serialized): void
+    {
+        $this->data = unserialize($serialized, ['allowed_classes' => [$this->getType()]]);
+    }
 }

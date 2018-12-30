@@ -124,7 +124,7 @@ abstract class AbstractArray implements ArrayInterface
      */
     public function unserialize($serialized): void
     {
-        $this->data = unserialize($serialized);
+        $this->data = unserialize($serialized, ['allowed_classes' => false]);
     }
 
     /**

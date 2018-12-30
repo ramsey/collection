@@ -211,4 +211,19 @@ class CollectionTest extends TestCase
         // Make sure the collection stays unchanged
         $this->assertEquals([$bar1, $bar2, $bar3], $barCollection->toArray());
     }
+
+    public function testSerializable()
+    {
+        $bar1 = new Bar(1, 'a');
+        $bar2 = new Bar(2, 'b');
+        $bar3 = new Bar(3, 'c');
+        $barCollection = new BarCollection([$bar1, $bar2, $bar3]);
+
+        $collectionSerialized = serialize($barCollection);
+        $barCollection2 = unserialize($collectionSerialized);
+
+        $this->assertInstanceOf(BarCollection::class, $barCollection2);
+        $this->assertContainsOnlyInstancesOf(Bar::class, $barCollection2);
+        $this->assertEquals($barCollection, $barCollection2);
+    }
 }
