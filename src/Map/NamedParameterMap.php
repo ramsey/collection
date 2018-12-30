@@ -97,6 +97,6 @@ class NamedParameterMap extends AbstractMap
             }
         }
 
-        return array_combine($names, $types);
+        return array_combine($names, $types) ?: [];
     }
 }

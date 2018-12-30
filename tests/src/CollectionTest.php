@@ -4,6 +4,10 @@ declare(strict_types=1);
 namespace Ramsey\Collection\Test;
 
 use Ramsey\Collection\Collection;
+use Ramsey\Collection\Exception\OutOfBoundsException;
+use Ramsey\Collection\Exception\ValueExtractionException;
+use Ramsey\Collection\Test\Mock\Bar;
+use Ramsey\Collection\Test\Mock\BarCollection;
 use Ramsey\Collection\Test\Mock\Foo;
 use Ramsey\Collection\Test\Mock\FooCollection;
 
@@ -12,21 +16,21 @@ use Ramsey\Collection\Test\Mock\FooCollection;
  */
 class CollectionTest extends TestCase
 {
-    public function testContructorSetsType()
+    public function testConstructorSetsType(): void
     {
         $collection = new Collection('string');
 
         $this->assertEquals('string', $collection->getType());
     }
 
-    public function testContructorWithData()
+    public function testConstructorWithData(): void
     {
         $collection = new Collection('string', ['foo', 'bar']);
 
         $this->assertCount(2, $collection);
     }
 
-    public function testOffsetSet()
+    public function testOffsetSet(): void
     {
         $collection = new Collection('integer');
         $collection[] = $this->faker->numberBetween();
@@ -38,14 +42,14 @@ class CollectionTest extends TestCase
         $collection[] = $this->faker->text();
     }
 
-    public function testAdd()
+    public function testAdd(): void
     {
         $collection = new Collection('integer');
 
         $this->assertTrue($collection->add($this->faker->numberBetween()));
     }
 
-    public function testAddMayAddSameObjectMultipleTimes()
+    public function testAddMayAddSameObjectMultipleTimes(): void
     {
         $expectedCount = 4;
 
@@ -69,7 +73,7 @@ class CollectionTest extends TestCase
         $this->assertCount($expectedCount, $collection2);
     }
 
-    public function testContains()
+    public function testContains(): void
     {
         $name = $this->faker->name();
 
@@ -87,7 +91,7 @@ class CollectionTest extends TestCase
         $this->assertFalse($collection->contains($obj2));
     }
 
-    public function testContainsNonStrict()
+    public function testContainsNonStrict(): void
     {
         $name = $this->faker->name();
 
@@ -105,7 +109,7 @@ class CollectionTest extends TestCase
         $this->assertTrue($collection->contains($obj2, false));
     }
 
-    public function testRemove()
+    public function testRemove(): void
     {
         $obj1 = new \stdClass();
         $obj1->name = $this->faker->name();
@@ -123,7 +127,7 @@ class CollectionTest extends TestCase
         $this->assertFalse($collection->remove($obj1));
     }
 
-    public function testSubclassBehavior()
+    public function testSubclassBehavior(): void
     {
         $fooCollection = new FooCollection();
 
@@ -134,5 +138,77 @@ class CollectionTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Value must be of type ' . Foo::class);
         $fooCollection[] = new \stdClass();
+    }
+
+    public function testColumnByProperty(): void
+    {
+        $bar1 = new Bar(1, 'a');
+        $bar2 = new Bar(2, 'b');
+        $bar3 = new Bar(3, 'c');
+        $barCollection = new BarCollection([$bar1, $bar2, $bar3]);
+
+        $this->assertEquals(['a', 'b', 'c'], $barCollection->column('name'));
+    }
+
+    public function testColumnByMethod(): void
+    {
+        $bar1 = new Bar(1, 'a');
+        $bar2 = new Bar(2, 'b');
+        $bar3 = new Bar(3, 'c');
+        $barCollection = new BarCollection([$bar1, $bar2, $bar3]);
+
+        $this->assertEquals([1, 2, 3], $barCollection->column('getId'));
+    }
+
+    public function testColumnShouldRaiseExceptionOnUndefinedPropertyOrMethod(): void
+    {
+        $bar1 = new Bar(1, 'a');
+        $barCollection = new BarCollection([$bar1]);
+
+        $this->expectException(ValueExtractionException::class);
+        $this->expectExceptionMessage('Method or property "fu" not defined in Ramsey\Collection\Test\Mock\Bar');
+        $barCollection->column('fu');
+    }
+
+    public function testFirstShouldRaiseExceptionOnEmptyCollection(): void
+    {
+        $barCollection = new BarCollection();
+
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage('Can\'t determine first item. Collection is empty');
+        $barCollection->first();
+    }
+
+    public function testFirst(): void
+    {
+        $bar1 = new Bar(1, 'a');
+        $bar2 = new Bar(2, 'b');
+        $bar3 = new Bar(3, 'c');
+        $barCollection = new BarCollection([$bar1, $bar2, $bar3]);
+
+        $this->assertSame($bar1, $barCollection->first());
+        // Make sure the collection stays unchanged
+        $this->assertEquals([$bar1, $bar2, $bar3], $barCollection->toArray());
+    }
+
+    public function testLastShouldRaiseExceptionOnEmptyCollection(): void
+    {
+        $barCollection = new BarCollection();
+
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage('Can\'t determine last item. Collection is empty');
+        $barCollection->last();
+    }
+
+    public function testLast(): void
+    {
+        $bar1 = new Bar(1, 'a');
+        $bar2 = new Bar(2, 'b');
+        $bar3 = new Bar(3, 'c');
+        $barCollection = new BarCollection([$bar1, $bar2, $bar3]);
+
+        $this->assertSame($bar3, $barCollection->last());
+        // Make sure the collection stays unchanged
+        $this->assertEquals([$bar1, $bar2, $bar3], $barCollection->toArray());
     }
 }
