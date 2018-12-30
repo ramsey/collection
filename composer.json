@@ -34,7 +34,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Ramsey\\Collection\\Test\\": "tests/src/"
+            "Ramsey\\Collection\\Test\\": "tests/"
         }
     },
     "scripts": {
