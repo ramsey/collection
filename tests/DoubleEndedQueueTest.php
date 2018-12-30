@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Ramsey\Collection\Test;
 
 use Ramsey\Collection\DoubleEndedQueue;
+use Ramsey\Collection\Exception\InvalidArgumentException;
 use Ramsey\Collection\Exception\NoSuchElementException;
 
 /**
@@ -46,7 +47,7 @@ class DoubleEndedQueueTest extends TestCase
     {
         $queue = $this->queue('string');
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Value must be of type string; value is 42');
         $queue->addFirst(42);
     }

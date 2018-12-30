@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Ramsey\Collection\Map;
 
+use Ramsey\Collection\Exception\InvalidArgumentException;
 use Ramsey\Collection\Tool\TypeTrait;
 use Ramsey\Collection\Tool\ValueToStringTrait;
 
@@ -31,13 +32,13 @@ abstract class AbstractTypedMap extends AbstractMap implements TypedMapInterface
     public function offsetSet($offset, $value): void
     {
         if (false === $this->checkType($this->getKeyType(), $offset)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Key must be of type ' . $this->getKeyType() . '; key is '
                 . $this->toolValueToString($offset)
             );
         }
         if (false === $this->checkType($this->getValueType(), $value)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Value must be of type ' . $this->getValueType() . '; value is '
                 . $this->toolValueToString($value)
             );

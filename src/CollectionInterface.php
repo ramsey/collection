@@ -17,7 +17,9 @@ declare(strict_types=1);
 namespace Ramsey\Collection;
 
 use Ramsey\Collection\Exception\CollectionMismatchException;
+use Ramsey\Collection\Exception\InvalidArgumentException;
 use Ramsey\Collection\Exception\InvalidSortOrderException;
+use Ramsey\Collection\Exception\UnsupportedOperationException;
 use Ramsey\Collection\Exception\ValueExtractionException;
 
 /**
@@ -50,6 +52,8 @@ interface CollectionInterface extends ArrayInterface
      *
      * @param mixed $element
      * @return bool true if this collection changed as a result of the call
+     * @throws InvalidArgumentException
+     * @throws UnsupportedOperationException
      */
     public function add($element): bool;
 

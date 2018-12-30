@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Ramsey\Collection;
 
 use Ramsey\Collection\Exception\CollectionMismatchException;
+use Ramsey\Collection\Exception\InvalidArgumentException;
 use Ramsey\Collection\Exception\InvalidSortOrderException;
 use Ramsey\Collection\Exception\OutOfBoundsException;
 use Ramsey\Collection\Tool\TypeTrait;
@@ -48,7 +49,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     public function offsetSet($offset, $value): void
     {
         if ($this->checkType($this->getType(), $value) === false) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Value must be of type ' . $this->getType() . '; value is '
                 . $this->toolValueToString($value)
             );

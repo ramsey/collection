@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Ramsey\Collection\Test\Map;
 
+use Ramsey\Collection\Exception\InvalidArgumentException;
 use Ramsey\Collection\Map\AssociativeArrayMap;
 use Ramsey\Collection\Test\Mock\Foo;
 use Ramsey\Collection\Test\TestCase;
@@ -16,7 +17,7 @@ class AssociativeArrayMapTest extends TestCase
     {
         $associativeArrayMapObject = new AssociativeArrayMap();
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Map elements are key/value pairs; a key must be provided for value 123');
         $associativeArrayMapObject[] = 123;
     }
@@ -97,7 +98,7 @@ class AssociativeArrayMapTest extends TestCase
     {
         $associativeArrayMapObject = new AssociativeArrayMap();
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Map elements are key/value pairs; a key must be provided for value 123');
         $previousValue = $associativeArrayMapObject->put(null, 123);
     }
@@ -121,7 +122,7 @@ class AssociativeArrayMapTest extends TestCase
     {
         $associativeArrayMapObject = new AssociativeArrayMap();
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Map elements are key/value pairs; a key must be provided for value 123');
         $previousValue = $associativeArrayMapObject->putIfAbsent(null, 123);
     }

@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Ramsey\Collection;
 
+use Ramsey\Collection\Exception\InvalidArgumentException;
 use Ramsey\Collection\Exception\NoSuchElementException;
 use Ramsey\Collection\Tool\TypeTrait;
 use Ramsey\Collection\Tool\ValueToStringTrait;
@@ -47,7 +48,7 @@ class Queue extends AbstractArray implements QueueInterface
     public function offsetSet($offset, $value): void
     {
         if ($this->checkType($this->getType(), $value) === false) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Value must be of type ' . $this->getType() . '; value is '
                 . $this->toolValueToString($value)
             );

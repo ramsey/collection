@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Ramsey\Collection\Map;
 
 use Ramsey\Collection\AbstractArray;
+use Ramsey\Collection\Exception\InvalidArgumentException;
 
 /**
  * This class provides an implementation of the MapInterface, to
@@ -27,7 +28,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
     public function offsetSet($offset, $value): void
     {
         if ($offset === null) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Map elements are key/value pairs; a key must be provided for '
                 . 'value ' . $value
             );

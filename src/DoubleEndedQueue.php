@@ -14,6 +14,7 @@
 
 namespace Ramsey\Collection;
 
+use Ramsey\Collection\Exception\InvalidArgumentException;
 use Ramsey\Collection\Exception\NoSuchElementException;
 
 class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
@@ -26,7 +27,7 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
     public function offsetSet($offset, $value): void
     {
         if ($this->checkType($this->getType(), $value) === false) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Value must be of type ' . $this->getType() . '; value is '
                 . $this->toolValueToString($value)
             );
@@ -61,7 +62,7 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
     public function addFirst($element): bool
     {
         if ($this->checkType($this->getType(), $element) === false) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Value must be of type ' . $this->getType() . '; value is '
                 . $this->toolValueToString($element)
             );

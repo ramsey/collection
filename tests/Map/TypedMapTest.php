@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Ramsey\Collection\Test\Map;
 
+use Ramsey\Collection\Exception\InvalidArgumentException;
 use Ramsey\Collection\Map\TypedMap;
 use Ramsey\Collection\Map\TypedMapInterface;
 use Ramsey\Collection\Test\TestCase;
@@ -39,7 +40,7 @@ class TypedMapTest extends TestCase
     {
         $map = new TypedMap('string', 'mixed');
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Key must be of type string; key is');
         $map[9] = 'foo';
     }
@@ -55,7 +56,7 @@ class TypedMapTest extends TestCase
     {
         $map = new TypedMap('mixed', 'string');
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Value must be of type string; value is');
         $map['foo'] = 9;
     }

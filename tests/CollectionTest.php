@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Ramsey\Collection\Test;
 
 use Ramsey\Collection\Collection;
+use Ramsey\Collection\Exception\InvalidArgumentException;
 use Ramsey\Collection\Exception\OutOfBoundsException;
 use Ramsey\Collection\Exception\ValueExtractionException;
 use Ramsey\Collection\Test\Mock\Bar;
@@ -37,7 +38,7 @@ class CollectionTest extends TestCase
 
         // Ensure that an exception is thrown when attempting to add
         // an invalid type for this collection
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Value must be of type integer');
         $collection[] = $this->faker->text();
     }
@@ -135,7 +136,7 @@ class CollectionTest extends TestCase
         $fooCollection[] = new Foo();
         $fooCollection[] = new Foo();
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Value must be of type ' . Foo::class);
         $fooCollection[] = new \stdClass();
     }

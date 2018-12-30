@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Ramsey\Collection\Test\Map;
 
+use Ramsey\Collection\Exception\InvalidArgumentException;
 use Ramsey\Collection\Map\NamedParameterMap;
 use Ramsey\Collection\Test\Mock\Foo;
 use Ramsey\Collection\Test\TestCase;
@@ -87,7 +88,7 @@ class NamedParameterMapTest extends TestCase
     {
         $namedParameterMap = new NamedParameterMap(['foo']);
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Attempting to set value for unconfigured parameter \'bar\'');
         $namedParameterMap['bar'] = 123;
     }
@@ -96,7 +97,7 @@ class NamedParameterMapTest extends TestCase
     {
         $namedParameterMap = new NamedParameterMap(['foo' => 'int']);
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Value for \'foo\' must be of type int');
         $namedParameterMap['foo'] = $this->faker->text();
     }
@@ -105,7 +106,7 @@ class NamedParameterMapTest extends TestCase
     {
         $namedParameterMap = new NamedParameterMap(['foo' => 'int']);
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Value for \'foo\' must be of type int');
         $namedParameterMap['foo'] = new \DateTime();
     }

@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Ramsey\Collection\Map;
 
+use Ramsey\Collection\Exception\InvalidArgumentException;
 use Ramsey\Collection\Tool\TypeTrait;
 use Ramsey\Collection\Tool\ValueToStringTrait;
 
@@ -58,14 +59,14 @@ class NamedParameterMap extends AbstractMap
     public function offsetSet($offset, $value): void
     {
         if (!array_key_exists($offset, $this->namedParameters)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Attempting to set value for unconfigured parameter \''
                 . $offset . '\''
             );
         }
 
         if ($this->checkType($this->namedParameters[$offset], $value) === false) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Value for \'' . $offset . '\' must be of type '
                 . $this->namedParameters[$offset] . '; value is '
                 . $this->toolValueToString($value)
