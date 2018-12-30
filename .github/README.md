@@ -43,12 +43,12 @@ The ramsey/collection library is copyright © [Ben Ramsey](https://benramsey.com
 
 
 
-[conduct]: https://github.com/ramsey/collection/blob/master/CODE_OF_CONDUCT.md
+[conduct]: https://github.com/ramsey/collection/blob/master/.github/CODE_OF_CONDUCT.md
 [java]: http://docs.oracle.com/javase/8/docs/technotes/guides/collections/index.html
 [packagist]: https://packagist.org/packages/ramsey/collection
 [composer]: http://getcomposer.org/
 [apidocs]: http://docs.benramsey.com/ramsey-collection/latest/
-[contributing]: https://github.com/ramsey/collection/blob/master/CONTRIBUTING.md
+[contributing]: https://github.com/ramsey/collection/blob/master/.github/CONTRIBUTING.md
 
 [badge-source]: http://img.shields.io/badge/source-ramsey/collection-blue.svg?style=flat-square
 [badge-release]: https://img.shields.io/github/release/ramsey/collection.svg?style=flat-square
