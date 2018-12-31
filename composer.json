@@ -2,7 +2,7 @@
     "name": "ramsey/collection",
     "description": "A PHP 7.2+ library for representing and manipulating collections.",
     "type": "library",
-    "keywords": ["array", "collection", "hash", "map"],
+    "keywords": ["array", "collection", "hash", "map", "queue", "set"],
     "homepage": "https://github.com/ramsey/collection",
     "license": "MIT",
     "authors": [
