@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-
 /**
  * This file is part of the ramsey/collection library
  *
@@ -9,32 +7,34 @@ declare(strict_types=1);
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://benramsey.com/projects/ramsey-collection/ Documentation
- * @link https://packagist.org/packages/ramsey/collection Packagist
  * @link https://github.com/ramsey/collection GitHub
  */
+
+declare(strict_types=1);
 
 namespace Ramsey\Collection\Map;
 
 use Ramsey\Collection\Tool\TypeTrait;
 
 /**
- * A `TypedMap` represent a Map of elements where key and value are typed.
+ * A `TypedMap` represents a map of elements where key and value are typed.
  *
- * Each element is identified by a key with defined type and a value of defined type.
- * The keys of the map must be unique. The values on the map can be repeated but each
- * with its own different key.
+ * Each element is identified by a key with defined type and a value of defined
+ * type. The keys of the map must be unique. The values on the map can be=
+ * repeated but each with its own different key.
  *
- * The most common case is to use a string type key. But it's not limited to this type if keys.
+ * The most common case is to use a string type key, but it's not limited to
+ * this type of keys.
  *
- * This is a direct implementation of `TypedMapInterface`, provided for the sake of convenience.
+ * This is a direct implementation of `TypedMapInterface`, provided for the sake
+ * of convenience.
  *
  * Example usage:
  *
  * ```php
  * $map = new TypedMap('string', Foo::class);
  * $map['x'] = new Foo();
- * foreach($map as $key => $value) {
+ * foreach ($map as $key => $value) {
  *     // do something with $key, it will be a Foo::class
  * }
  *
@@ -50,15 +50,15 @@ use Ramsey\Collection\Tool\TypeTrait;
  * ]);
  * ```
  *
- * It is preferable to subclass `AbstractTypedMap`
- * to create your own typed map implementation
+ * It is preferable to subclass `AbstractTypedMap` to create your own typed map
+ * implementation:
  *
  * ```php
  * class FooTypedMap extends AbstractTypedMap
  * {
  *     public function getKeyType()
  *     {
- *         return "int"
+ *         return 'int';
  *     }
  *
  *     public function getValueType()
@@ -68,53 +68,49 @@ use Ramsey\Collection\Tool\TypeTrait;
  * }
  * ```
  *
- * ... but it is not limited, you also can use the `TypedMap` class
+ * … but you also may use the `TypedMap` class:
  *
  * ```php
  * class FooTypedMap extends TypedMap
  * {
  *     public function __constructor(array $data = [])
  *     {
- *         parent::__construct("int", Foo::class, $data);
+ *         parent::__construct('int', Foo::class, $data);
  *     }
  * }
  * ```
- *
- *
- * @package Ramsey\Collection\Map
  */
 class TypedMap extends AbstractTypedMap
 {
-
     use TypeTrait;
 
     /**
-     * The type of keys stored in this collection
+     * The data type of keys stored in this collection.
      *
      * A map key's type is immutable once it is set. For this reason, this
-     * property is set private
+     * property is set private.
      *
-     * @var string type of the map key
+     * @var string data type of the map key.
      */
     private $keyType;
 
     /**
-     * The type of values stored in this collection
+     * The data type of values stored in this collection.
      *
      * A map values's type is immutable once it is set. For this reason, this
-     * property is set private
+     * property is set private.
      *
-     * @var string type of the map value
+     * @var string data type of the map value.
      */
     private $valueType;
 
     /**
      * Constructs a map object of the specified key and value types,
-     * optionally with the specified data
+     * optionally with the specified data.
      *
-     * @param string $keyType
-     * @param string $valueType
-     * @param array $data
+     * @param string $keyType The data type of the map's keys.
+     * @param string $valueType The data type of the map's values.
+     * @param array $data The initial data to set for this map.
      */
     public function __construct(string $keyType, string $valueType, array $data = [])
     {
@@ -123,11 +119,21 @@ class TypedMap extends AbstractTypedMap
         parent::__construct($data);
     }
 
+    /**
+     * Return the type used on the key.
+     *
+     * @return string
+     */
     public function getKeyType(): string
     {
         return $this->keyType;
     }
-    
+
+    /**
+     * Return the type forced on the values.
+     *
+     * @return string
+     */
     public function getValueType(): string
     {
         return $this->valueType;

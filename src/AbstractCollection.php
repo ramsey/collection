@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-
 /**
  * This file is part of the ramsey/collection library
  *
@@ -9,10 +7,10 @@ declare(strict_types=1);
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://benramsey.com/projects/ramsey-collection/ Documentation
- * @link https://packagist.org/packages/ramsey/collection Packagist
  * @link https://github.com/ramsey/collection GitHub
  */
+
+declare(strict_types=1);
 
 namespace Ramsey\Collection;
 
@@ -20,12 +18,13 @@ use Ramsey\Collection\Exception\CollectionMismatchException;
 use Ramsey\Collection\Exception\InvalidArgumentException;
 use Ramsey\Collection\Exception\InvalidSortOrderException;
 use Ramsey\Collection\Exception\OutOfBoundsException;
+use Ramsey\Collection\Exception\ValueExtractionException;
 use Ramsey\Collection\Tool\TypeTrait;
 use Ramsey\Collection\Tool\ValueExtractorTrait;
 use Ramsey\Collection\Tool\ValueToStringTrait;
 
 /**
- * This class provides an implementation of the CollectionInterface, to
+ * This class provides a basic implementation of `CollectionInterface`, to
  * minimize the effort required to implement this interface
  */
 abstract class AbstractCollection extends AbstractArray implements CollectionInterface
@@ -34,6 +33,16 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     use ValueToStringTrait;
     use ValueExtractorTrait;
 
+    /**
+     * Ensures that this collection contains the specified element.
+     *
+     * @param mixed $element The element to add to the collection.
+     *
+     * @return bool `true` if this collection changed as a result of the call.
+     *
+     * @throws InvalidArgumentException when the element does not match the
+     *     specified type for this collection.
+     */
     public function add($element): bool
     {
         $this[] = $element;
@@ -41,11 +50,28 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         return true;
     }
 
+    /**
+     * Returns `true` if this collection contains the specified element.
+     *
+     * @param mixed $element The element to check whether the collection contains.
+     * @param bool $strict Whether to perform a strict type check on the value.
+     *
+     * @return bool
+     */
     public function contains($element, bool $strict = true): bool
     {
         return \in_array($element, $this->data, $strict);
     }
 
+    /**
+     * Sets the given value to the given offset in the array.
+     *
+     * @param mixed|null $offset The offset is ignored and is treated as `null`.
+     * @param mixed $value The value to set at the given offset.
+     *
+     * @throws InvalidArgumentException when the value does not match the
+     *     specified type for this collection.
+     */
     public function offsetSet($offset, $value): void
     {
         if ($this->checkType($this->getType(), $value) === false) {
@@ -58,11 +84,18 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         $this->data[] = $value;
     }
 
+    /**
+     * Removes a single instance of the specified element from this collection,
+     * if it is present.
+     *
+     * @param mixed $element The element to remove from the collection.
+     *
+     * @return bool `true` if an element was removed as a result of this call.
+     */
     public function remove($element): bool
     {
         if (($position = array_search($element, $this->data, true)) !== false) {
             unset($this->data[$position]);
-
 
             return true;
         }
@@ -71,7 +104,13 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
-     * @inheritDoc
+     * Returns the values from given property or method.
+     *
+     * @param string $propertyOrMethod The property or method name to filter by.
+     *
+     * @return array
+     *
+     * @throws ValueExtractionException if property or method is not defined.
      */
     public function column(string $propertyOrMethod): array
     {
@@ -85,7 +124,11 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
-     * @inheritDoc
+     * Returns the first item of the collection.
+     *
+     * @return mixed
+     *
+     * @throws OutOfBoundsException when the collection is empty.
      */
     public function first()
     {
@@ -99,7 +142,11 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
-     * @inheritDoc
+     * Returns the last item of the collection.
+     *
+     * @return mixed
+     *
+     * @throws OutOfBoundsException when the collection is empty.
      */
     public function last()
     {
@@ -114,7 +161,19 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
-     * @inheritDoc
+     * Returns a sorted collection.
+     *
+     * {@inheritdoc}
+     *
+     * @param string $propertyOrMethod The property or method to sort by.
+     * @param string $order The sort order for the resulting collection (one of
+     *     this interface's `SORT_*` constants).
+     *
+     * @return self
+     *
+     * @throws InvalidSortOrderException if neither "asc" nor "desc" was given
+     *     as the order.
+     * @throws ValueExtractionException if property or method is not defined.
      */
     public function sort(string $propertyOrMethod, string $order = self::SORT_ASC): CollectionInterface
     {
@@ -135,7 +194,13 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
-     * @inheritDoc
+     * Returns a filtered collection.
+     *
+     * {@inheritdoc}
+     *
+     * @param callable $callback A callable to use for filtering elements.
+     *
+     * @return self
      */
     public function filter(callable $callback): CollectionInterface
     {
@@ -146,7 +211,16 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
-     * @inheritDoc
+     * Returns a collection of matching items.
+     *
+     * {@inheritdoc}
+     *
+     * @param string $propertyOrMethod The property or method to evaluate.
+     * @param mixed  $value The value to match.
+     *
+     * @return self
+     *
+     * @throws ValueExtractionException if property or method is not defined.
      */
     public function where(string $propertyOrMethod, $value): CollectionInterface
     {
@@ -158,7 +232,14 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
-     * @inheritDoc
+     * Applies a callback to each item of the collection.
+     *
+     * {@inheritdoc}
+     *
+     * @param callable $callback A callable to apply to each item of the
+     *     collection.
+     *
+     * @return self
      */
     public function map(callable $callback): CollectionInterface
     {
@@ -169,7 +250,16 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
-     * @inheritDoc
+     * Create a new collection with divergent items between current and given
+     * collection.
+     *
+     * @param CollectionInterface $other The collection to check for divergent
+     *     items.
+     *
+     * @return self
+     *
+     * @throws CollectionMismatchException if the given collection is not of the
+     *     same type.
      */
     public function diff(CollectionInterface $other): CollectionInterface
     {
@@ -188,7 +278,16 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
-     * @inheritDoc
+     * Create a new collection with intersecting item between current and given
+     * collection.
+     *
+     * @param CollectionInterface $other The collection to check for
+     *     intersecting items.
+     *
+     * @return self
+     *
+     * @throws CollectionMismatchException if the given collection is not of the
+     *     same type.
      */
     public function intersect(CollectionInterface $other): CollectionInterface
     {
@@ -204,7 +303,13 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
-     * @inheritDoc
+     * Merge current items and items of given collections into a new one.
+     *
+     * @param CollectionInterface ...$collections The collections to merge.
+     *
+     * @return self
+     *
+     * @throws CollectionMismatchException if any of the given collections are not of the same type.
      */
     public function merge(CollectionInterface ...$collections): CollectionInterface
     {
@@ -224,7 +329,9 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
-     * @inheritDoc
+     * Converts a serialized string representation into an instance object.
+     *
+     * @param string $serialized A PHP serialized string to unserialize.
      */
     public function unserialize($serialized): void
     {

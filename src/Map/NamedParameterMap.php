@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-
 /**
  * This file is part of the ramsey/collection library
  *
@@ -9,10 +7,10 @@ declare(strict_types=1);
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://benramsey.com/projects/ramsey-collection/ Documentation
- * @link https://packagist.org/packages/ramsey/collection Packagist
  * @link https://github.com/ramsey/collection GitHub
  */
+
+declare(strict_types=1);
 
 namespace Ramsey\Collection\Map;
 
@@ -21,7 +19,7 @@ use Ramsey\Collection\Tool\TypeTrait;
 use Ramsey\Collection\Tool\ValueToStringTrait;
 
 /**
- * NamedParameterMap represents a mapping of values to a set of named keys
+ * `NamedParameterMap` represents a mapping of values to a set of named keys
  * that may optionally be typed
  */
 class NamedParameterMap extends AbstractMap
@@ -30,15 +28,17 @@ class NamedParameterMap extends AbstractMap
     use ValueToStringTrait;
 
     /**
+     * Named parameters defined for this map.
+     *
      * @var array
      */
     protected $namedParameters;
 
     /**
-     * Constructs a new NamedParameterMap object
+     * Constructs a new `NamedParameterMap`.
      *
-     * @param array $namedParameters The named parameters supported
-     * @param array $data
+     * @param array $namedParameters The named parameters defined for this map.
+     * @param array $data An initial set of data to set on this map.
      */
     public function __construct(array $namedParameters, array $data = [])
     {
@@ -47,7 +47,7 @@ class NamedParameterMap extends AbstractMap
     }
 
     /**
-     * Returns named parameters set for this NamedParameterMap
+     * Returns named parameters set for this `NamedParameterMap`.
      *
      * @return array
      */
@@ -56,6 +56,16 @@ class NamedParameterMap extends AbstractMap
         return $this->namedParameters;
     }
 
+    /**
+     * Sets the given value to the given offset in the map.
+     *
+     * @param mixed $offset The offset to set.
+     * @param mixed $value The value to set at the given offset.
+     *
+     * @throws InvalidArgumentException if the offset provided is not a
+     *     defined named parameter, or if the value is not of the type defined
+     *     for the given named parameter.
+     */
     public function offsetSet($offset, $value): void
     {
         if (!array_key_exists($offset, $this->namedParameters)) {
@@ -78,9 +88,10 @@ class NamedParameterMap extends AbstractMap
 
     /**
      * Given an array of named parameters, constructs a proper mapping of
-     * named parameters to types
+     * named parameters to types.
      *
-     * @param array $namedParameters
+     * @param array $namedParameters The named parameters to filter.
+     *
      * @return array
      */
     protected function filterNamedParameters(array $namedParameters): array

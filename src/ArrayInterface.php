@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-
 /**
  * This file is part of the ramsey/collection library
  *
@@ -9,34 +7,36 @@ declare(strict_types=1);
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://benramsey.com/projects/ramsey-collection/ Documentation
- * @link https://packagist.org/packages/ramsey/collection Packagist
  * @link https://github.com/ramsey/collection GitHub
  */
+
+declare(strict_types=1);
 
 namespace Ramsey\Collection;
 
 /**
- * Implementing this interface allows an object to be the target of the
- * "for-each loop" statement
+ * `ArrayInterface` provides traversable array functionality to data types.
  */
-interface ArrayInterface extends \IteratorAggregate, \ArrayAccess, \Serializable, \Countable
+interface ArrayInterface extends
+    \ArrayAccess,
+    \Countable,
+    \IteratorAggregate,
+    \Serializable
 {
     /**
-     * Remove all the elements from this array object
-     *
-     * @return void
+     * Removes all items from this array.
      */
     public function clear(): void;
 
     /**
-     * Returns a native PHP array containing all of the elements in this array
-     * object
+     * Returns a native PHP array representation of this array object.
+     *
+     * @return array
      */
     public function toArray(): array;
 
     /**
-     * Returns `true` if this array object contains no elements
+     * Returns `true` if this array is empty.
      *
      * @return bool
      */

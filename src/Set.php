@@ -1,14 +1,26 @@
 <?php
+/**
+ * This file is part of the ramsey/collection library
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
+ * @license http://opensource.org/licenses/MIT MIT
+ * @link https://github.com/ramsey/collection GitHub
+ */
+
 declare(strict_types=1);
 
 namespace Ramsey\Collection;
 
 /**
- * A Set is a Collection that contains no duplicate elements.
+ * A set is a collection that contains no duplicate elements.
  *
  * Great care must be exercised if mutable objects are used as set elements.
- * The behavior of a Set is not specified if the value of an object is changed in a manner
- * that affects equals comparisons while the object is an element in the set.
+ * The behavior of a set is not specified if the value of an object is changed
+ * in a manner that affects equals comparisons while the object is an element in
+ * the set.
  *
  * Example usage:
  *
@@ -28,18 +40,18 @@ class Set extends AbstractSet
     /**
      * The type of elements stored in this set
      *
-     * A set's type is immutable. For this reason, this property is private
+     * A set's type is immutable. For this reason, this property is private.
      *
      * @var string
      */
     private $setType;
 
     /**
-     * Constructs a Set object of the specified type,
-     * optionally with the specified data
+     * Constructs a set object of the specified type, optionally with the
+     * specified data.
      *
-     * @param string $setType
-     * @param array $data
+     * @param string $setType The type (FQCN) associated with this set.
+     * @param array $data The initial items to store in the set.
      */
     public function __construct(string $setType, array $data = [])
     {
@@ -48,7 +60,7 @@ class Set extends AbstractSet
     }
 
     /**
-     * Returns the type associated with this set
+     * Returns the type associated with this set.
      *
      * @return string
      */

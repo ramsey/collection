@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-
 /**
  * This file is part of the ramsey/collection library
  *
@@ -9,10 +7,10 @@ declare(strict_types=1);
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://benramsey.com/projects/ramsey-collection/ Documentation
- * @link https://packagist.org/packages/ramsey/collection Packagist
  * @link https://github.com/ramsey/collection GitHub
  */
+
+declare(strict_types=1);
 
 namespace Ramsey\Collection\Tool;
 
@@ -22,18 +20,19 @@ namespace Ramsey\Collection\Tool;
 trait ValueToStringTrait
 {
     /**
-     * Return a string with the information of the value
-     * null value: NULL
-     * boolean: TRUE, FALSE
-     * array: Array
-     * scalar: converted-value
-     * resource: (type resource #number)
-     * object with __toString(): result of __toString()
-     * object DateTime: ISO 8601 date
-     * object: (className Object)
-     * anonymous function: same as object
+     * Returns a string representation of the value.
      *
-     * @param mixed $value
+     * - null value: `'NULL'`
+     * - boolean: `'TRUE'`, `'FALSE'`
+     * - array: `'Array'`
+     * - scalar: converted-value
+     * - resource: `'(type resource #number)'`
+     * - object with `__toString()`: result of `__toString()`
+     * - object DateTime: ISO 8601 date
+     * - object: `'(className Object)'`
+     * - anonymous function: same as object
+     *
+     * @param mixed $value the value to return as a string.
      * @return string
      */
     protected function toolValueToString($value): string

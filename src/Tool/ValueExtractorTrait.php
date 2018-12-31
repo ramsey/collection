@@ -1,19 +1,38 @@
 <?php
+/**
+ * This file is part of the ramsey/collection library
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
+ * @license http://opensource.org/licenses/MIT MIT
+ * @link https://github.com/ramsey/collection GitHub
+ */
+
 declare(strict_types=1);
 
 namespace Ramsey\Collection\Tool;
 
 use Ramsey\Collection\Exception\ValueExtractionException;
 
+/**
+ * Provides functionality to extract the value of a property or method from an object.
+ */
 trait ValueExtractorTrait
 {
     /**
-     * @param mixed  $object
-     * @param string $propertyOrMethod
+     * Extracts the value of the given property or method from the object.
      *
-     * @return mixed
+     * @param object $object The object to extract the value from.
+     * @param string $propertyOrMethod The property or method for which the
+     *     value should be extracted.
+     *
+     * @return mixed the value extracted from the specified property or method.
+     *
+     * @throws ValueExtractionException if the method or property is not defined.
      */
-    protected function extractValue($object, string $propertyOrMethod)
+    protected function extractValue(object $object, string $propertyOrMethod)
     {
         if (\property_exists($object, $propertyOrMethod)) {
             return $object->$propertyOrMethod;

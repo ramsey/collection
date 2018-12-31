@@ -45,12 +45,12 @@ class AssociativeArrayMapTest extends TestCase
     public function testKeys()
     {
         $associativeArrayMapObject = new AssociativeArrayMap();
-        
+
         // empty map returns empty array
         $this->assertEquals([], $associativeArrayMapObject->keys());
         $associativeArrayMapObject['foo'] = null;
         $associativeArrayMapObject['bar'] = 321;
-        
+
         // array with key-value entries return array containing keys
         $this->assertEquals(['foo', 'bar'], $associativeArrayMapObject->keys());
     }

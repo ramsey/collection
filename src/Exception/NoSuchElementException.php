@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-
 /**
  * This file is part of the ramsey/collection library
  *
@@ -9,14 +7,16 @@ declare(strict_types=1);
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://benramsey.com/projects/ramsey-collection/ Documentation
- * @link https://packagist.org/packages/ramsey/collection Packagist
  * @link https://github.com/ramsey/collection GitHub
  */
 
+declare(strict_types=1);
+
 namespace Ramsey\Collection\Exception;
 
+/**
+ * Thrown when attempting to access an element that does not exist.
+ */
 class NoSuchElementException extends \RuntimeException
 {
-
 }

@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-
 /**
  * This file is part of the ramsey/collection library
  *
@@ -9,29 +7,28 @@ declare(strict_types=1);
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://benramsey.com/projects/ramsey-collection/ Documentation
- * @link https://packagist.org/packages/ramsey/collection Packagist
  * @link https://github.com/ramsey/collection GitHub
  */
+
+declare(strict_types=1);
 
 namespace Ramsey\Collection\Map;
 
 /**
- * A `TypedMap` represent a Map of elements where key and value are typed.
- *
- * @package Ramsey\Collection\Map
+ * A `TypedMapInterface` represents a map of elements where key and value are
+ * typed.
  */
 interface TypedMapInterface extends MapInterface
 {
     /**
-     * Return the type used on the key
+     * Return the type used on the key.
      *
      * @return string
      */
     public function getKeyType(): string;
 
     /**
-     * Return the type forced on the values
+     * Return the type forced on the values.
      *
      * @return string
      */

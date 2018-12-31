@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-
 /**
  * This file is part of the ramsey/collection library
  *
@@ -9,10 +7,10 @@ declare(strict_types=1);
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://benramsey.com/projects/ramsey-collection/ Documentation
- * @link https://packagist.org/packages/ramsey/collection Packagist
  * @link https://github.com/ramsey/collection GitHub
  */
+
+declare(strict_types=1);
 
 namespace Ramsey\Collection;
 
@@ -21,30 +19,60 @@ use Ramsey\Collection\Exception\NoSuchElementException;
 use Ramsey\Collection\Tool\TypeTrait;
 use Ramsey\Collection\Tool\ValueToStringTrait;
 
+/**
+ * This class provides a basic implementation of `QueueInterface`, to minimize
+ * the effort required to implement this interface.
+ */
 class Queue extends AbstractArray implements QueueInterface
 {
     use TypeTrait;
     use ValueToStringTrait;
 
     /**
+     * The type of elements stored in this queue.
+     *
+     * A queue's type is immutable once it is set. For this reason, this
+     * property is set private.
+     *
      * @var string
      */
     private $queueType;
 
     /**
+     * The index of the head of the queue.
+     *
      * @var int
      */
     protected $index = 0;
 
     /**
-     * Queue constructor.
+     * Constructs a queue object of the specified type, optionally with the
+     * specified data.
+     *
+     * @param string $queueType The type (FQCN) associated with this queue.
+     * @param array $data The initial items to store in the collection.
      */
-    public function __construct($type, array $data = [])
+    public function __construct(string $queueType, array $data = [])
     {
-        $this->queueType = $type;
+        $this->queueType = $queueType;
         parent::__construct($data);
     }
 
+    /**
+     * Sets the given value to the given offset in the queue.
+     *
+     * Since arbitrary offsets may not be manipulated in a queue, this method
+     * serves only to fulfill the `ArrayAccess` interface requirements. It is
+     * invoked by other operations when adding values to the queue.
+     *
+     * @param mixed|null $offset The offset is ignored and is treated as `null`.
+     * @param mixed $value The value to set at the given offset.
+     *
+     * @throws InvalidArgumentException when the value does not match the
+     *     specified type for this queue.
+     *
+     * @link http://php.net/manual/en/arrayaccess.offsetset.php ArrayAccess::offsetSet()
+     */
     public function offsetSet($offset, $value): void
     {
         if ($this->checkType($this->getType(), $value) === false) {
@@ -58,25 +86,19 @@ class Queue extends AbstractArray implements QueueInterface
     }
 
     /**
-     * Ensures that this queue contains the specified element (optional
-     * operation). Returns true if this queue changed as a result of the
-     * call. (Returns false if this queue does not permit duplicates and
-     * already contains the specified element.)
+     * Ensures that this queue contains the specified element.
      *
-     * Queues that support this operation may place limitations on what
-     * elements may be added to this queue. In particular, some
-     * queues will refuse to add null elements, and others will impose
-     * restrictions on the type of elements that may be added. Queue
-     * classes should clearly specify in their documentation any restrictions
-     * on what elements may be added.
+     * This method differs from `offer()` only in that it throws an exception if
+     * it cannot add the element to the queue.
      *
-     * If a queue refuses to add a particular element for any reason other
-     * than that it already contains the element, it must throw an exception
-     * (rather than returning false). This preserves the invariant that a
-     * queue always contains the specified element after this call returns.
+     * @param mixed $element The element to add to this queue.
      *
-     * @param mixed $element
-     * @return bool true if this queue changed as a result of the call
+     * @return bool `true` if this queue changed as a result of the call.
+     *
+     * @throws InvalidArgumentException when the element does not match the
+     *     specified type for this queue.
+     *
+     * @see self::offer()
      */
     public function add($element): bool
     {
@@ -86,11 +108,16 @@ class Queue extends AbstractArray implements QueueInterface
     }
 
     /**
-     * Retrieves, but does not remove, the head of this queue. This method
-     * differs from peek only in that it throws an exception if this queue is empty.
+     * Retrieves, but does not remove, the head of this queue.
      *
-     * @return mixed the head of this queue
-     * @throws NoSuchElementException
+     * This method differs from `peek()` only in that it throws an exception if
+     * this queue is empty.
+     *
+     * @return mixed the head of this queue.
+     *
+     * @throws NoSuchElementException if this queue is empty.
+     *
+     * @see self::peek()
      */
     public function element()
     {
@@ -104,26 +131,33 @@ class Queue extends AbstractArray implements QueueInterface
     }
 
     /**
-     * Inserts the specified element into this queue if it is possible to do so
-     * immediately without violating capacity restrictions. When using a
-     * capacity-restricted queue, this method is generally preferable to add(E),
-     * which can fail to insert an element only by throwing an exception.
+     * Inserts the specified element into this queue.
      *
-     * @param mixed $element
-     * @return bool true if the element was added to this queue, else false
+     * This method differs from `add()` only in that it does not throw an
+     * exception if it cannot add the element to the queue.
+     *
+     * @param mixed $element The element to add to this queue.
+     *
+     * @return bool `true` if the element was added to this queue, else `false`.
+     *
+     * @see self::add()
      */
     public function offer($element): bool
     {
-        $this[] = $element;
-
-        return true;
+        try {
+            return $this->add($element);
+        } catch (InvalidArgumentException $e) {
+            return false;
+        }
     }
 
     /**
-     * Retrieves, but does not remove, the head of this queue, or returns null
+     * Retrieves, but does not remove, the head of this queue, or returns `null`
      * if this queue is empty.
      *
-     * @return mixed the head of this queue, or null if this queue is empty
+     * @return mixed|null the head of this queue, or `null` if this queue is empty.
+     *
+     * @see self::element()
      */
     public function peek()
     {
@@ -135,10 +169,12 @@ class Queue extends AbstractArray implements QueueInterface
     }
 
     /**
-     * Retrieves and removes the head of this queue, or returns null
+     * Retrieves and removes the head of this queue, or returns `null`
      * if this queue is empty.
      *
-     * @return mixed the head of this queue, or null if this queue is empty
+     * @return mixed|null the head of this queue, or `null` if this queue is empty.
+     *
+     * @see self::remove()
      */
     public function poll()
     {
@@ -155,18 +191,23 @@ class Queue extends AbstractArray implements QueueInterface
     }
 
     /**
-     * Retrieves and removes the head of this queue. This method differs
-     * from poll only in that it throws an
-     * exception if this queue is empty.
+     * Retrieves and removes the head of this queue.
      *
-     * @return mixed the head of this queue
-     * @throws NoSuchElementException
+     * This method differs from `poll()` only in that it throws an exception if
+     * this queue is empty.
+     *
+     * @return mixed the head of this queue.
+     *
+     * @throws NoSuchElementException if this queue is empty.
+     *
+     * @see self::poll()
      */
     public function remove()
     {
         if ($this->count() === 0) {
             throw new NoSuchElementException('Can\'t return element from Queue. Queue is empty.');
         }
+
         $head = $this[$this->index];
 
         unset($this[$this->index]);
@@ -176,7 +217,7 @@ class Queue extends AbstractArray implements QueueInterface
     }
 
     /**
-     * Returns the type associated with this collection
+     * Returns the type associated with this queue.
      *
      * @return string
      */

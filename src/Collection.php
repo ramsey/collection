@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-
 /**
  * This file is part of the ramsey/collection library
  *
@@ -9,18 +7,19 @@ declare(strict_types=1);
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://benramsey.com/projects/ramsey-collection/ Documentation
- * @link https://packagist.org/packages/ramsey/collection Packagist
  * @link https://github.com/ramsey/collection GitHub
  */
+
+declare(strict_types=1);
 
 namespace Ramsey\Collection;
 
 /**
- * A collection represents a group of objects. Each object in the collection
- * is of a specific, defined type.
+ * A collection represents a group of objects.
  *
- * This is a direct implementation of CollectionInterface, provided for
+ * Each object in the collection is of a specific, defined type.
+ *
+ * This is a direct implementation of `CollectionInterface`, provided for
  * the sake of convenience.
  *
  * Example usage:
@@ -35,7 +34,7 @@ namespace Ramsey\Collection;
  * }
  * ```
  *
- * It is preferable to subclass AbstractCollection to create your own typed
+ * It is preferable to subclass `AbstractCollection` to create your own typed
  * collections. For example:
  *
  * ``` php
@@ -74,30 +73,31 @@ namespace Ramsey\Collection;
 class Collection extends AbstractCollection
 {
     /**
-     * The type of elements stored in this collection
+     * The type of elements stored in this collection.
      *
      * A collection's type is immutable once it is set. For this reason, this
-     * property is set private
+     * property is set private.
      *
      * @var string
      */
     private $collectionType;
 
     /**
-     * Constructs a collection object of the specified type,
-     * optionally with the specified data
+     * Constructs a collection object of the specified type, optionally with the
+     * specified data.
      *
-     * @param string $collectionType
-     * @param array $data
+     * @param string $collectionType The type (FQCN) associated with this
+     *     collection.
+     * @param array $data The initial items to store in the collection.
      */
-    public function __construct($collectionType, array $data = [])
+    public function __construct(string $collectionType, array $data = [])
     {
         $this->collectionType = $collectionType;
         parent::__construct($data);
     }
 
     /**
-     * Returns the type associated with this collection
+     * Returns the type associated with this collection.
      *
      * @return string
      */

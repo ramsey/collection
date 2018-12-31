@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-
 /**
  * This file is part of the ramsey/collection library
  *
@@ -9,65 +7,69 @@ declare(strict_types=1);
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://benramsey.com/projects/ramsey-collection/ Documentation
- * @link https://packagist.org/packages/ramsey/collection Packagist
  * @link https://github.com/ramsey/collection GitHub
  */
 
+declare(strict_types=1);
+
 namespace Ramsey\Collection;
 
-use Ramsey\Collection\Exception\CollectionMismatchException;
-use Ramsey\Collection\Exception\InvalidArgumentException;
-use Ramsey\Collection\Exception\InvalidSortOrderException;
-use Ramsey\Collection\Exception\UnsupportedOperationException;
-use Ramsey\Collection\Exception\ValueExtractionException;
-
 /**
- * A collection represents a group of objects, known as its elements. Some
- * collections allow duplicate elements and others do not. Some are ordered and
- * others unordered.
+ * A collection represents a group of objects, known as its elements.
+ *
+ * Some collections allow duplicate elements and others do not. Some are ordered
+ * and others unordered.
  */
 interface CollectionInterface extends ArrayInterface
 {
+    /**
+     * Ascending sort type.
+     */
     public const SORT_ASC = 'asc';
+
+    /**
+     * Descending sort type.
+     */
     public const SORT_DESC = 'desc';
 
     /**
      * Ensures that this collection contains the specified element (optional
-     * operation). Returns true if this collection changed as a result of the
-     * call. (Returns false if this collection does not permit duplicates and
+     * operation).
+     *
+     * Returns `true` if this collection changed as a result of the call.
+     * (Returns `false` if this collection does not permit duplicates and
      * already contains the specified element.)
      *
      * Collections that support this operation may place limitations on what
      * elements may be added to this collection. In particular, some
-     * collections will refuse to add null elements, and others will impose
+     * collections will refuse to add `null` elements, and others will impose
      * restrictions on the type of elements that may be added. Collection
      * classes should clearly specify in their documentation any restrictions
      * on what elements may be added.
      *
      * If a collection refuses to add a particular element for any reason other
      * than that it already contains the element, it must throw an exception
-     * (rather than returning false). This preserves the invariant that a
+     * (rather than returning `false`). This preserves the invariant that a
      * collection always contains the specified element after this call returns.
      *
-     * @param mixed $element
-     * @return bool true if this collection changed as a result of the call
-     * @throws InvalidArgumentException
-     * @throws UnsupportedOperationException
+     * @param mixed $element The element to add to the collection.
+     *
+     * @return bool `true` if this collection changed as a result of the call.
      */
     public function add($element): bool;
 
     /**
-     * Returns `true` if this collection contains the specified element
+     * Returns `true` if this collection contains the specified element.
      *
-     * @param mixed $element
+     * @param mixed $element The element to check whether the collection contains.
      * @param bool $strict Whether to perform a strict type check on the value.
+     *
      * @return bool
      */
     public function contains($element, bool $strict = true): bool;
 
     /**
-     * Returns the type associated with this collection
+     * Returns the type associated with this collection.
      *
      * @return string
      */
@@ -75,110 +77,124 @@ interface CollectionInterface extends ArrayInterface
 
     /**
      * Removes a single instance of the specified element from this collection,
-     * if it is present
+     * if it is present.
      *
-     * @param mixed $element
-     * @return bool true if an element was removed as a result of this call
+     * @param mixed $element The element to remove from the collection.
+     *
+     * @return bool `true` if an element was removed as a result of this call.
      */
     public function remove($element): bool;
 
     /**
-     * Return the values from given property or method
+     * Returns the values from the given property or method.
      *
-     * @param string $propertyOrMethod
+     * @param string $propertyOrMethod The property or method name to filter by.
      *
      * @return array
-     * @throws ValueExtractionException Raised if property of method is not defined
      */
     public function column(string $propertyOrMethod): array;
 
     /**
-     * Return the first item of the collection
+     * Returns the first item of the collection.
      *
      * @return mixed
      */
     public function first();
 
     /**
-     * Returns the last item of the collection
+     * Returns the last item of the collection.
      *
      * @return mixed
      */
     public function last();
 
     /**
-     * Sort the collection by property or method with given sort order
+     * Sort the collection by a property or method with the given sort order.
      *
-     * This will always leave the original collection untouched and will return a new one.
+     * This will always leave the original collection untouched and will return
+     * a new one.
      *
-     * @param string $propertyOrMethod
-     * @param string $order
+     * @param string $propertyOrMethod The property or method to sort by.
+     * @param string $order The sort order for the resulting collection (one of
+     *     this interface's `SORT_*` constants).
      *
-     * @return CollectionInterface
-     * @throws InvalidSortOrderException Raised if neither ASC nor DESC was given
+     * @return self
      */
     public function sort(string $propertyOrMethod, string $order = self::SORT_ASC): self;
 
     /**
-     * Filter out items of the collection which don't math the criteria of given callback.
+     * Filter out items of the collection which don't match the criteria of
+     * given callback.
      *
-     * This will always leave the original collection untouched and will return a new one.
+     * This will always leave the original collection untouched and will return
+     * a new one.
      *
-     * @param callable $callback
+     * See the {@link http://php.net/manual/en/function.array-filter.php PHP array_filter() documentation}
+     * for examples of how the `$callback` parameter works.
      *
-     * @return CollectionInterface
+     * @param callable $callback A callable to use for filtering elements.
+     *
+     * @return self
      */
     public function filter(callable $callback): self;
 
     /**
-     * Create a new collection where items match the criteria of given callback
+     * Create a new collection where items match the criteria of given callback.
      *
-     * This will always leave the original collection untouched and will return a new one.
+     * This will always leave the original collection untouched and will return
+     * a new one.
      *
-     * @param string $propertyOrMethod
-     * @param mixed  $value
+     * @param string $propertyOrMethod The property or method to evaluate.
+     * @param mixed  $value The value to match.
      *
-     * @return CollectionInterface
+     * @return self
      */
     public function where(string $propertyOrMethod, $value): self;
 
     /**
-     * Apply a given callback method on each item of the collection
+     * Apply a given callback method on each item of the collection.
      *
-     * This will always leave the original collection untouched and will return a new one.
+     * This will always leave the original collection untouched and will return
+     * a new one.
      *
-     * @param callable $callback
+     * See the {@link http://php.net/manual/en/function.array-map.php PHP array_map() documentation}
+     * for examples of how the `$callback` parameter works.
      *
-     * @return CollectionInterface
+     * @param callable $callback A callable to apply to each item of the
+     *     collection.
+     *
+     * @return self
      */
     public function map(callable $callback): self;
 
     /**
-     * Create a new collection with divergent items between current and given collection
+     * Create a new collection with divergent items between current and given
+     * collection.
      *
-     * @param CollectionInterface $other
+     * @param CollectionInterface $other The collection to check for divergent
+     *     items.
      *
-     * @return CollectionInterface
-     * @throws CollectionMismatchException Raised if given collection is not of same type
+     * @return self
      */
     public function diff(CollectionInterface $other): self;
 
     /**
-     * Create a new collection with intersecting item between current and given collection
+     * Create a new collection with intersecting item between current and given
+     * collection.
      *
-     * @param CollectionInterface $other
+     * @param CollectionInterface $other The collection to check for
+     *     intersecting items.
      *
-     * @return CollectionInterface
-     * @throws CollectionMismatchException Raised if given collection is not of same type
+     * @return self
      */
     public function intersect(CollectionInterface $other): self;
 
     /**
-     * Merge current items and items of given collections into a new one
+     * Merge current items and items of given collections into a new one.
      *
-     * @param CollectionInterface ...$collections
+     * @param CollectionInterface ...$collections The collections to merge.
      *
-     * @return CollectionInterface
+     * @return self
      */
     public function merge(CollectionInterface ...$collections): self;
 }
