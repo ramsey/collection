@@ -28,9 +28,15 @@ composer require ramsey/collection
 ```
 
 
+## API documentation
+
+The [latest class API documentation][apidocs] is available online.
+
+
 ## Examples
 
 Examples of how to use this framework can be found in the [Wiki pages](https://github.com/ramsey/collection/wiki/Examples).
+
 
 ## Contributing
 
@@ -47,7 +53,7 @@ The ramsey/collection library is copyright © [Ben Ramsey](https://benramsey.com
 [java]: http://docs.oracle.com/javase/8/docs/technotes/guides/collections/index.html
 [packagist]: https://packagist.org/packages/ramsey/collection
 [composer]: http://getcomposer.org/
-[apidocs]: http://docs.benramsey.com/ramsey-collection/latest/
+[apidocs]: https://docs.benramsey.com/ramsey-collection/latest/
 [contributing]: https://github.com/ramsey/collection/blob/master/.github/CONTRIBUTING.md
 
 [badge-source]: http://img.shields.io/badge/source-ramsey/collection-blue.svg?style=flat-square
