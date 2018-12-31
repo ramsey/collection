@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Ramsey\Collection\Test;
 
 use Faker\Generator;
-use PHPUnit\Framework\TestCase as PhpUnitTestCase;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
-class TestCase extends PhpUnitTestCase
+class TestCase extends MockeryTestCase
 {
     /** @var Generator */
     protected $faker;

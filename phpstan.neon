@@ -1,2 +1,3 @@
 includes:
 	- vendor/jangregor/phpstan-prophecy/src/extension.neon
+	- vendor/phpstan/phpstan-mockery/extension.neon
