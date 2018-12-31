@@ -239,4 +239,16 @@ class DoubleEndedQueueTest extends TestCase
         $this->assertSame('bar', $deque->firstElement());
         $this->assertSame('yop', $deque->lastElement());
     }
+
+    public function testOfferFirstReturnsFalseOnException()
+    {
+        $element = 'foo';
+
+        $deque = \Mockery::mock(DoubleEndedQueue::class);
+        $deque->shouldReceive('offerFirst')->passthru();
+
+        $deque->expects()->addFirst($element)->andThrow(InvalidArgumentException::class);
+
+        $this->assertFalse($deque->offerFirst($element));
+    }
 }
