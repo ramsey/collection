@@ -213,7 +213,7 @@ class CollectionTest extends TestCase
         $this->assertEquals([$bar1, $bar2, $bar3], $barCollection->toArray());
     }
 
-    public function testSerializable()
+    public function testSerializable(): void
     {
         $bar1 = new Bar(1, 'a');
         $bar2 = new Bar(2, 'b');

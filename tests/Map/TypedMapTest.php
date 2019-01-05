@@ -13,7 +13,7 @@ use Ramsey\Collection\Test\TestCase;
  */
 class TypedMapTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $typed = new TypedMap('int', 'string');
 
@@ -24,7 +24,7 @@ class TypedMapTest extends TestCase
         $this->assertCount(0, $typed);
     }
 
-    public function testConstructorWithValues()
+    public function testConstructorWithValues(): void
     {
         $content = [0 => '0', 1 => '1', 2 => '4', 3 => '8', 4 => '16'];
         $keys = \array_keys($content);
@@ -36,7 +36,7 @@ class TypedMapTest extends TestCase
         }
     }
 
-    public function testConstructorAddWrongKeyType()
+    public function testConstructorAddWrongKeyType(): void
     {
         $map = new TypedMap('string', 'mixed');
 
@@ -45,14 +45,14 @@ class TypedMapTest extends TestCase
         $map[9] = 'foo';
     }
 
-    public function testConstructorAllowAddEmptyKey()
+    public function testConstructorAllowAddEmptyKey(): void
     {
         $map = new TypedMap('string', 'mixed');
         $map[''] = 'foo';
         $this->assertEquals([''], $map->keys());
     }
 
-    public function testConstructorAddWrongValueType()
+    public function testConstructorAddWrongValueType(): void
     {
         $map = new TypedMap('mixed', 'string');
 

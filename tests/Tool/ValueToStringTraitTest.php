@@ -14,30 +14,30 @@ class ValueToStringTraitTest extends TestCase
 
     use ValueToStringTrait;
 
-    public function testValueNull()
+    public function testValueNull(): void
     {
         $this->assertEquals('NULL', $this->toolValueToString(null));
     }
 
-    public function testValueBoolean()
+    public function testValueBoolean(): void
     {
         $this->assertEquals('TRUE', $this->toolValueToString(true));
         $this->assertEquals('FALSE', $this->toolValueToString(false));
     }
 
-    public function testValueArray()
+    public function testValueArray(): void
     {
         $this->assertEquals('Array', $this->toolValueToString([]));
     }
 
-    public function testValueScalar()
+    public function testValueScalar(): void
     {
         $this->assertEquals('', $this->toolValueToString(''));
         $this->assertEquals('foo', $this->toolValueToString('foo'));
         $this->assertEquals('9', $this->toolValueToString(9));
     }
 
-    public function testValueResource()
+    public function testValueResource(): void
     {
         // get_resource_type behaves different on php and hhvm
         $resource = \opendir(__DIR__);
@@ -46,12 +46,12 @@ class ValueToStringTraitTest extends TestCase
         $this->assertEquals($expected, $this->toolValueToString($resource));
     }
 
-    public function testValueObjectWithToString()
+    public function testValueObjectWithToString(): void
     {
         $this->assertEquals('BAZ', $this->toolValueToString(new Mock\ObjectWithToString()));
     }
 
-    public function testValueDateTime()
+    public function testValueDateTime(): void
     {
         // datetimes are objects but are returned as iso dates, not as generic objects
         $expected = '2016-12-31T23:59:59+00:00';
@@ -59,7 +59,7 @@ class ValueToStringTraitTest extends TestCase
         $this->assertEquals($expected, $this->toolValueToString($date));
     }
 
-    public function testValueObject()
+    public function testValueObject(): void
     {
         $expected = '(stdClass Object)';
 
@@ -69,7 +69,7 @@ class ValueToStringTraitTest extends TestCase
         $this->assertEquals($expected, $casted);
     }
 
-    public function testValueClosure()
+    public function testValueClosure(): void
     {
         // do not return a message like 'callable', cast it as object
         $startWith = '(Closure';
@@ -84,7 +84,7 @@ class ValueToStringTraitTest extends TestCase
         $this->assertStringEndsWith($endsWith, $casted);
     }
 
-    public function testValueObjectWithInvoke()
+    public function testValueObjectWithInvoke(): void
     {
         // the object has a public __invoke method, is detected as callable
         // do not return a message like 'callable', cast it as object
