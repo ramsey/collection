@@ -220,8 +220,8 @@ class CollectionTest extends TestCase
         $bar3 = new Bar(3, 'c');
         $barCollection = new BarCollection([$bar1, $bar2, $bar3]);
 
-        $collectionSerialized = serialize($barCollection);
-        $barCollection2 = unserialize($collectionSerialized);
+        $collectionSerialized = \serialize($barCollection);
+        $barCollection2 = \unserialize($collectionSerialized);
 
         $this->assertInstanceOf(BarCollection::class, $barCollection2);
         $this->assertContainsOnlyInstancesOf(Bar::class, $barCollection2);

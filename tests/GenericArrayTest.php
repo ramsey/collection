@@ -77,8 +77,8 @@ class GenericArrayTest extends TestCase
         $phpArray = ['foo' => 123, 'bar' => 456];
         $genericArrayObject = new GenericArray($phpArray);
 
-        $genericArrayObjectSerialized = serialize($genericArrayObject);
-        $genericArrayObject2 = unserialize($genericArrayObjectSerialized);
+        $genericArrayObjectSerialized = \serialize($genericArrayObject);
+        $genericArrayObject2 = \unserialize($genericArrayObjectSerialized);
 
         $this->assertInstanceOf(\Ramsey\Collection\ArrayInterface::class, $genericArrayObject2);
         $this->assertEquals($genericArrayObject, $genericArrayObject2);
@@ -89,7 +89,7 @@ class GenericArrayTest extends TestCase
         $phpArray = ['foo' => 123, 'bar' => 456];
         $genericArrayObject = new GenericArray($phpArray);
 
-        $this->assertEquals(count($phpArray), count($genericArrayObject));
+        $this->assertCount(\count($phpArray), $genericArrayObject);
     }
 
     public function testClear()

@@ -27,7 +27,7 @@ class TypedMapTest extends TestCase
     public function testConstructorWithValues()
     {
         $content = [0 => '0', 1 => '1', 2 => '4', 3 => '8', 4 => '16'];
-        $keys = array_keys($content);
+        $keys = \array_keys($content);
         $map = new TypedMap('int', 'string', $content);
 
         $this->assertEquals($keys, $map->keys());

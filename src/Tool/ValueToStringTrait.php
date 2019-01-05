@@ -53,13 +53,13 @@ trait ValueToStringTrait
         }
 
         // scalar types (integer, float, string)
-        if (is_scalar($value)) {
+        if (\is_scalar($value)) {
             return (string) $value;
         }
 
         // resource
         if (\is_resource($value)) {
-            return '(' . get_resource_type($value) . ' resource #' . (int)$value . ')';
+            return '(' . \get_resource_type($value) . ' resource #' . (int)$value . ')';
         }
 
         // after this line $value is an object since is not null, scalar, array or resource

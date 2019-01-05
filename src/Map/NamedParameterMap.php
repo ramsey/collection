@@ -68,7 +68,7 @@ class NamedParameterMap extends AbstractMap
      */
     public function offsetSet($offset, $value): void
     {
-        if (!array_key_exists($offset, $this->namedParameters)) {
+        if (!\array_key_exists($offset, $this->namedParameters)) {
             throw new InvalidArgumentException(
                 'Attempting to set value for unconfigured parameter \''
                 . $offset . '\''

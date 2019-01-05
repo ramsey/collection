@@ -66,7 +66,7 @@ class NamedParameterMapTest extends TestCase
         $namedParameterMap['myNumeric'] = "{$this->faker->randomFloat()}";
         $namedParameterMap['myNumeric'] = "{$this->faker->randomNumber()}";
         $namedParameterMap['myObject'] = new \stdClass();
-        $namedParameterMap['myResource'] = fopen('php://memory', 'r');
+        $namedParameterMap['myResource'] = \fopen('php://memory', 'r');
         $namedParameterMap['myScalar'] = $this->faker->name();
         $namedParameterMap['myScalar'] = $this->faker->randomNumber();
         $namedParameterMap['myScalar'] = $this->faker->randomFloat();
@@ -76,7 +76,7 @@ class NamedParameterMapTest extends TestCase
         $namedParameterMap['myMixed'] = $this->faker->randomNumber();
         $namedParameterMap['myMixed'] = new Foo();
         $namedParameterMap['myMixed'] = null;
-        $namedParameterMap['myMixed'] = fopen('php://memory', 'r');
+        $namedParameterMap['myMixed'] = \fopen('php://memory', 'r');
 
         $this->assertEquals(
             $expectedParams,

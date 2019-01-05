@@ -27,6 +27,7 @@
         "phpstan/phpstan": "^0.10.3",
         "phpstan/phpstan-mockery": "^0.10.2",
         "phpunit/phpunit": "^7.3",
+        "slevomat/coding-standard": "^4.0",
         "squizlabs/php_codesniffer": "^3.3"
     },
     "autoload": {
@@ -41,7 +42,7 @@
     },
     "scripts": {
         "lint": "parallel-lint src tests",
-        "phpcs": "phpcs src tests --standard=psr12 -sp --colors",
+        "phpcs": "phpcs src tests -sp --colors",
         "phpstan": [
             "phpstan analyse src -c phpstan.neon --level max --no-progress",
             "phpstan analyse tests -c phpstan.neon --level 4 --no-progress"

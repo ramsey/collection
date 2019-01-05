@@ -205,7 +205,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     public function filter(callable $callback): CollectionInterface
     {
         $collection = clone $this;
-        $collection->data = \array_merge([], array_filter($collection->data, $callback));
+        $collection->data = \array_merge([], \array_filter($collection->data, $callback));
 
         return $collection;
     }
@@ -295,7 +295,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             throw new CollectionMismatchException('Collection must be of type ' . static::class);
         }
 
-        $intersect = array_uintersect($this->data, $other->data, function ($a, $b) {
+        $intersect = \array_uintersect($this->data, $other->data, function ($a, $b) {
             return $a === $b ? 0 : -1;
         });
 
@@ -318,7 +318,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         foreach ($collections as $index => $collection) {
             if (!$collection instanceof static) {
                 throw new CollectionMismatchException(
-                    sprintf('Collection with index %d must be of type %s', $index, static::class)
+                    \sprintf('Collection with index %d must be of type %s', $index, static::class)
                 );
             }
 
