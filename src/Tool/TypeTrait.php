@@ -31,40 +31,40 @@ trait TypeTrait
     {
         switch ($type) {
             case 'array':
-                return is_array($value);
+                return \is_array($value);
 
             case 'bool':
             case 'boolean':
-                return is_bool($value);
+                return \is_bool($value);
 
             case 'callable':
-                return is_callable($value);
+                return \is_callable($value);
 
             case 'float':
             case 'double':
-                return is_float($value);
+                return \is_float($value);
 
             case 'int':
             case 'integer':
-                return is_int($value);
+                return \is_int($value);
 
             case 'null':
-                return is_null($value);
+                return $value === null;
 
             case 'numeric':
-                return is_numeric($value);
+                return \is_numeric($value);
 
             case 'object':
-                return is_object($value);
+                return \is_object($value);
 
             case 'resource':
-                return is_resource($value);
+                return \is_resource($value);
 
             case 'scalar':
-                return is_scalar($value);
+                return \is_scalar($value);
 
             case 'string':
-                return is_string($value);
+                return \is_string($value);
 
             case 'mixed':
                 return true;

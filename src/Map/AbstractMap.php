@@ -52,7 +52,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
      */
     public function containsKey($key): bool
     {
-        return array_key_exists($key, $this->data);
+        return \array_key_exists($key, $this->data);
     }
 
     /**
@@ -66,7 +66,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
      */
     public function containsValue($value): bool
     {
-        return in_array($value, $this->data, true);
+        return \in_array($value, $this->data, true);
     }
 
     /**
@@ -76,7 +76,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
      */
     public function keys(): array
     {
-        return array_keys($this->data);
+        return \array_keys($this->data);
     }
 
     /**
