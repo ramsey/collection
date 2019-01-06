@@ -94,7 +94,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      */
     public function remove($element): bool
     {
-        if (($position = array_search($element, $this->data, true)) !== false) {
+        if (($position = \array_search($element, $this->data, true)) !== false) {
             unset($this->data[$position]);
 
             return true;
@@ -136,9 +136,9 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             throw new OutOfBoundsException('Can\'t determine first item. Collection is empty');
         }
 
-        reset($this->data);
+        \reset($this->data);
 
-        return current($this->data);
+        return \current($this->data);
     }
 
     /**
@@ -154,8 +154,8 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             throw new OutOfBoundsException('Can\'t determine last item. Collection is empty');
         }
 
-        $item = end($this->data);
-        reset($this->data);
+        $item = \end($this->data);
+        \reset($this->data);
 
         return $item;
     }
@@ -183,7 +183,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
 
         $collection = clone $this;
 
-        usort($collection->data, function ($a, $b) use ($propertyOrMethod, $order) {
+        \usort($collection->data, function ($a, $b) use ($propertyOrMethod, $order) {
             $aValue = $this->extractValue($a, $propertyOrMethod);
             $bValue = $this->extractValue($b, $propertyOrMethod);
 
@@ -205,7 +205,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     public function filter(callable $callback): CollectionInterface
     {
         $collection = clone $this;
-        $collection->data = array_merge([], array_filter($collection->data, $callback));
+        $collection->data = \array_merge([], \array_filter($collection->data, $callback));
 
         return $collection;
     }
@@ -244,7 +244,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     public function map(callable $callback): CollectionInterface
     {
         $collection = clone $this;
-        array_map($callback, $collection->data);
+        \array_map($callback, $collection->data);
 
         return $collection;
     }
@@ -271,10 +271,10 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             return $a === $b ? 0 : -1;
         };
 
-        $diffAtoB = array_udiff($this->data, $other->data, $comparator);
-        $diffBtoA = array_udiff($other->data, $this->data, $comparator);
+        $diffAtoB = \array_udiff($this->data, $other->data, $comparator);
+        $diffBtoA = \array_udiff($other->data, $this->data, $comparator);
 
-        return new static(array_merge($diffAtoB, $diffBtoA));
+        return new static(\array_merge($diffAtoB, $diffBtoA));
     }
 
     /**
@@ -295,7 +295,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             throw new CollectionMismatchException('Collection must be of type ' . static::class);
         }
 
-        $intersect = array_uintersect($this->data, $other->data, function ($a, $b) {
+        $intersect = \array_uintersect($this->data, $other->data, function ($a, $b) {
             return $a === $b ? 0 : -1;
         });
 
@@ -318,14 +318,14 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         foreach ($collections as $index => $collection) {
             if (!$collection instanceof static) {
                 throw new CollectionMismatchException(
-                    sprintf('Collection with index %d must be of type %s', $index, static::class)
+                    \sprintf('Collection with index %d must be of type %s', $index, static::class)
                 );
             }
 
             $temp[] = $collection->toArray();
         }
 
-        return new static(array_merge(...$temp));
+        return new static(\array_merge(...$temp));
     }
 
     /**
@@ -335,6 +335,6 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      */
     public function unserialize($serialized): void
     {
-        $this->data = unserialize($serialized, ['allowed_classes' => [$this->getType()]]);
+        $this->data = \unserialize($serialized, ['allowed_classes' => [$this->getType()]]);
     }
 }

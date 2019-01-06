@@ -19,7 +19,7 @@ class QueueTest extends TestCase
         return new Queue($type, $data);
     }
 
-    public function testOfferReturnsFalseOnException()
+    public function testOfferReturnsFalseOnException(): void
     {
         $element = 'foo';
 

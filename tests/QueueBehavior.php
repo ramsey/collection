@@ -11,21 +11,21 @@ trait QueueBehavior
 {
     abstract protected function queue(string $type, array $data = []): QueueInterface;
 
-    public function testConstructorSetsType()
+    public function testConstructorSetsType(): void
     {
         $queue = $this->queue('integer');
 
         $this->assertEquals('integer', $queue->getType());
     }
 
-    public function testConstructorWithData()
+    public function testConstructorWithData(): void
     {
         $queue = $this->queue('string', ['Foo', 'Bar']);
 
         $this->assertEquals(2, $queue->count());
     }
 
-    public function testOffsetSet()
+    public function testOffsetSet(): void
     {
         $queue = $this->queue('string');
         $queue[] = $this->faker->text();
@@ -33,7 +33,7 @@ trait QueueBehavior
         $this->assertSame(1, $queue->count());
     }
 
-    public function testOffsetSetThrowsException()
+    public function testOffsetSetThrowsException(): void
     {
         $queue = $this->queue('string');
 
@@ -42,7 +42,7 @@ trait QueueBehavior
         $queue[] = 42;
     }
 
-    public function testValuesCanBeAdded()
+    public function testValuesCanBeAdded(): void
     {
         $queue = $this->queue('string');
 
@@ -50,7 +50,7 @@ trait QueueBehavior
         $this->assertSame(1, $queue->count());
     }
 
-    public function testAddMayAddSameObjectMultipleTimes()
+    public function testAddMayAddSameObjectMultipleTimes(): void
     {
         $expectedCount = 4;
 
@@ -74,7 +74,7 @@ trait QueueBehavior
         $this->assertCount($expectedCount, $queue2);
     }
 
-    public function testOfferAddsElement()
+    public function testOfferAddsElement(): void
     {
         $queue = $this->queue(\stdClass::class);
 
@@ -87,7 +87,7 @@ trait QueueBehavior
         $this->assertSame($object, $queue->poll());
     }
 
-    public function testIterateOverQueue()
+    public function testIterateOverQueue(): void
     {
         $queue = $this->queue(\stdClass::class);
 
@@ -104,7 +104,7 @@ trait QueueBehavior
         }
     }
 
-    public function testElementDontRemovePeekFromQueue()
+    public function testElementDontRemovePeekFromQueue(): void
     {
         $object1 = new \stdClass();
         $object1->name = 'foo';
@@ -121,7 +121,7 @@ trait QueueBehavior
         $this->assertSame(2, $queue->count());
     }
 
-    public function testElementThrowsExceptionIfEmpty()
+    public function testElementThrowsExceptionIfEmpty(): void
     {
         $queue = $this->queue('string');
 
@@ -131,7 +131,7 @@ trait QueueBehavior
         $queue->element();
     }
 
-    public function testPeekReturnsObjects()
+    public function testPeekReturnsObjects(): void
     {
         $object1 = new \stdClass();
         $object1->name = $this->faker->name();
@@ -147,14 +147,14 @@ trait QueueBehavior
         $this->assertSame($object1, $queue->peek());
     }
 
-    public function testPeekReturnsNullIfEmpty()
+    public function testPeekReturnsNullIfEmpty(): void
     {
         $queue = $this->queue('bool');
 
         $this->assertNull($queue->peek());
     }
 
-    public function testPollRemovesTheHead()
+    public function testPollRemovesTheHead(): void
     {
         $queue = $this->queue('string');
 
@@ -168,14 +168,14 @@ trait QueueBehavior
         $this->assertSame(0, $queue->count());
     }
 
-    public function testPollReturnsNullIfEmpty()
+    public function testPollReturnsNullIfEmpty(): void
     {
         $queue = $this->queue(\stdClass::class);
 
-        $this->assertSame(null, $queue->poll());
+        $this->assertNull($queue->poll());
     }
 
-    public function testRemove()
+    public function testRemove(): void
     {
         $obj1 = new \stdClass();
         $obj1->name = $this->faker->name();
@@ -192,7 +192,7 @@ trait QueueBehavior
         $this->assertSame(2, $queue->count());
     }
 
-    public function testRemoveThrowsExceptionIfEmpty()
+    public function testRemoveThrowsExceptionIfEmpty(): void
     {
         $object1 = new \stdClass();
         $object1->name = $this->faker->name();
@@ -213,7 +213,7 @@ trait QueueBehavior
         $queue->remove();
     }
 
-    public function testMixedUsageOfAllMethods()
+    public function testMixedUsageOfAllMethods(): void
     {
         $queue = $this->queue('string');
 

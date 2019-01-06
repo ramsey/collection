@@ -13,7 +13,7 @@ use Ramsey\Collection\Test\TestCase;
  */
 class NamedParameterMapTest extends TestCase
 {
-    public function testNamedParameters()
+    public function testNamedParameters(): void
     {
         $inputParams = [
             'myArray' => 'array',
@@ -24,13 +24,20 @@ class NamedParameterMapTest extends TestCase
             'myInt' => 'int',
             'myInteger' => 'integer',
             'myNull' => 'null',
-            'myNumeric' => 'numeric',
+            'myNumericFloat' => 'numeric',
+            'myNumericInt' => 'numeric',
             'myObject' => 'object',
             'myResource' => 'resource',
-            'myScalar' => 'scalar',
+            'myScalarString' => 'scalar',
+            'myScalarInt' => 'scalar',
+            'myScalarFloat' => 'scalar',
+            'myScalarBool' => 'scalar',
             'myString' => 'string',
-            'myFoo' => 'Ramsey\Collection\Test\Mock\Foo',
-            'myMixed', // indexed array value in input
+            'myFoo' => Foo::class,
+            'myMixedInt',
+            'myMixedObject',
+            'myMixedNull',
+            'myMixedResource',
         ];
 
         $expectedParams = [
@@ -42,13 +49,20 @@ class NamedParameterMapTest extends TestCase
             'myInt' => 'int',
             'myInteger' => 'integer',
             'myNull' => 'null',
-            'myNumeric' => 'numeric',
+            'myNumericFloat' => 'numeric',
+            'myNumericInt' => 'numeric',
             'myObject' => 'object',
             'myResource' => 'resource',
-            'myScalar' => 'scalar',
+            'myScalarString' => 'scalar',
+            'myScalarInt' => 'scalar',
+            'myScalarFloat' => 'scalar',
+            'myScalarBool' => 'scalar',
             'myString' => 'string',
-            'myFoo' => 'Ramsey\Collection\Test\Mock\Foo',
-            'myMixed' => 'mixed',
+            'myFoo' => Foo::class,
+            'myMixedInt' => 'mixed',
+            'myMixedObject' => 'mixed',
+            'myMixedNull' => 'mixed',
+            'myMixedResource' => 'mixed',
         ];
 
         $namedParameterMap = new NamedParameterMap($inputParams);
@@ -63,20 +77,20 @@ class NamedParameterMapTest extends TestCase
         $namedParameterMap['myInt'] = $this->faker->randomNumber();
         $namedParameterMap['myInteger'] = $this->faker->randomNumber();
         $namedParameterMap['myNull'] = null;
-        $namedParameterMap['myNumeric'] = "{$this->faker->randomFloat()}";
-        $namedParameterMap['myNumeric'] = "{$this->faker->randomNumber()}";
+        $namedParameterMap['myNumericFloat'] = (string)$this->faker->randomFloat();
+        $namedParameterMap['myNumericInt'] = (string)$this->faker->randomNumber();
         $namedParameterMap['myObject'] = new \stdClass();
-        $namedParameterMap['myResource'] = fopen('php://memory', 'r');
-        $namedParameterMap['myScalar'] = $this->faker->name();
-        $namedParameterMap['myScalar'] = $this->faker->randomNumber();
-        $namedParameterMap['myScalar'] = $this->faker->randomFloat();
-        $namedParameterMap['myScalar'] = $this->faker->boolean();
+        $namedParameterMap['myResource'] = \fopen('php://memory', 'rb');
+        $namedParameterMap['myScalarString'] = $this->faker->name();
+        $namedParameterMap['myScalarInt'] = $this->faker->randomNumber();
+        $namedParameterMap['myScalarFloat'] = $this->faker->randomFloat();
+        $namedParameterMap['myScalarBool'] = $this->faker->boolean();
         $namedParameterMap['myString'] = $this->faker->text();
         $namedParameterMap['myFoo'] = new Foo();
-        $namedParameterMap['myMixed'] = $this->faker->randomNumber();
-        $namedParameterMap['myMixed'] = new Foo();
-        $namedParameterMap['myMixed'] = null;
-        $namedParameterMap['myMixed'] = fopen('php://memory', 'r');
+        $namedParameterMap['myMixedInt'] = $this->faker->randomNumber();
+        $namedParameterMap['myMixedObject'] = new Foo();
+        $namedParameterMap['myMixedNull'] = null;
+        $namedParameterMap['myMixedResource'] = \fopen('php://memory', 'rb');
 
         $this->assertEquals(
             $expectedParams,
@@ -84,7 +98,7 @@ class NamedParameterMapTest extends TestCase
         );
     }
 
-    public function testNamedParametersWithUnnamedParameterThrowException()
+    public function testNamedParametersWithUnnamedParameterThrowException(): void
     {
         $namedParameterMap = new NamedParameterMap(['foo']);
 
@@ -93,7 +107,7 @@ class NamedParameterMapTest extends TestCase
         $namedParameterMap['bar'] = 123;
     }
 
-    public function testNamedParametersWithWrongTypeThrowsException()
+    public function testNamedParametersWithWrongTypeThrowsException(): void
     {
         $namedParameterMap = new NamedParameterMap(['foo' => 'int']);
 
@@ -102,7 +116,7 @@ class NamedParameterMapTest extends TestCase
         $namedParameterMap['foo'] = $this->faker->text();
     }
 
-    public function testNamedParameterWithNoStringValue()
+    public function testNamedParameterWithNoStringValue(): void
     {
         $namedParameterMap = new NamedParameterMap(['foo' => 'int']);
 

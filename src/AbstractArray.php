@@ -121,7 +121,7 @@ abstract class AbstractArray implements ArrayInterface
      */
     public function serialize(): string
     {
-        return serialize($this->data);
+        return \serialize($this->data);
     }
 
     /**
@@ -133,7 +133,7 @@ abstract class AbstractArray implements ArrayInterface
      */
     public function unserialize($serialized): void
     {
-        $this->data = unserialize($serialized, ['allowed_classes' => false]);
+        $this->data = \unserialize($serialized, ['allowed_classes' => false]);
     }
 
     /**
@@ -145,7 +145,7 @@ abstract class AbstractArray implements ArrayInterface
      */
     public function count(): int
     {
-        return count($this->data);
+        return \count($this->data);
     }
 
     /**

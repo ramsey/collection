@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<ruleset name="PSR12-ramsey-collection">
+    <description>PSR-12 with native function invocation</description>
+    <!-- Add slevomat/coding-standard to installed_paths so we can use a single sniff -->
+    <config name="installed_paths" value="../../slevomat/coding-standard"/>
+
+    <rule ref="PSR12"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions"/>
+</ruleset>

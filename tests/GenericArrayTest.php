@@ -10,7 +10,7 @@ use Ramsey\Collection\GenericArray;
  */
 class GenericArrayTest extends TestCase
 {
-    public function testConstructWithNoParameters()
+    public function testConstructWithNoParameters(): void
     {
         $genericArrayObject = new GenericArray();
 
@@ -19,7 +19,7 @@ class GenericArrayTest extends TestCase
         $this->assertTrue($genericArrayObject->isEmpty());
     }
 
-    public function testConstructWithArray()
+    public function testConstructWithArray(): void
     {
         $phpArray = ['foo' => 'bar', 'baz'];
         $genericArrayObject = new GenericArray($phpArray);
@@ -28,14 +28,14 @@ class GenericArrayTest extends TestCase
         $this->assertFalse($genericArrayObject->isEmpty());
     }
 
-    public function testGetIterator()
+    public function testGetIterator(): void
     {
         $genericArrayObject = new GenericArray();
 
         $this->assertInstanceOf(\ArrayIterator::class, $genericArrayObject->getIterator());
     }
 
-    public function testArrayAccess()
+    public function testArrayAccess(): void
     {
         $phpArray = ['foo' => 123];
         $genericArrayObject = new GenericArray($phpArray);
@@ -51,7 +51,7 @@ class GenericArrayTest extends TestCase
         $this->assertFalse(isset($genericArrayObject['foo']));
     }
 
-    public function testOffsetSetWithEmptyOffset()
+    public function testOffsetSetWithEmptyOffset(): void
     {
         $genericArrayObject = new GenericArray();
         $genericArrayObject[] = 123;
@@ -64,7 +64,7 @@ class GenericArrayTest extends TestCase
      * offset with a NULL value has the same behavior has isset() called on
      * any standard PHP array offset with a NULL value.
      */
-    public function testOffsetExistsWithNullValue()
+    public function testOffsetExistsWithNullValue(): void
     {
         $genericArrayObject = new GenericArray();
         $genericArrayObject['foo'] = null;
@@ -72,27 +72,27 @@ class GenericArrayTest extends TestCase
         $this->assertFalse(isset($genericArrayObject['foo']));
     }
 
-    public function testSerializable()
+    public function testSerializable(): void
     {
         $phpArray = ['foo' => 123, 'bar' => 456];
         $genericArrayObject = new GenericArray($phpArray);
 
-        $genericArrayObjectSerialized = serialize($genericArrayObject);
-        $genericArrayObject2 = unserialize($genericArrayObjectSerialized);
+        $genericArrayObjectSerialized = \serialize($genericArrayObject);
+        $genericArrayObject2 = \unserialize($genericArrayObjectSerialized);
 
         $this->assertInstanceOf(\Ramsey\Collection\ArrayInterface::class, $genericArrayObject2);
         $this->assertEquals($genericArrayObject, $genericArrayObject2);
     }
 
-    public function testCountable()
+    public function testCountable(): void
     {
         $phpArray = ['foo' => 123, 'bar' => 456];
         $genericArrayObject = new GenericArray($phpArray);
 
-        $this->assertEquals(count($phpArray), count($genericArrayObject));
+        $this->assertCount(\count($phpArray), $genericArrayObject);
     }
 
-    public function testClear()
+    public function testClear(): void
     {
         $phpArray = ['foo' => 'bar'];
         $genericArrayObject = new GenericArray($phpArray);

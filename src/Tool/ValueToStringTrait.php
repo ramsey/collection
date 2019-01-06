@@ -38,43 +38,43 @@ trait ValueToStringTrait
     protected function toolValueToString($value): string
     {
         // null
-        if (is_null($value)) {
+        if ($value === null) {
             return 'NULL';
         }
 
         // boolean constants
-        if (is_bool($value)) {
-            return ($value) ? 'TRUE' : 'FALSE';
+        if (\is_bool($value)) {
+            return $value ? 'TRUE' : 'FALSE';
         }
 
         // array
-        if (is_array($value)) {
+        if (\is_array($value)) {
             return 'Array';
         }
 
         // scalar types (integer, float, string)
-        if (is_scalar($value)) {
+        if (\is_scalar($value)) {
             return (string) $value;
         }
 
         // resource
-        if (is_resource($value)) {
-            return '(' . get_resource_type($value) . ' resource #' . intval($value) . ')';
+        if (\is_resource($value)) {
+            return '(' . \get_resource_type($value) . ' resource #' . (int)$value . ')';
         }
 
         // after this line $value is an object since is not null, scalar, array or resource
 
         // __toString() is implemented
-        if (is_callable([$value, '__toString'])) {
+        if (\is_callable([$value, '__toString'])) {
             return (string) $value->__toString();
         }
 
         // object of type \DateTime
         if ($value instanceof \DateTimeInterface) {
-            return $value->format("c");
+            return $value->format('c');
         }
 
         // unknown type
-        return '(' . get_class($value) . ' Object)';
+        return '(' . \get_class($value) . ' Object)';
     }
 }

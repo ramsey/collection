@@ -25,39 +25,39 @@ class SetTest extends PhpUnitTestCase
         $this->set = new Set('int');
     }
 
-    public function testConstructorInheritance()
+    public function testConstructorInheritance(): void
     {
         $this->assertInstanceOf(CollectionInterface::class, $this->set);
         $this->assertInstanceOf(AbstractSet::class, $this->set);
     }
 
-    public function testConstructGetType()
+    public function testConstructGetType(): void
     {
         $this->assertSame('int', $this->set->getType());
     }
 
-    public function testConstructWithValues()
+    public function testConstructWithValues(): void
     {
         $expected = [2, 4, 6, 8];
         $localSet = new Set('int', $expected);
         $this->assertEquals($expected, $localSet->toArray());
     }
 
-    public function testAddDuplicates()
+    public function testAddDuplicates(): void
     {
         $this->assertTrue($this->set->add(100));
         $this->assertFalse($this->set->add(100));
         $this->assertSame([100], $this->set->toArray());
     }
 
-    public function testOffsetSetDuplicates()
+    public function testOffsetSetDuplicates(): void
     {
         $this->set[] = 100;
         $this->set[] = 100;
         $this->assertSame([100], $this->set->toArray());
     }
 
-    public function testUsingEqualButNotIdentical()
+    public function testUsingEqualButNotIdentical(): void
     {
         $uniqueFoos = new Set(Foo::class);
 
@@ -66,7 +66,7 @@ class SetTest extends PhpUnitTestCase
         $this->assertTrue($uniqueFoos->add(new Foo()));
     }
 
-    public function testUsingIdentical()
+    public function testUsingIdentical(): void
     {
         $uniqueFoos = new Set(Foo::class);
 

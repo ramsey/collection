@@ -13,7 +13,7 @@ use Ramsey\Collection\Test\TestCase;
  */
 class AssociativeArrayMapTest extends TestCase
 {
-    public function testOffsetSetWithEmptyOffsetThrowsException()
+    public function testOffsetSetWithEmptyOffsetThrowsException(): void
     {
         $associativeArrayMapObject = new AssociativeArrayMap();
 
@@ -22,7 +22,7 @@ class AssociativeArrayMapTest extends TestCase
         $associativeArrayMapObject[] = 123;
     }
 
-    public function testOffsetSetWithValidKey()
+    public function testOffsetSetWithValidKey(): void
     {
         $associativeArrayMapObject = new AssociativeArrayMap();
         $associativeArrayMapObject['foo'] = 123;
@@ -30,7 +30,7 @@ class AssociativeArrayMapTest extends TestCase
         $this->assertEquals(123, $associativeArrayMapObject['foo']);
     }
 
-    public function testContainsKey()
+    public function testContainsKey(): void
     {
         $associativeArrayMapObject = new AssociativeArrayMap();
         $associativeArrayMapObject['foo'] = null;
@@ -42,7 +42,7 @@ class AssociativeArrayMapTest extends TestCase
         $this->assertFalse($associativeArrayMapObject->containsKey('baz'));
     }
 
-    public function testKeys()
+    public function testKeys(): void
     {
         $associativeArrayMapObject = new AssociativeArrayMap();
 
@@ -55,7 +55,7 @@ class AssociativeArrayMapTest extends TestCase
         $this->assertEquals(['foo', 'bar'], $associativeArrayMapObject->keys());
     }
 
-    public function testContainsValue()
+    public function testContainsValue(): void
     {
         $foo = new Foo();
 
@@ -70,7 +70,7 @@ class AssociativeArrayMapTest extends TestCase
         $this->assertFalse($associativeArrayMapObject->containsValue(new Foo()));
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $data = ['foo' => 123];
         $associativeArrayMapObject = new AssociativeArrayMap($data);
@@ -79,7 +79,7 @@ class AssociativeArrayMapTest extends TestCase
         $this->assertEquals(false, $associativeArrayMapObject->get('bar', false));
     }
 
-    public function testPut()
+    public function testPut(): void
     {
         $associativeArrayMapObject = new AssociativeArrayMap();
         $previousValue = $associativeArrayMapObject->put('foo', 123);
@@ -94,7 +94,7 @@ class AssociativeArrayMapTest extends TestCase
         $this->assertEquals(456, $associativeArrayMapObject->get('foo'));
     }
 
-    public function testPutWithNullKeyThrowsException()
+    public function testPutWithNullKeyThrowsException(): void
     {
         $associativeArrayMapObject = new AssociativeArrayMap();
 
@@ -103,7 +103,7 @@ class AssociativeArrayMapTest extends TestCase
         $previousValue = $associativeArrayMapObject->put(null, 123);
     }
 
-    public function testPutIfAbsent()
+    public function testPutIfAbsent(): void
     {
         $associativeArrayMapObject = new AssociativeArrayMap();
         $currentValue = $associativeArrayMapObject->putIfAbsent('foo', 123);
@@ -118,7 +118,7 @@ class AssociativeArrayMapTest extends TestCase
         $this->assertEquals(123, $associativeArrayMapObject->get('foo'));
     }
 
-    public function testPutIfAbsentWithNullKeyThrowsException()
+    public function testPutIfAbsentWithNullKeyThrowsException(): void
     {
         $associativeArrayMapObject = new AssociativeArrayMap();
 
@@ -127,7 +127,7 @@ class AssociativeArrayMapTest extends TestCase
         $previousValue = $associativeArrayMapObject->putIfAbsent(null, 123);
     }
 
-    public function testRemove()
+    public function testRemove(): void
     {
         $data = ['foo' => 123];
         $associativeArrayMapObject = new AssociativeArrayMap($data);
@@ -141,7 +141,7 @@ class AssociativeArrayMapTest extends TestCase
         $this->assertFalse($associativeArrayMapObject->containsKey('foo'));
     }
 
-    public function testRemoveIf()
+    public function testRemoveIf(): void
     {
         $data = ['foo' => 123];
         $associativeArrayMapObject = new AssociativeArrayMap($data);
@@ -152,7 +152,7 @@ class AssociativeArrayMapTest extends TestCase
         $this->assertFalse($associativeArrayMapObject->containsKey('foo'));
     }
 
-    public function testReplace()
+    public function testReplace(): void
     {
         $data = ['foo' => 123];
         $associativeArrayMapObject = new AssociativeArrayMap($data);
@@ -166,7 +166,7 @@ class AssociativeArrayMapTest extends TestCase
         $this->assertFalse($associativeArrayMapObject->containsKey('bar'));
     }
 
-    public function testReplaceIf()
+    public function testReplaceIf(): void
     {
         $data = ['foo' => 123];
         $associativeArrayMapObject = new AssociativeArrayMap($data);
