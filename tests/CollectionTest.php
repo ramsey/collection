@@ -43,6 +43,17 @@ class CollectionTest extends TestCase
         $collection[] = $this->faker->text();
     }
 
+    public function testOffsetSetPosition(): void
+    {
+        $offset = $this->faker->numberBetween(0, 100);
+        $value = $this->faker->numberBetween(0, 100);
+
+        $collection = new Collection('int');
+        $collection->offsetSet($offset, $value);
+
+        $this->assertSame($value, $collection->offsetGet($offset));
+    }
+
     public function testAdd(): void
     {
         $collection = new Collection('integer');
