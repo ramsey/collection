@@ -1,11 +1,19 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ramsey\Collection\Test\Mock;
 
 class Bar
 {
+    /**
+     * @var int
+     */
     public $id;
+
+    /**
+     * @var string
+     */
     public $name;
 
     public function __construct(int $id, string $name)

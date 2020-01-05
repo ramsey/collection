@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -7,7 +8,6 @@
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://github.com/ramsey/collection GitHub
  */
 
 declare(strict_types=1);
@@ -38,14 +38,14 @@ abstract class AbstractTypedMap extends AbstractMap implements TypedMapInterface
      */
     public function offsetSet($offset, $value): void
     {
-        if (false === $this->checkType($this->getKeyType(), $offset)) {
+        if ($this->checkType($this->getKeyType(), $offset) === false) {
             throw new InvalidArgumentException(
                 'Key must be of type ' . $this->getKeyType() . '; key is '
                 . $this->toolValueToString($offset)
             );
         }
 
-        if (false === $this->checkType($this->getValueType(), $value)) {
+        if ($this->checkType($this->getValueType(), $value) === false) {
             throw new InvalidArgumentException(
                 'Value must be of type ' . $this->getValueType() . '; value is '
                 . $this->toolValueToString($value)

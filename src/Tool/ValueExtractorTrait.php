@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -7,7 +8,6 @@
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://github.com/ramsey/collection GitHub
  */
 
 declare(strict_types=1);
@@ -15,6 +15,11 @@ declare(strict_types=1);
 namespace Ramsey\Collection\Tool;
 
 use Ramsey\Collection\Exception\ValueExtractionException;
+
+use function get_class;
+use function method_exists;
+use function property_exists;
+use function sprintf;
 
 /**
  * Provides functionality to extract the value of a property or method from an object.
@@ -34,16 +39,16 @@ trait ValueExtractorTrait
      */
     protected function extractValue(object $object, string $propertyOrMethod)
     {
-        if (\property_exists($object, $propertyOrMethod)) {
+        if (property_exists($object, $propertyOrMethod)) {
             return $object->$propertyOrMethod;
         }
 
-        if (\method_exists($object, $propertyOrMethod)) {
+        if (method_exists($object, $propertyOrMethod)) {
             return $object->{$propertyOrMethod}();
         }
 
         throw new ValueExtractionException(
-            \sprintf('Method or property "%s" not defined in %s', $propertyOrMethod, \get_class($object))
+            sprintf('Method or property "%s" not defined in %s', $propertyOrMethod, get_class($object))
         );
     }
 }

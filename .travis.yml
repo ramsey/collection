@@ -3,6 +3,7 @@ language: php
 php:
   - 7.2
   - 7.3
+  - 7.4
   - nightly
 
 matrix:
@@ -16,17 +17,17 @@ before_install:
   - travis_retry composer self-update
 
 install:
-  - travis_retry composer require --no-update php-coveralls/php-coveralls:^2.0
+  - travis_retry composer require --no-update "php-coveralls/php-coveralls:^2"
   - travis_retry composer install --no-interaction --prefer-dist
 
 before_script:
   - mkdir -p build/logs
 
 script:
-  - ./vendor/bin/parallel-lint src tests
+  - composer run lint
+  - composer run phpcs
   - composer run phpstan
   - ./vendor/bin/phpunit --verbose --coverage-clover build/logs/clover.xml
-  - ./vendor/bin/phpcs src tests -sp
 
 after_success:
   - travis_retry php vendor/bin/php-coveralls -v

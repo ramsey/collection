@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ramsey\Collection\Test\Tool;
@@ -9,8 +10,6 @@ use Ramsey\Collection\Tool\ValueExtractorTrait;
 
 /**
  * Cover up all possible outcomes of the ValueExtractorTrait.
- *
- * @author  icanhazstring <blubb0r05+github@gmail.com>
  */
 class ValueExtractorTraitTest extends TestCase
 {
@@ -19,6 +18,9 @@ class ValueExtractorTraitTest extends TestCase
         $test = new class {
             use ValueExtractorTrait;
 
+            /**
+             * @return mixed
+             */
             public function __invoke(string $propertyOrMethod)
             {
                 return $this->extractValue($this, $propertyOrMethod);
@@ -26,7 +28,7 @@ class ValueExtractorTraitTest extends TestCase
         };
 
         $this->expectException(ValueExtractionException::class);
-        $this->expectExceptionMessageRegExp('/Method or property "undefinedMethod" not defined in .*/');
+        $this->expectExceptionMessage('Method or property "undefinedMethod" not defined in');
 
         $test('undefinedMethod');
     }
@@ -36,6 +38,9 @@ class ValueExtractorTraitTest extends TestCase
         $test = new class {
             use ValueExtractorTrait;
 
+            /**
+             * @return mixed
+             */
             public function __invoke(string $propertyOrMethod)
             {
                 return $this->extractValue($this, $propertyOrMethod);
@@ -55,8 +60,14 @@ class ValueExtractorTraitTest extends TestCase
         $test = new class {
             use ValueExtractorTrait;
 
+            /**
+             * @var string
+             */
             public $testProperty = 'works!';
 
+            /**
+             * @return mixed
+             */
             public function __invoke(string $propertyOrMethod)
             {
                 return $this->extractValue($this, $propertyOrMethod);

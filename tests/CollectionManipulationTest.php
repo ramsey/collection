@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ramsey\Collection\Test;
@@ -15,8 +16,6 @@ use Ramsey\Collection\Test\Mock\FooCollection;
  *
  * The nature of those manipulation methods is that the original collection stays untouched
  * and you will receive a new one. This is why every test MUST include a assertNotSame() assertion.
- *
- * @author icanhazstring <blubb0r05+github@gmail.com>
  */
 class CollectionManipulationTest extends TestCase
 {

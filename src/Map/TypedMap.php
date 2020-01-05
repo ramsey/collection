@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -7,7 +8,6 @@
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://github.com/ramsey/collection GitHub
  */
 
 declare(strict_types=1);
@@ -110,7 +110,7 @@ class TypedMap extends AbstractTypedMap
      *
      * @param string $keyType The data type of the map's keys.
      * @param string $valueType The data type of the map's values.
-     * @param array $data The initial data to set for this map.
+     * @param mixed[] $data The initial data to set for this map.
      */
     public function __construct(string $keyType, string $valueType, array $data = [])
     {
@@ -121,8 +121,6 @@ class TypedMap extends AbstractTypedMap
 
     /**
      * Return the type used on the key.
-     *
-     * @return string
      */
     public function getKeyType(): string
     {
@@ -131,8 +129,6 @@ class TypedMap extends AbstractTypedMap
 
     /**
      * Return the type forced on the values.
-     *
-     * @return string
      */
     public function getValueType(): string
     {

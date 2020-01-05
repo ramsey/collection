@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -7,12 +8,21 @@
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://github.com/ramsey/collection GitHub
  */
 
 declare(strict_types=1);
 
 namespace Ramsey\Collection\Tool;
+
+use DateTimeInterface;
+
+use function get_class;
+use function get_resource_type;
+use function is_array;
+use function is_bool;
+use function is_callable;
+use function is_resource;
+use function is_scalar;
 
 /**
  * Provides functionality to express a value as string
@@ -33,7 +43,6 @@ trait ValueToStringTrait
      * - anonymous function: same as object
      *
      * @param mixed $value the value to return as a string.
-     * @return string
      */
     protected function toolValueToString($value): string
     {
@@ -43,38 +52,38 @@ trait ValueToStringTrait
         }
 
         // boolean constants
-        if (\is_bool($value)) {
+        if (is_bool($value)) {
             return $value ? 'TRUE' : 'FALSE';
         }
 
         // array
-        if (\is_array($value)) {
+        if (is_array($value)) {
             return 'Array';
         }
 
         // scalar types (integer, float, string)
-        if (\is_scalar($value)) {
+        if (is_scalar($value)) {
             return (string) $value;
         }
 
         // resource
-        if (\is_resource($value)) {
-            return '(' . \get_resource_type($value) . ' resource #' . (int)$value . ')';
+        if (is_resource($value)) {
+            return '(' . get_resource_type($value) . ' resource #' . (int) $value . ')';
         }
 
         // after this line $value is an object since is not null, scalar, array or resource
 
         // __toString() is implemented
-        if (\is_callable([$value, '__toString'])) {
+        if (is_callable([$value, '__toString'])) {
             return (string) $value->__toString();
         }
 
         // object of type \DateTime
-        if ($value instanceof \DateTimeInterface) {
+        if ($value instanceof DateTimeInterface) {
             return $value->format('c');
         }
 
         // unknown type
-        return '(' . \get_class($value) . ' Object)';
+        return '(' . get_class($value) . ' Object)';
     }
 }

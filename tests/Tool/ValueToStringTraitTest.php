@@ -1,17 +1,24 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ramsey\Collection\Test\Tool;
 
+use DateTimeImmutable;
 use Ramsey\Collection\Test\TestCase;
+use Ramsey\Collection\Test\Tool\Mock\ObjectWithInvoke;
+use Ramsey\Collection\Test\Tool\Mock\ObjectWithToString;
 use Ramsey\Collection\Tool\ValueToStringTrait;
+use stdClass;
+
+use function get_resource_type;
+use function opendir;
 
 /**
  * Tests for ValueToStringTrait
  */
 class ValueToStringTraitTest extends TestCase
 {
-
     use ValueToStringTrait;
 
     public function testValueNull(): void
@@ -40,22 +47,25 @@ class ValueToStringTraitTest extends TestCase
     public function testValueResource(): void
     {
         // get_resource_type behaves different on php and hhvm
-        $resource = \opendir(__DIR__);
-        $expected = '(' . \get_resource_type($resource) . ' resource #' . (int)$resource . ')';
+        $resource = opendir(__DIR__);
+
+        $this->assertIsResource($resource);
+
+        $expected = '(' . get_resource_type($resource) . ' resource #' . (int) $resource . ')';
 
         $this->assertEquals($expected, $this->toolValueToString($resource));
     }
 
     public function testValueObjectWithToString(): void
     {
-        $this->assertEquals('BAZ', $this->toolValueToString(new Mock\ObjectWithToString()));
+        $this->assertEquals('BAZ', $this->toolValueToString(new ObjectWithToString()));
     }
 
     public function testValueDateTime(): void
     {
         // datetimes are objects but are returned as iso dates, not as generic objects
         $expected = '2016-12-31T23:59:59+00:00';
-        $date = new \DateTimeImmutable('2016-12-31T23:59:59+00:00');
+        $date = new DateTimeImmutable('2016-12-31T23:59:59+00:00');
         $this->assertEquals($expected, $this->toolValueToString($date));
     }
 
@@ -63,7 +73,7 @@ class ValueToStringTraitTest extends TestCase
     {
         $expected = '(stdClass Object)';
 
-        $value = new \stdClass();
+        $value = new stdClass();
         $casted = $this->toolValueToString($value);
 
         $this->assertEquals($expected, $casted);
@@ -88,10 +98,10 @@ class ValueToStringTraitTest extends TestCase
     {
         // the object has a public __invoke method, is detected as callable
         // do not return a message like 'callable', cast it as object
-        $startWith = '(' . Mock\ObjectWithInvoke::class . ' ';
+        $startWith = '(' . ObjectWithInvoke::class . ' ';
         $endsWith = ' Object)';
 
-        $value = new Mock\ObjectWithInvoke();
+        $value = new ObjectWithInvoke();
         $casted = $this->toolValueToString($value);
 
         $this->assertStringStartsWith($startWith, $casted);

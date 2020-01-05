@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -7,7 +8,6 @@
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://github.com/ramsey/collection GitHub
  */
 
 declare(strict_types=1);
@@ -63,15 +63,11 @@ interface CollectionInterface extends ArrayInterface
      *
      * @param mixed $element The element to check whether the collection contains.
      * @param bool $strict Whether to perform a strict type check on the value.
-     *
-     * @return bool
      */
     public function contains($element, bool $strict = true): bool;
 
     /**
      * Returns the type associated with this collection.
-     *
-     * @return string
      */
     public function getType(): string;
 
@@ -90,7 +86,7 @@ interface CollectionInterface extends ArrayInterface
      *
      * @param string $propertyOrMethod The property or method name to filter by.
      *
-     * @return array
+     * @return mixed[]
      */
     public function column(string $propertyOrMethod): array;
 
@@ -118,7 +114,7 @@ interface CollectionInterface extends ArrayInterface
      * @param string $order The sort order for the resulting collection (one of
      *     this interface's `SORT_*` constants).
      *
-     * @return self
+     * @return CollectionInterface<mixed, mixed>
      */
     public function sort(string $propertyOrMethod, string $order = self::SORT_ASC): self;
 
@@ -134,7 +130,7 @@ interface CollectionInterface extends ArrayInterface
      *
      * @param callable $callback A callable to use for filtering elements.
      *
-     * @return self
+     * @return CollectionInterface<mixed, mixed>
      */
     public function filter(callable $callback): self;
 
@@ -147,7 +143,7 @@ interface CollectionInterface extends ArrayInterface
      * @param string $propertyOrMethod The property or method to evaluate.
      * @param mixed  $value The value to match.
      *
-     * @return self
+     * @return CollectionInterface<mixed, mixed>
      */
     public function where(string $propertyOrMethod, $value): self;
 
@@ -163,7 +159,7 @@ interface CollectionInterface extends ArrayInterface
      * @param callable $callback A callable to apply to each item of the
      *     collection.
      *
-     * @return self
+     * @return CollectionInterface<mixed, mixed>
      */
     public function map(callable $callback): self;
 
@@ -171,10 +167,10 @@ interface CollectionInterface extends ArrayInterface
      * Create a new collection with divergent items between current and given
      * collection.
      *
-     * @param CollectionInterface $other The collection to check for divergent
+     * @param CollectionInterface<mixed, mixed> $other The collection to check for divergent
      *     items.
      *
-     * @return self
+     * @return CollectionInterface<mixed, mixed>
      */
     public function diff(CollectionInterface $other): self;
 
@@ -182,19 +178,19 @@ interface CollectionInterface extends ArrayInterface
      * Create a new collection with intersecting item between current and given
      * collection.
      *
-     * @param CollectionInterface $other The collection to check for
+     * @param CollectionInterface<mixed, mixed> $other The collection to check for
      *     intersecting items.
      *
-     * @return self
+     * @return CollectionInterface<mixed, mixed>
      */
     public function intersect(CollectionInterface $other): self;
 
     /**
      * Merge current items and items of given collections into a new one.
      *
-     * @param CollectionInterface ...$collections The collections to merge.
+     * @param CollectionInterface<mixed, mixed> ...$collections The collections to merge.
      *
-     * @return self
+     * @return CollectionInterface<mixed, mixed>
      */
     public function merge(CollectionInterface ...$collections): self;
 }

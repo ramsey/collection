@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -7,7 +8,6 @@
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://github.com/ramsey/collection GitHub
  */
 
 declare(strict_types=1);
@@ -51,7 +51,7 @@ class Set extends AbstractSet
      * specified data.
      *
      * @param string $setType The type (FQCN) associated with this set.
-     * @param array $data The initial items to store in the set.
+     * @param mixed[] $data The initial items to store in the set.
      */
     public function __construct(string $setType, array $data = [])
     {
@@ -61,8 +61,6 @@ class Set extends AbstractSet
 
     /**
      * Returns the type associated with this set.
-     *
-     * @return string
      */
     public function getType(): string
     {

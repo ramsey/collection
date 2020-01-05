@@ -1,11 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ramsey\Collection\Test;
 
+use Mockery;
 use Ramsey\Collection\DoubleEndedQueue;
 use Ramsey\Collection\Exception\InvalidArgumentException;
 use Ramsey\Collection\Exception\NoSuchElementException;
+use stdClass;
 
 /**
  * @covers \Ramsey\Collection\DoubleEndedQueue
@@ -14,6 +17,9 @@ class DoubleEndedQueueTest extends TestCase
 {
     use QueueBehavior;
 
+    /**
+     * @param mixed[] $data
+     */
     protected function queue(string $type, array $data = []): DoubleEndedQueue
     {
         return new DoubleEndedQueue($type, $data);
@@ -140,14 +146,14 @@ class DoubleEndedQueueTest extends TestCase
 
     public function testPollFirstReturnsNullIfEmpty(): void
     {
-        $queue = $this->queue(\stdClass::class);
+        $queue = $this->queue(stdClass::class);
 
         $this->assertNull($queue->pollFirst());
     }
 
     public function testPollLastReturnsNullIfEmpty(): void
     {
-        $queue = $this->queue(\stdClass::class);
+        $queue = $this->queue(stdClass::class);
 
         $this->assertNull($queue->pollLast());
     }
@@ -244,7 +250,7 @@ class DoubleEndedQueueTest extends TestCase
     {
         $element = 'foo';
 
-        $deque = \Mockery::mock(DoubleEndedQueue::class);
+        $deque = Mockery::mock(DoubleEndedQueue::class);
         $deque->shouldReceive('offerFirst')->passthru();
 
         $deque->expects()->addFirst($element)->andThrow(InvalidArgumentException::class);

@@ -1,9 +1,16 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ramsey\Collection\Test;
 
+use ArrayIterator;
+use Ramsey\Collection\ArrayInterface;
 use Ramsey\Collection\GenericArray;
+
+use function count;
+use function serialize;
+use function unserialize;
 
 /**
  * Tests for GenericArray, as well as coverage for AbstractArray
@@ -14,7 +21,7 @@ class GenericArrayTest extends TestCase
     {
         $genericArrayObject = new GenericArray();
 
-        $this->assertInternalType('array', $genericArrayObject->toArray());
+        $this->assertIsArray($genericArrayObject->toArray());
         $this->assertEmpty($genericArrayObject->toArray());
         $this->assertTrue($genericArrayObject->isEmpty());
     }
@@ -32,7 +39,7 @@ class GenericArrayTest extends TestCase
     {
         $genericArrayObject = new GenericArray();
 
-        $this->assertInstanceOf(\ArrayIterator::class, $genericArrayObject->getIterator());
+        $this->assertInstanceOf(ArrayIterator::class, $genericArrayObject->getIterator());
     }
 
     public function testArrayAccess(): void
@@ -48,7 +55,7 @@ class GenericArrayTest extends TestCase
         unset($genericArrayObject['foo']);
 
         $this->assertEquals(456, $genericArrayObject['bar']);
-        $this->assertFalse(isset($genericArrayObject['foo']));
+        $this->assertArrayNotHasKey('key', $genericArrayObject);
     }
 
     public function testOffsetSetWithEmptyOffset(): void
@@ -77,10 +84,10 @@ class GenericArrayTest extends TestCase
         $phpArray = ['foo' => 123, 'bar' => 456];
         $genericArrayObject = new GenericArray($phpArray);
 
-        $genericArrayObjectSerialized = \serialize($genericArrayObject);
-        $genericArrayObject2 = \unserialize($genericArrayObjectSerialized);
+        $genericArrayObjectSerialized = serialize($genericArrayObject);
+        $genericArrayObject2 = unserialize($genericArrayObjectSerialized);
 
-        $this->assertInstanceOf(\Ramsey\Collection\ArrayInterface::class, $genericArrayObject2);
+        $this->assertInstanceOf(ArrayInterface::class, $genericArrayObject2);
         $this->assertEquals($genericArrayObject, $genericArrayObject2);
     }
 
@@ -89,7 +96,7 @@ class GenericArrayTest extends TestCase
         $phpArray = ['foo' => 123, 'bar' => 456];
         $genericArrayObject = new GenericArray($phpArray);
 
-        $this->assertCount(\count($phpArray), $genericArrayObject);
+        $this->assertCount(count($phpArray), $genericArrayObject);
     }
 
     public function testClear(): void

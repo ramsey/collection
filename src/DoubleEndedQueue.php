@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -7,7 +8,6 @@
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://github.com/ramsey/collection GitHub
  */
 
 declare(strict_types=1);
@@ -37,13 +37,13 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
      * serves only to fulfill the `ArrayAccess` interface requirements. It is
      * invoked by other operations when adding values to the queue.
      *
+     * @link http://php.net/manual/en/arrayaccess.offsetset.php ArrayAccess::offsetSet()
+     *
      * @param mixed|null $offset The offset is ignored and is treated as `null`.
      * @param mixed $value The value to set at the given offset.
      *
      * @throws InvalidArgumentException when the value does not match the
      *     specified type for this queue.
-     *
-     * @link http://php.net/manual/en/arrayaccess.offsetset.php ArrayAccess::offsetSet()
      */
     public function offsetSet($offset, $value): void
     {
@@ -62,14 +62,14 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
     /**
      * Ensures that the specified element is inserted at the front of this queue.
      *
+     * @see self::offerFirst()
+     *
      * @param mixed $element The element to add to this queue.
      *
      * @return bool `true` if this queue changed as a result of the call.
      *
      * @throws InvalidArgumentException when the value does not match the
      *     specified type for this queue.
-     *
-     * @see self::offerFirst()
      */
     public function addFirst($element): bool
     {
@@ -90,14 +90,14 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
     /**
      * Ensures that the specified element in inserted at the end of this queue.
      *
+     * @see Queue::add()
+     *
      * @param mixed $element The element to add to this queue.
      *
      * @return bool `true` if this queue changed as a result of the call.
      *
      * @throws InvalidArgumentException when the value does not match the
      *     specified type for this queue.
-     *
-     * @see Queue::add()
      */
     public function addLast($element): bool
     {
@@ -107,11 +107,11 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
     /**
      * Inserts the specified element at the front this queue.
      *
+     * @see self::addFirst()
+     *
      * @param mixed $element The element to add to this queue.
      *
      * @return bool `true` if the element was added to this queue, else `false`.
-     *
-     * @see self::addFirst()
      */
     public function offerFirst($element): bool
     {
@@ -125,12 +125,12 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
     /**
      * Inserts the specified element at the end this queue.
      *
+     * @see self::addLast()
+     * @see Queue::offer()
+     *
      * @param mixed $element The element to add to this queue.
      *
      * @return bool `true` if the element was added to this queue, else `false`.
-     *
-     * @see self::addLast()
-     * @see Queue::offer()
      */
     public function offerLast($element): bool
     {
@@ -143,12 +143,12 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
      * This method differs from `pollFirst()` only in that it throws an
      * exception if this queue is empty.
      *
+     * @see self::pollFirst()
+     * @see Queue::remove()
+     *
      * @return mixed the head of this queue.
      *
      * @throws NoSuchElementException if this queue is empty.
-     *
-     * @see self::pollFirst()
-     * @see Queue::remove()
      */
     public function removeFirst()
     {
@@ -161,11 +161,11 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
      * This method differs from `pollLast()` only in that it throws an exception
      * if this queue is empty.
      *
+     * @see self::pollLast()
+     *
      * @return mixed the tail of this queue.
      *
      * @throws NoSuchElementException if this queue is empty.
-     *
-     * @see self::pollLast()
      */
     public function removeLast()
     {
@@ -185,9 +185,9 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
      * Retrieves and removes the head of this queue, or returns `null` if this
      * queue is empty.
      *
-     * @return mixed|null the head of this queue, or `null` if this queue is empty.
-     *
      * @see self::removeFirst()
+     *
+     * @return mixed|null the head of this queue, or `null` if this queue is empty.
      */
     public function pollFirst()
     {
@@ -198,9 +198,9 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
      * Retrieves and removes the tail of this queue, or returns `null` if this
      * queue is empty.
      *
-     * @return mixed|null the tail of this queue, or `null` if this queue is empty.
-     *
      * @see self::removeLast()
+     *
+     * @return mixed|null the tail of this queue, or `null` if this queue is empty.
      */
     public function pollLast()
     {
@@ -222,12 +222,12 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
      * This method differs from `peekFirst()` only in that it throws an
      * exception if this queue is empty.
      *
+     * @see self::peekFirst()
+     * @see Queue::element()
+     *
      * @return mixed the head of this queue.
      *
      * @throws NoSuchElementException if this queue is empty.
-     *
-     * @see self::peekFirst()
-     * @see Queue::element()
      */
     public function firstElement()
     {
@@ -240,11 +240,11 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
      * This method differs from `peekLast()` only in that it throws an exception
      * if this queue is empty.
      *
+     * @see self::peekLast()
+     *
      * @return mixed the tail of this queue.
      *
      * @throws NoSuchElementException if this queue is empty.
-     *
-     * @see self::peekLast()
      */
     public function lastElement()
     {
@@ -259,10 +259,10 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
      * Retrieves, but does not remove, the head of this queue, or returns `null`
      * if this queue is empty.
      *
-     * @return mixed|null the head of this queue, or `null` if this queue is empty.
-     *
      * @see self::firstElement()
      * @see Queue::peek()
+     *
+     * @return mixed|null the head of this queue, or `null` if this queue is empty.
      */
     public function peekFirst()
     {
@@ -273,9 +273,9 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
      * Retrieves, but does not remove, the tail of this queue, or returns `null`
      * if this queue is empty.
      *
-     * @return mixed|null the tail of this queue, or `null` if this queue is empty
-     *
      * @see self::lastElement()
+     *
+     * @return mixed|null the tail of this queue, or `null` if this queue is empty
      */
     public function peekLast()
     {

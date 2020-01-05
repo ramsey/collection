@@ -1,3 +1,7 @@
-includes:
-	- vendor/jangregor/phpstan-prophecy/src/extension.neon
-	- vendor/phpstan/phpstan-mockery/extension.neon
+parameters:
+    checkGenericClassInNonGenericObjectType: false
+    ignoreErrors:
+        -
+            message: "#^Unsafe usage of new static\\(\\)\\.$#"
+            count: 3
+            path: src/AbstractCollection.php

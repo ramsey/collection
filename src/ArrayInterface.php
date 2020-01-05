@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -7,21 +8,25 @@
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://github.com/ramsey/collection GitHub
  */
 
 declare(strict_types=1);
 
 namespace Ramsey\Collection;
 
+use ArrayAccess;
+use Countable;
+use IteratorAggregate;
+use Serializable;
+
 /**
  * `ArrayInterface` provides traversable array functionality to data types.
  */
 interface ArrayInterface extends
-    \ArrayAccess,
-    \Countable,
-    \IteratorAggregate,
-    \Serializable
+    ArrayAccess,
+    Countable,
+    IteratorAggregate,
+    Serializable
 {
     /**
      * Removes all items from this array.
@@ -31,14 +36,12 @@ interface ArrayInterface extends
     /**
      * Returns a native PHP array representation of this array object.
      *
-     * @return array
+     * @return mixed[]
      */
     public function toArray(): array;
 
     /**
      * Returns `true` if this array is empty.
-     *
-     * @return bool
      */
     public function isEmpty(): bool;
 }

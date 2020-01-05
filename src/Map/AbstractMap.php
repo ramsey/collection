@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -7,7 +8,6 @@
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://github.com/ramsey/collection GitHub
  */
 
 declare(strict_types=1);
@@ -16,6 +16,10 @@ namespace Ramsey\Collection\Map;
 
 use Ramsey\Collection\AbstractArray;
 use Ramsey\Collection\Exception\InvalidArgumentException;
+
+use function array_key_exists;
+use function array_keys;
+use function in_array;
 
 /**
  * This class provides a basic implementation of `MapInterface`, to minimize the
@@ -47,12 +51,10 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
      * Returns `true` if this map contains a mapping for the specified key.
      *
      * @param mixed $key The key to check in the map.
-     *
-     * @return bool
      */
     public function containsKey($key): bool
     {
-        return \array_key_exists($key, $this->data);
+        return array_key_exists($key, $this->data);
     }
 
     /**
@@ -61,22 +63,20 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
      * This performs a strict type check on the value.
      *
      * @param mixed $value The value to check in the map.
-     *
-     * @return bool
      */
     public function containsValue($value): bool
     {
-        return \in_array($value, $this->data, true);
+        return in_array($value, $this->data, true);
     }
 
     /**
      * Return an array of the keys contained in this map.
      *
-     * @return array
+     * @return mixed[]
      */
     public function keys(): array
     {
-        return \array_keys($this->data);
+        return array_keys($this->data);
     }
 
     /**

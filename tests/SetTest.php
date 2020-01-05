@@ -1,13 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ramsey\Collection\Test;
 
+use PHPUnit\Framework\TestCase as PhpUnitTestCase;
 use Ramsey\Collection\AbstractSet;
 use Ramsey\Collection\CollectionInterface;
 use Ramsey\Collection\Set;
 use Ramsey\Collection\Test\Mock\Foo;
-use PHPUnit\Framework\TestCase as PhpUnitTestCase;
 
 /**
  * Tests for Set class.
@@ -20,7 +21,7 @@ class SetTest extends PhpUnitTestCase
     /** @var Set */
     private $set;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->set = new Set('int');
     }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ramsey\Collection\Test;
@@ -11,6 +12,10 @@ use Ramsey\Collection\Test\Mock\Bar;
 use Ramsey\Collection\Test\Mock\BarCollection;
 use Ramsey\Collection\Test\Mock\Foo;
 use Ramsey\Collection\Test\Mock\FooCollection;
+use stdClass;
+
+use function serialize;
+use function unserialize;
 
 /**
  * Tests for Collection, as well as coverage for AbstractCollection
@@ -54,7 +59,7 @@ class CollectionTest extends TestCase
     {
         $expectedCount = 4;
 
-        $obj1 = new \stdClass();
+        $obj1 = new stdClass();
         $obj1->name = $this->faker->name();
 
         $collection1 = new Collection('stdClass');
@@ -78,11 +83,11 @@ class CollectionTest extends TestCase
     {
         $name = $this->faker->name();
 
-        $obj1 = new \stdClass();
+        $obj1 = new stdClass();
         $obj1->name = $name;
 
         // Object with same properties but different identity
-        $obj2 = new \stdClass();
+        $obj2 = new stdClass();
         $obj2->name = $name;
 
         $collection = new Collection('stdClass');
@@ -96,11 +101,11 @@ class CollectionTest extends TestCase
     {
         $name = $this->faker->name();
 
-        $obj1 = new \stdClass();
+        $obj1 = new stdClass();
         $obj1->name = $name;
 
         // Object with same properties but different identity
-        $obj2 = new \stdClass();
+        $obj2 = new stdClass();
         $obj2->name = $name;
 
         $collection = new Collection('stdClass');
@@ -112,7 +117,7 @@ class CollectionTest extends TestCase
 
     public function testRemove(): void
     {
-        $obj1 = new \stdClass();
+        $obj1 = new stdClass();
         $obj1->name = $this->faker->name();
 
         $collection = new Collection('stdClass');
@@ -138,7 +143,7 @@ class CollectionTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Value must be of type ' . Foo::class);
-        $fooCollection[] = new \stdClass();
+        $fooCollection[] = new stdClass();
     }
 
     public function testColumnByProperty(): void
@@ -220,8 +225,8 @@ class CollectionTest extends TestCase
         $bar3 = new Bar(3, 'c');
         $barCollection = new BarCollection([$bar1, $bar2, $bar3]);
 
-        $collectionSerialized = \serialize($barCollection);
-        $barCollection2 = \unserialize($collectionSerialized);
+        $collectionSerialized = serialize($barCollection);
+        $barCollection2 = unserialize($collectionSerialized);
 
         $this->assertInstanceOf(BarCollection::class, $barCollection2);
         $this->assertContainsOnlyInstancesOf(Bar::class, $barCollection2);

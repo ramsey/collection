@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ramsey\Collection\Test;
@@ -6,9 +7,13 @@ namespace Ramsey\Collection\Test;
 use Ramsey\Collection\Exception\InvalidArgumentException;
 use Ramsey\Collection\Exception\NoSuchElementException;
 use Ramsey\Collection\QueueInterface;
+use stdClass;
 
 trait QueueBehavior
 {
+    /**
+     * @param mixed[] $data
+     */
     abstract protected function queue(string $type, array $data = []): QueueInterface;
 
     public function testConstructorSetsType(): void
@@ -54,11 +59,11 @@ trait QueueBehavior
     {
         $expectedCount = 4;
 
-        $obj1 = new \stdClass();
+        $obj1 = new stdClass();
         $obj1->name = $this->faker->name();
 
-        $queue1 = $this->queue(\stdClass::class);
-        $queue2 = $this->queue(\stdClass::class);
+        $queue1 = $this->queue(stdClass::class);
+        $queue2 = $this->queue(stdClass::class);
 
         // Add the same object multiple times
         for ($i = 0; $i < $expectedCount; $i++) {
@@ -76,9 +81,9 @@ trait QueueBehavior
 
     public function testOfferAddsElement(): void
     {
-        $queue = $this->queue(\stdClass::class);
+        $queue = $this->queue(stdClass::class);
 
-        $object = new \stdClass();
+        $object = new stdClass();
         $object->name = $this->faker->name();
 
         $queue->offer($object);
@@ -89,10 +94,10 @@ trait QueueBehavior
 
     public function testIterateOverQueue(): void
     {
-        $queue = $this->queue(\stdClass::class);
+        $queue = $this->queue(stdClass::class);
 
         for ($i = 0; $i < 4; $i++) {
-            $object = new \stdClass();
+            $object = new stdClass();
             $object->id = $i;
             $queue->add($object);
         }
@@ -106,13 +111,13 @@ trait QueueBehavior
 
     public function testElementDontRemovePeekFromQueue(): void
     {
-        $object1 = new \stdClass();
+        $object1 = new stdClass();
         $object1->name = 'foo';
 
-        $object2 = new \stdClass();
+        $object2 = new stdClass();
         $object2->name = 'bar';
 
-        $queue = $this->queue(\stdClass::class);
+        $queue = $this->queue(stdClass::class);
         $queue->add($object1);
         $queue->add($object2);
 
@@ -133,13 +138,13 @@ trait QueueBehavior
 
     public function testPeekReturnsObjects(): void
     {
-        $object1 = new \stdClass();
+        $object1 = new stdClass();
         $object1->name = $this->faker->name();
 
-        $object2 = new \stdClass();
+        $object2 = new stdClass();
         $object2->name = $this->faker->name();
 
-        $queue = $this->queue(\stdClass::class);
+        $queue = $this->queue(stdClass::class);
         $queue->add($object1);
         $queue->add($object2);
 
@@ -170,17 +175,17 @@ trait QueueBehavior
 
     public function testPollReturnsNullIfEmpty(): void
     {
-        $queue = $this->queue(\stdClass::class);
+        $queue = $this->queue(stdClass::class);
 
         $this->assertNull($queue->poll());
     }
 
     public function testRemove(): void
     {
-        $obj1 = new \stdClass();
+        $obj1 = new stdClass();
         $obj1->name = $this->faker->name();
 
-        $queue = $this->queue(\stdClass::class);
+        $queue = $this->queue(stdClass::class);
 
         // Add the same object multiple times
         $queue->add($obj1);
@@ -194,13 +199,13 @@ trait QueueBehavior
 
     public function testRemoveThrowsExceptionIfEmpty(): void
     {
-        $object1 = new \stdClass();
+        $object1 = new stdClass();
         $object1->name = $this->faker->name();
 
-        $object2 = new \stdClass();
+        $object2 = new stdClass();
         $object2->name = $this->faker->name();
 
-        $queue = $this->queue(\stdClass::class);
+        $queue = $this->queue(stdClass::class);
         $queue->add($object1);
         $queue->add($object2);
 

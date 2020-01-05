@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the ramsey/collection library
  *
@@ -7,7 +8,6 @@
  *
  * @copyright Copyright (c) Ben Ramsey <ben@benramsey.com>
  * @license http://opensource.org/licenses/MIT MIT
- * @link https://github.com/ramsey/collection GitHub
  */
 
 declare(strict_types=1);
@@ -22,6 +22,20 @@ use Ramsey\Collection\Exception\ValueExtractionException;
 use Ramsey\Collection\Tool\TypeTrait;
 use Ramsey\Collection\Tool\ValueExtractorTrait;
 use Ramsey\Collection\Tool\ValueToStringTrait;
+
+use function array_filter;
+use function array_map;
+use function array_merge;
+use function array_search;
+use function array_udiff;
+use function array_uintersect;
+use function current;
+use function end;
+use function in_array;
+use function reset;
+use function sprintf;
+use function unserialize;
+use function usort;
 
 /**
  * This class provides a basic implementation of `CollectionInterface`, to
@@ -55,12 +69,10 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      *
      * @param mixed $element The element to check whether the collection contains.
      * @param bool $strict Whether to perform a strict type check on the value.
-     *
-     * @return bool
      */
     public function contains($element, bool $strict = true): bool
     {
-        return \in_array($element, $this->data, $strict);
+        return in_array($element, $this->data, $strict);
     }
 
     /**
@@ -94,7 +106,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      */
     public function remove($element): bool
     {
-        if (($position = \array_search($element, $this->data, true)) !== false) {
+        if (($position = array_search($element, $this->data, true)) !== false) {
             unset($this->data[$position]);
 
             return true;
@@ -108,7 +120,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      *
      * @param string $propertyOrMethod The property or method name to filter by.
      *
-     * @return array
+     * @return mixed[]
      *
      * @throws ValueExtractionException if property or method is not defined.
      */
@@ -132,13 +144,13 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      */
     public function first()
     {
-        if (empty($this->data)) {
+        if ($this->isEmpty()) {
             throw new OutOfBoundsException('Can\'t determine first item. Collection is empty');
         }
 
-        \reset($this->data);
+        reset($this->data);
 
-        return \current($this->data);
+        return current($this->data);
     }
 
     /**
@@ -150,12 +162,12 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      */
     public function last()
     {
-        if (empty($this->data)) {
+        if ($this->isEmpty()) {
             throw new OutOfBoundsException('Can\'t determine last item. Collection is empty');
         }
 
-        $item = \end($this->data);
-        \reset($this->data);
+        $item = end($this->data);
+        reset($this->data);
 
         return $item;
     }
@@ -169,7 +181,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      * @param string $order The sort order for the resulting collection (one of
      *     this interface's `SORT_*` constants).
      *
-     * @return self
+     * @return CollectionInterface<mixed, mixed>
      *
      * @throws InvalidSortOrderException if neither "asc" nor "desc" was given
      *     as the order.
@@ -177,13 +189,13 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      */
     public function sort(string $propertyOrMethod, string $order = self::SORT_ASC): CollectionInterface
     {
-        if (!\in_array($order, [self::SORT_ASC, self::SORT_DESC], true)) {
+        if (!in_array($order, [self::SORT_ASC, self::SORT_DESC], true)) {
             throw new InvalidSortOrderException('Invalid sort order given: ' . $order);
         }
 
         $collection = clone $this;
 
-        \usort($collection->data, function ($a, $b) use ($propertyOrMethod, $order) {
+        usort($collection->data, function ($a, $b) use ($propertyOrMethod, $order) {
             $aValue = $this->extractValue($a, $propertyOrMethod);
             $bValue = $this->extractValue($b, $propertyOrMethod);
 
@@ -200,12 +212,12 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      *
      * @param callable $callback A callable to use for filtering elements.
      *
-     * @return self
+     * @return CollectionInterface<mixed, mixed>
      */
     public function filter(callable $callback): CollectionInterface
     {
         $collection = clone $this;
-        $collection->data = \array_merge([], \array_filter($collection->data, $callback));
+        $collection->data = array_merge([], array_filter($collection->data, $callback));
 
         return $collection;
     }
@@ -218,7 +230,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      * @param string $propertyOrMethod The property or method to evaluate.
      * @param mixed  $value The value to match.
      *
-     * @return self
+     * @return CollectionInterface<mixed, mixed>
      *
      * @throws ValueExtractionException if property or method is not defined.
      */
@@ -239,12 +251,12 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      * @param callable $callback A callable to apply to each item of the
      *     collection.
      *
-     * @return self
+     * @return CollectionInterface<mixed, mixed>
      */
     public function map(callable $callback): CollectionInterface
     {
         $collection = clone $this;
-        \array_map($callback, $collection->data);
+        array_map($callback, $collection->data);
 
         return $collection;
     }
@@ -253,10 +265,10 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      * Create a new collection with divergent items between current and given
      * collection.
      *
-     * @param CollectionInterface $other The collection to check for divergent
+     * @param CollectionInterface<mixed, mixed> $other The collection to check for divergent
      *     items.
      *
-     * @return self
+     * @return CollectionInterface<mixed, mixed>
      *
      * @throws CollectionMismatchException if the given collection is not of the
      *     same type.
@@ -271,20 +283,20 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             return $a === $b ? 0 : -1;
         };
 
-        $diffAtoB = \array_udiff($this->data, $other->data, $comparator);
-        $diffBtoA = \array_udiff($other->data, $this->data, $comparator);
+        $diffAtoB = array_udiff($this->data, $other->data, $comparator);
+        $diffBtoA = array_udiff($other->data, $this->data, $comparator);
 
-        return new static(\array_merge($diffAtoB, $diffBtoA));
+        return new static(array_merge($diffAtoB, $diffBtoA));
     }
 
     /**
      * Create a new collection with intersecting item between current and given
      * collection.
      *
-     * @param CollectionInterface $other The collection to check for
+     * @param CollectionInterface<mixed, mixed> $other The collection to check for
      *     intersecting items.
      *
-     * @return self
+     * @return CollectionInterface<mixed, mixed>
      *
      * @throws CollectionMismatchException if the given collection is not of the
      *     same type.
@@ -295,7 +307,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             throw new CollectionMismatchException('Collection must be of type ' . static::class);
         }
 
-        $intersect = \array_uintersect($this->data, $other->data, function ($a, $b) {
+        $intersect = array_uintersect($this->data, $other->data, function ($a, $b) {
             return $a === $b ? 0 : -1;
         });
 
@@ -305,9 +317,9 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     /**
      * Merge current items and items of given collections into a new one.
      *
-     * @param CollectionInterface ...$collections The collections to merge.
+     * @param CollectionInterface<mixed, mixed> ...$collections The collections to merge.
      *
-     * @return self
+     * @return CollectionInterface<mixed, mixed>
      *
      * @throws CollectionMismatchException if any of the given collections are not of the same type.
      */
@@ -318,23 +330,21 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         foreach ($collections as $index => $collection) {
             if (!$collection instanceof static) {
                 throw new CollectionMismatchException(
-                    \sprintf('Collection with index %d must be of type %s', $index, static::class)
+                    sprintf('Collection with index %d must be of type %s', $index, static::class)
                 );
             }
 
             $temp[] = $collection->toArray();
         }
 
-        return new static(\array_merge(...$temp));
+        return new static(array_merge(...$temp));
     }
 
     /**
-     * Converts a serialized string representation into an instance object.
-     *
-     * @param string $serialized A PHP serialized string to unserialize.
+     * @inheritDoc
      */
     public function unserialize($serialized): void
     {
-        $this->data = \unserialize($serialized, ['allowed_classes' => [$this->getType()]]);
+        $this->data = unserialize($serialized, ['allowed_classes' => [$this->getType()]]);
     }
 }
