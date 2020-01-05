@@ -93,7 +93,11 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             );
         }
 
-        $this->data[] = $value;
+        if ($offset === null) {
+            $this->data[] = $value;
+        } else {
+            $this->data[$offset] = $value;
+        }
     }
 
     /**
