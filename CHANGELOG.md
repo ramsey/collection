@@ -13,6 +13,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Security
 
+## [1.0.1] - 2020-01-04
+
+### Fixed
+
+* Fixed `AbstractCollection::offsetSet()` so that it uses the provided `$offset`
+  when setting `$value` in the array.
+
 ## [1.0.0] - 2018-12-31
 
 ### Added
@@ -87,7 +94,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Support generic arrays and maps.
 
-[Unreleased]: https://github.com/ramsey/collection/compare/1.0.0...HEAD
+[Unreleased]: https://github.com/ramsey/collection/compare/1.0.1...HEAD
+[1.0.1]: https://github.com/ramsey/collection/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/ramsey/collection/compare/0.3.0...1.0.0
 [0.3.0]: https://github.com/ramsey/collection/compare/0.2.1...0.3.0
 [0.2.1]: https://github.com/ramsey/collection/compare/0.2.0...0.2.1

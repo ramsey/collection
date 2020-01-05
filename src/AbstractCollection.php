@@ -78,7 +78,8 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     /**
      * Sets the given value to the given offset in the array.
      *
-     * @param mixed|null $offset The offset is ignored and is treated as `null`.
+     * @param mixed|null $offset The position to set the value in the array, or
+     *     `null` to append the value to the array.
      * @param mixed $value The value to set at the given offset.
      *
      * @throws InvalidArgumentException when the value does not match the
