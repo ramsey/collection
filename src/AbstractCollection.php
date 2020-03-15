@@ -285,7 +285,17 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         }
 
         $comparator = function ($a, $b) {
-            return $a === $b ? 0 : -1;
+            // If the two values are object, we convert them to unique scalars.
+            // If the collection contains mixed values (unlikely) where some are objects
+            // and some are not, we leave them as they are.
+            // The comparator should still work and the result of $a < $b should
+            // be consistent but unpredictable since not documented.
+            if (is_object($a) && is_object($b)) {
+                $a = spl_object_id($a);
+                $b = spl_object_id($b);
+            }
+
+            return $a === $b ? 0 : ($a < $b ? 1 : -1);
         };
 
         $diffAtoB = array_udiff($this->data, $other->data, $comparator);
@@ -312,9 +322,21 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             throw new CollectionMismatchException('Collection must be of type ' . static::class);
         }
 
-        $intersect = array_uintersect($this->data, $other->data, function ($a, $b) {
-            return $a === $b ? 0 : -1;
-        });
+        $comparator = function ($a, $b) {
+            // If the two values are object, we convert them to unique scalars.
+            // If the collection contains mixed values (unlikely) where some are objects
+            // and some are not, we leave them as they are.
+            // The comparator should still work and the result of $a < $b should
+            // be consistent but unpredictable since not documented.
+            if (is_object($a) && is_object($b)) {
+                $a = spl_object_id($a);
+                $b = spl_object_id($b);
+            }
+
+            return $a === $b ? 0 : ($a < $b ? 1 : -1);
+        };
+
+        $intersect = array_uintersect($this->data, $other->data, $comparator);
 
         return new static($intersect);
     }
