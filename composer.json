@@ -17,7 +17,7 @@
         "source": "https://github.com/ramsey/collection"
     },
     "require": {
-        "php": "^7.2"
+        "php": "^7.2 || ^8"
     },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
