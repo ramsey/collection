@@ -284,6 +284,12 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             throw new CollectionMismatchException('Collection must be of type ' . static::class);
         }
 
+        // When using generics (Collection.php, Set.php, etc),
+        // we also need to make sure that the internal types match each other
+        if ($other->getType() !== $this->getType()) {
+            throw new CollectionMismatchException('Collection items must be of type ' . $this->getType());
+        }
+
         $comparator = function ($a, $b) {
             return $a === $b ? 0 : -1;
         };
@@ -316,6 +322,12 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             throw new CollectionMismatchException('Collection must be of type ' . static::class);
         }
 
+        // When using generics (Collection.php, Set.php, etc),
+        // we also need to make sure that the internal types match each other
+        if ($other->getType() !== $this->getType()) {
+            throw new CollectionMismatchException('Collection items must be of type ' . $this->getType());
+        }
+
         $intersect = array_uintersect($this->data, $other->data, function ($a, $b) {
             return $a === $b ? 0 : -1;
         });
@@ -343,6 +355,14 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             if (!$collection instanceof static) {
                 throw new CollectionMismatchException(
                     sprintf('Collection with index %d must be of type %s', $index, static::class)
+                );
+            }
+
+            // When using generics (Collection.php, Set.php, etc),
+            // we also need to make sure that the internal types match each other
+            if ($collection->getType() !== $this->getType()) {
+                throw new CollectionMismatchException(
+                    sprintf('Collection items in collection with index %d must be of type %s', $index, $this->getType())
                 );
             }
 
