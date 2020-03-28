@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ramsey\Collection\Test;
 
+use Ramsey\Collection\Collection;
 use Ramsey\Collection\Exception\CollectionMismatchException;
 use Ramsey\Collection\Exception\InvalidSortOrderException;
 use Ramsey\Collection\Exception\ValueExtractionException;
@@ -204,6 +205,19 @@ class CollectionManipulationTest extends TestCase
         $this->assertEquals([$bar1, $bar2], $barCollection2->toArray());
     }
 
+    public function testDiffGenericCollection(): void
+    {
+        $bar1 = new Bar(1, 'a');
+        $bar2 = new Bar(2, 'b');
+
+        $barCollection1 = new Collection(Bar::class, [$bar1]);
+        $barCollection2 = new Collection(Bar::class, [$bar1, $bar2]);
+
+        $diffCollection = $barCollection1->diff($barCollection2);
+
+        $this->assertEquals([$bar2], $diffCollection->toArray());
+    }
+
     public function testIntersectShouldRaiseExceptionOnDiverseCollections(): void
     {
         $barCollection = new BarCollection();
@@ -230,6 +244,19 @@ class CollectionManipulationTest extends TestCase
         // Make sure original collections are untouched
         $this->assertEquals([$bar1], $barCollection1->toArray());
         $this->assertEquals([$bar1, $bar2], $barCollection2->toArray());
+    }
+
+    public function testIntersectGenericCollection(): void
+    {
+        $bar1 = new Bar(1, 'a');
+        $bar2 = new Bar(2, 'b');
+
+        $barCollection1 = new Collection(Bar::class, [$bar1]);
+        $barCollection2 = new Collection(Bar::class, [$bar1, $bar2]);
+
+        $diffCollection = $barCollection1->intersect($barCollection2);
+
+        $this->assertEquals([$bar1], $diffCollection->toArray());
     }
 
     public function testMergeShouldRaiseExceptionOnDiverseCollection(): void
@@ -262,5 +289,18 @@ class CollectionManipulationTest extends TestCase
         $this->assertEquals([$bar1], $barCollection1->toArray());
         $this->assertEquals([$bar2], $barCollection2->toArray());
         $this->assertEquals([$bar3], $barCollection3->toArray());
+    }
+
+    public function testMergeGenericCollection(): void
+    {
+        $bar1 = new Bar(1, 'a');
+        $bar2 = new Bar(2, 'b');
+
+        $barCollection1 = new Collection(Bar::class, [$bar1]);
+        $barCollection2 = new Collection(Bar::class, [$bar2]);
+
+        $diffCollection = $barCollection1->merge($barCollection2);
+
+        $this->assertEquals([$bar1, $bar2], $diffCollection->toArray());
     }
 }
