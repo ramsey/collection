@@ -290,8 +290,12 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
 
         $diffAtoB = array_udiff($this->data, $other->data, $comparator);
         $diffBtoA = array_udiff($other->data, $this->data, $comparator);
+        $diff = array_merge($diffAtoB, $diffBtoA);
 
-        return new static(array_merge($diffAtoB, $diffBtoA));
+        $collection = clone $this;
+        $collection->data = $diff;
+
+        return $collection;
     }
 
     /**
@@ -316,7 +320,10 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             return $a === $b ? 0 : -1;
         });
 
-        return new static($intersect);
+        $collection = clone $this;
+        $collection->data = $intersect;
+
+        return $collection;
     }
 
     /**
@@ -342,7 +349,12 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             $temp[] = $collection->toArray();
         }
 
-        return new static(array_merge(...$temp));
+        $merge = array_merge(...$temp);
+
+        $collection = clone $this;
+        $collection->data = $merge;
+
+        return $collection;
     }
 
     /**
