@@ -30,7 +30,7 @@ class DoubleEndedQueueTest extends TestCase
         $queue = $this->queue('string', ['Bar']);
 
         $this->assertTrue($queue->addFirst('Foo'));
-        $this->assertSame(2, $queue->count());
+        $this->assertCount(2, $queue);
         $this->assertSame('Foo', $queue->firstElement());
         $this->assertSame('Bar', $queue->lastElement());
     }
@@ -49,7 +49,7 @@ class DoubleEndedQueueTest extends TestCase
         $queue = $this->queue('string', ['Bar']);
 
         $this->assertTrue($queue->addLast('Foo'));
-        $this->assertSame(2, $queue->count());
+        $this->assertCount(2, $queue);
         $this->assertSame('Bar', $queue->firstElement());
         $this->assertSame('Foo', $queue->lastElement());
     }
@@ -60,7 +60,7 @@ class DoubleEndedQueueTest extends TestCase
 
         $this->assertSame('foo', $queue->firstElement());
         $this->assertSame('foo', $queue->firstElement());
-        $this->assertSame(2, $queue->count());
+        $this->assertCount(2, $queue);
     }
 
     public function testLastElementDontRemoveFromQueue(): void
@@ -69,7 +69,7 @@ class DoubleEndedQueueTest extends TestCase
 
         $this->assertSame('bar', $queue->lastElement());
         $this->assertSame('bar', $queue->lastElement());
-        $this->assertSame(2, $queue->count());
+        $this->assertCount(2, $queue);
     }
 
     public function testFirstElementThrowsExceptionIfEmpty(): void
@@ -126,22 +126,22 @@ class DoubleEndedQueueTest extends TestCase
     {
         $queue = $this->queue('string', ['foo', 'bar']);
 
-        $this->assertSame(2, $queue->count());
+        $this->assertCount(2, $queue);
         $this->assertSame('foo', $queue->pollFirst());
-        $this->assertSame(1, $queue->count());
+        $this->assertCount(1, $queue);
         $this->assertSame('bar', $queue->pollFirst());
-        $this->assertSame(0, $queue->count());
+        $this->assertCount(0, $queue);
     }
 
     public function testPollLastRemovesTheTail(): void
     {
         $queue = $this->queue('string', ['foo', 'bar']);
 
-        $this->assertSame(2, $queue->count());
+        $this->assertCount(2, $queue);
         $this->assertSame('bar', $queue->pollLast());
-        $this->assertSame(1, $queue->count());
+        $this->assertCount(1, $queue);
         $this->assertSame('foo', $queue->pollLast());
-        $this->assertSame(0, $queue->count());
+        $this->assertCount(0, $queue);
     }
 
     public function testPollFirstReturnsNullIfEmpty(): void
@@ -162,9 +162,9 @@ class DoubleEndedQueueTest extends TestCase
     {
         $queue = $this->queue('string', ['foo', 'bar', 'biz']);
 
-        $this->assertSame(3, $queue->count());
+        $this->assertCount(3, $queue);
         $this->assertSame('foo', $queue->removeFirst());
-        $this->assertSame(2, $queue->count());
+        $this->assertCount(2, $queue);
         $this->assertSame('bar', $queue->firstElement());
         $this->assertSame('biz', $queue->lastElement());
     }
@@ -173,9 +173,9 @@ class DoubleEndedQueueTest extends TestCase
     {
         $queue = $this->queue('string', ['foo', 'bar', 'biz']);
 
-        $this->assertSame(3, $queue->count());
+        $this->assertCount(3, $queue);
         $this->assertSame('biz', $queue->removeLast());
-        $this->assertSame(2, $queue->count());
+        $this->assertCount(2, $queue);
         $this->assertSame('foo', $queue->firstElement());
         $this->assertSame('bar', $queue->lastElement());
     }
@@ -241,7 +241,7 @@ class DoubleEndedQueueTest extends TestCase
 
         // deque should contain: bar, yop
 
-        $this->assertSame(2, $deque->count());
+        $this->assertCount(2, $deque);
         $this->assertSame('bar', $deque->firstElement());
         $this->assertSame('yop', $deque->lastElement());
     }
