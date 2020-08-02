@@ -27,7 +27,7 @@ trait QueueBehavior
     {
         $queue = $this->queue('string', ['Foo', 'Bar']);
 
-        $this->assertEquals(2, $queue->count());
+        $this->assertCount(2, $queue);
     }
 
     public function testOffsetSet(): void
@@ -35,7 +35,7 @@ trait QueueBehavior
         $queue = $this->queue('string');
         $queue[] = $this->faker->text();
 
-        $this->assertSame(1, $queue->count());
+        $this->assertCount(1, $queue);
     }
 
     public function testOffsetSetThrowsException(): void
@@ -52,7 +52,7 @@ trait QueueBehavior
         $queue = $this->queue('string');
 
         $this->assertTrue($queue->add('Foo'));
-        $this->assertSame(1, $queue->count());
+        $this->assertCount(1, $queue);
     }
 
     public function testAddMayAddSameObjectMultipleTimes(): void
@@ -88,7 +88,7 @@ trait QueueBehavior
 
         $queue->offer($object);
 
-        $this->assertSame(1, $queue->count());
+        $this->assertCount(1, $queue);
         $this->assertSame($object, $queue->poll());
     }
 
@@ -123,7 +123,7 @@ trait QueueBehavior
 
         $this->assertSame($object1, $queue->element());
         $this->assertSame($object1, $queue->element());
-        $this->assertSame(2, $queue->count());
+        $this->assertCount(2, $queue);
     }
 
     public function testElementThrowsExceptionIfEmpty(): void
@@ -166,11 +166,11 @@ trait QueueBehavior
         $queue->add('Foo');
         $queue->add('Bar');
 
-        $this->assertSame(2, $queue->count());
+        $this->assertCount(2, $queue);
         $this->assertSame('Foo', $queue->poll());
-        $this->assertSame(1, $queue->count());
+        $this->assertCount(1, $queue);
         $this->assertSame('Bar', $queue->poll());
-        $this->assertSame(0, $queue->count());
+        $this->assertCount(0, $queue);
     }
 
     public function testPollReturnsNullIfEmpty(): void
@@ -192,9 +192,9 @@ trait QueueBehavior
         $queue->add($obj1);
         $queue->add($obj1);
 
-        $this->assertSame(3, $queue->count());
+        $this->assertCount(3, $queue);
         $this->assertSame($obj1, $queue->remove());
-        $this->assertSame(2, $queue->count());
+        $this->assertCount(2, $queue);
     }
 
     public function testRemoveThrowsExceptionIfEmpty(): void
@@ -237,6 +237,6 @@ trait QueueBehavior
 
         $this->assertSame('Foo', $queue->remove());
 
-        $this->assertSame(1, $queue->count());
+        $this->assertCount(1, $queue);
     }
 }
