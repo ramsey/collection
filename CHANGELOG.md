@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Fixed `AbstractCollection::diff()`, `AbstractCollection::intersect()` and
   `AbstractCollection::merge()` when used with Generic collections.
+* Fixed `AbstractCollection::diff()` and `AbstractCollection::intersect()`
+  returning inconsistent results when used on collections containing objects.
 
 ### Security
 
