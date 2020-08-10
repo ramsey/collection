@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   `AbstractCollection::merge()` when used with Generic collections.
 * Fixed `AbstractCollection::diff()` and `AbstractCollection::intersect()`
   returning inconsistent results when used on collections containing objects.
+* Removed warning about deprecated dependency when running `composer install`
 
 ### Security
 
