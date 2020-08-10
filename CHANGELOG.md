@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed
 ### Fixed
+
+* Fixed `AbstractCollection::diff()` and `AbstractCollection::intersect()`
+  returning inconsistent results when used on collections containing objects.
+
 ### Security
 
 ## [1.0.1] - 2020-01-04
