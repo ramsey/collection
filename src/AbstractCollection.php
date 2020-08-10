@@ -284,6 +284,12 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             throw new CollectionMismatchException('Collection must be of type ' . static::class);
         }
 
+        // When using generics (Collection.php, Set.php, etc),
+        // we also need to make sure that the internal types match each other
+        if ($other->getType() !== $this->getType()) {
+            throw new CollectionMismatchException('Collection items must be of type ' . $this->getType());
+        }
+
         $comparator = function ($a, $b) {
             // If the two values are object, we convert them to unique scalars.
             // If the collection contains mixed values (unlikely) where some are objects
@@ -300,8 +306,12 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
 
         $diffAtoB = array_udiff($this->data, $other->data, $comparator);
         $diffBtoA = array_udiff($other->data, $this->data, $comparator);
+        $diff = array_merge($diffAtoB, $diffBtoA);
 
-        return new static(array_merge($diffAtoB, $diffBtoA));
+        $collection = clone $this;
+        $collection->data = $diff;
+
+        return $collection;
     }
 
     /**
@@ -322,6 +332,12 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             throw new CollectionMismatchException('Collection must be of type ' . static::class);
         }
 
+        // When using generics (Collection.php, Set.php, etc),
+        // we also need to make sure that the internal types match each other
+        if ($other->getType() !== $this->getType()) {
+            throw new CollectionMismatchException('Collection items must be of type ' . $this->getType());
+        }
+
         $comparator = function ($a, $b) {
             // If the two values are object, we convert them to unique scalars.
             // If the collection contains mixed values (unlikely) where some are objects
@@ -338,7 +354,10 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
 
         $intersect = array_uintersect($this->data, $other->data, $comparator);
 
-        return new static($intersect);
+        $collection = clone $this;
+        $collection->data = $intersect;
+
+        return $collection;
     }
 
     /**
@@ -361,10 +380,23 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
                 );
             }
 
+            // When using generics (Collection.php, Set.php, etc),
+            // we also need to make sure that the internal types match each other
+            if ($collection->getType() !== $this->getType()) {
+                throw new CollectionMismatchException(
+                    sprintf('Collection items in collection with index %d must be of type %s', $index, $this->getType())
+                );
+            }
+
             $temp[] = $collection->toArray();
         }
 
-        return new static(array_merge(...$temp));
+        $merge = array_merge(...$temp);
+
+        $collection = clone $this;
+        $collection->data = $merge;
+
+        return $collection;
     }
 
     /**
