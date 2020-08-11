@@ -1,22 +1,18 @@
 <?xml version="1.0"?>
 <ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/3.5.0/phpcs.xsd"
-         name="ramsey/collection">
+         xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd"
+         name="Vendor">
 
-    <description>ramsey/collection coding standard</description>
+    <description>Project coding standards.</description>
 
-    <!--
-        Much of this coding standard is borrowed from chiron/coding-standard:
-        https://github.com/ncou/coding-standard
-    -->
+    <arg name="extensions" value="php"/>
+    <arg name="colors"/>
+    <arg value="sp"/>
 
     <!-- Source and tests must follow the coding standard. -->
     <file>./src</file>
     <file>./tests</file>
-
-    <!-- Arguments for the command line runner. -->
-    <arg name="colors"/>
-    <arg value="sp"/>
+    <file>./resources/console</file>
 
     <!-- Rules -->
     <rule ref="PSR12">
@@ -102,6 +98,27 @@
 
     <!-- Require comma after last element in multi-line array -->
     <rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
+
+    <!-- Rules for single-line arrays. -->
+    <rule ref="SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace"/>
+
+    <!-- Require comma after last element in a multi-line method/function call -->
+    <!-- <rule ref="SlevomatCodingStandard.Functions.TrailingCommaInCall"/> -->
+
+    <!-- Require arrow functions for simple functions. -->
+    <!-- <rule ref="SlevomatCodingStandard.Functions.RequireArrowFunction"/> -->
+
+    <!-- Forbid the use of "Abstract" in an abstract class name (e.g., AbstractFoo) -->
+    <!-- <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming"/> -->
+
+    <!-- Forbid the use of "Exception" in an exception class name (e.g., FooException) -->
+    <!-- <rule ref="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming"/> -->
+
+    <!-- Forbid the use of "Interface" in an interface name (e.g., FooInterface) -->
+    <!-- <rule ref="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming"/> -->
+
+    <!-- Forbid the use of "Trait" in a trait name (e.g., FooTrait) -->
+    <!-- <rule ref="SlevomatCodingStandard.Classes.SuperfluousTraitNaming"/> -->
 
     <!-- Require presence of constant visibility -->
     <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility">
@@ -240,6 +257,9 @@
     <!-- Forbid using absolute class name references -->
     <rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
         <properties>
+            <property name="allowFallbackGlobalConstants" value="false"/>
+            <property name="allowFullyQualifiedGlobalConstants" value="false"/>
+            <property name="allowFullyQualifiedGlobalFunctions" value="false"/>
             <property name="allowFullyQualifiedExceptions" value="true"/>
             <property name="allowPartialUses" value="false"/>
             <property name="fullyQualifiedKeywords" type="array">
@@ -274,6 +294,9 @@
 
     <!-- Forbid weak comparisons -->
     <rule ref="SlevomatCodingStandard.Operators.DisallowEqualOperators"/>
+
+    <!-- Require NOWDOC if string interpolation not used -->
+    <rule ref="SlevomatCodingStandard.PHP.RequireNowdoc"/>
 
     <!-- Forbid 'list(...)' syntax -->
     <rule ref="SlevomatCodingStandard.PHP.ShortList"/>
@@ -324,11 +347,13 @@
             <property name="enableObjectTypeHint" value="true"/>
         </properties>
     </rule>
+    <!--
     <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
         <properties>
-            <property name="enableNativeTypeHint" value="false"/>
+            <property name="enableNativeTypeHint" value="true"/>
         </properties>
     </rule>
+    -->
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint">
         <properties>
             <property name="enableObjectTypeHint" value="true"/>
@@ -344,8 +369,18 @@
     <!-- Require the return type hint to have one space (i.e. function foo(): ?int) -->
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
 
+    <!-- For arrow functions, require 1 space after the keyword and before/after the arrow -->
+    <rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration"/>
+
     <!-- Forbid useless @var for constants -->
     <rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint"/>
+
+    <!-- Disallow use of super-global variables -->
+    <rule ref="SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable"/>
+
+    <!-- Clean up unnecessary variables -->
+    <rule ref="SlevomatCodingStandard.Variables.UselessVariable"/>
+    <rule ref="SlevomatCodingStandard.Variables.UnusedVariable"/>
 
     <!-- Forbid spaces around square brackets -->
     <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>

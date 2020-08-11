@@ -1,0 +1,5 @@
+#!/bin/bash
+
+__DIR__="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+php "${__DIR__}/repl.php"

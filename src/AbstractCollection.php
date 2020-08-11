@@ -290,7 +290,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             throw new CollectionMismatchException('Collection items must be of type ' . $this->getType());
         }
 
-        $comparator = function ($a, $b) {
+        $comparator = function ($a, $b): int {
             // If the two values are object, we convert them to unique scalars.
             // If the collection contains mixed values (unlikely) where some are objects
             // and some are not, we leave them as they are.
@@ -338,7 +338,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             throw new CollectionMismatchException('Collection items must be of type ' . $this->getType());
         }
 
-        $comparator = function ($a, $b) {
+        $comparator = function ($a, $b): int {
             // If the two values are object, we convert them to unique scalars.
             // If the collection contains mixed values (unlikely) where some are objects
             // and some are not, we leave them as they are.

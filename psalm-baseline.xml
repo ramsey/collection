@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="3.13.1@afd8874a9e4562eac42a02de90e42e430c3a1db1">
+  <file src="src/AbstractArray.php">
+    <InvalidTemplateParam occurrences="1">
+      <code>ArrayIterator&lt;mixed, mixed&gt;</code>
+    </InvalidTemplateParam>
+    <MixedArrayOffset occurrences="4">
+      <code>$this-&gt;data[$offset]</code>
+      <code>$this-&gt;data[$offset]</code>
+      <code>$this-&gt;data[$offset]</code>
+      <code>$this-&gt;data[$offset]</code>
+    </MixedArrayOffset>
+    <MixedAssignment occurrences="3">
+      <code>$value</code>
+      <code>$this[$key]</code>
+      <code>$this-&gt;data</code>
+    </MixedAssignment>
+  </file>
+  <file src="src/AbstractCollection.php">
+    <MissingClosureParamType occurrences="7">
+      <code>$a</code>
+      <code>$b</code>
+      <code>$item</code>
+      <code>$a</code>
+      <code>$b</code>
+      <code>$a</code>
+      <code>$b</code>
+    </MissingClosureParamType>
+    <MissingClosureReturnType occurrences="2">
+      <code>function ($a, $b) {</code>
+      <code>function ($a, $b) {</code>
+    </MissingClosureReturnType>
+    <MixedArgument occurrences="7">
+      <code>$item</code>
+      <code>$a</code>
+      <code>$b</code>
+      <code>$item</code>
+      <code>$other-&gt;data</code>
+      <code>$other-&gt;data</code>
+      <code>$other-&gt;data</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$callback</code>
+    </MixedArgumentTypeCoercion>
+    <MixedArrayOffset occurrences="1">
+      <code>$this-&gt;data[$offset]</code>
+    </MixedArrayOffset>
+    <MixedAssignment occurrences="8">
+      <code>$this[]</code>
+      <code>$item</code>
+      <code>$temp[]</code>
+      <code>$item</code>
+      <code>$aValue</code>
+      <code>$bValue</code>
+      <code>$accessorValue</code>
+      <code>$this-&gt;data</code>
+    </MixedAssignment>
+    <NoInterfaceProperties occurrences="3">
+      <code>$other-&gt;data</code>
+      <code>$other-&gt;data</code>
+      <code>$other-&gt;data</code>
+    </NoInterfaceProperties>
+    <TooManyTemplateParams occurrences="10">
+      <code>CollectionInterface&lt;mixed, mixed&gt;</code>
+      <code>CollectionInterface&lt;mixed, mixed&gt;</code>
+      <code>CollectionInterface&lt;mixed, mixed&gt;</code>
+      <code>CollectionInterface&lt;mixed, mixed&gt;</code>
+      <code>CollectionInterface&lt;mixed, mixed&gt;</code>
+      <code>CollectionInterface&lt;mixed, mixed&gt;</code>
+      <code>CollectionInterface&lt;mixed, mixed&gt;</code>
+      <code>CollectionInterface&lt;mixed, mixed&gt;</code>
+      <code>CollectionInterface&lt;mixed, mixed&gt;</code>
+      <code>CollectionInterface&lt;mixed, mixed&gt;</code>
+    </TooManyTemplateParams>
+  </file>
+  <file src="src/CollectionInterface.php">
+    <TooManyTemplateParams occurrences="10">
+      <code>CollectionInterface&lt;mixed, mixed&gt;</code>
+      <code>CollectionInterface&lt;mixed, mixed&gt;</code>
+      <code>CollectionInterface&lt;mixed, mixed&gt;</code>
+      <code>CollectionInterface&lt;mixed, mixed&gt;</code>
+      <code>CollectionInterface&lt;mixed, mixed&gt;</code>
+      <code>CollectionInterface&lt;mixed, mixed&gt;</code>
+      <code>CollectionInterface&lt;mixed, mixed&gt;</code>
+      <code>CollectionInterface&lt;mixed, mixed&gt;</code>
+      <code>CollectionInterface&lt;mixed, mixed&gt;</code>
+      <code>CollectionInterface&lt;mixed, mixed&gt;</code>
+    </TooManyTemplateParams>
+  </file>
+  <file src="src/DoubleEndedQueue.php">
+    <MixedAssignment occurrences="2">
+      <code>$tail</code>
+      <code>$tail</code>
+    </MixedAssignment>
+  </file>
+  <file src="src/Map/AbstractMap.php">
+    <MixedArgument occurrences="1">
+      <code>$key</code>
+    </MixedArgument>
+    <MixedArrayOffset occurrences="8">
+      <code>$this-&gt;data[$offset]</code>
+      <code>$this[$key]</code>
+      <code>$this[$key]</code>
+      <code>$this[$key]</code>
+      <code>$this[$key]</code>
+      <code>$this[$key]</code>
+      <code>$this[$key]</code>
+      <code>$this[$key]</code>
+    </MixedArrayOffset>
+    <MixedAssignment occurrences="8">
+      <code>$previousValue</code>
+      <code>$this[$key]</code>
+      <code>$currentValue</code>
+      <code>$this[$key]</code>
+      <code>$previousValue</code>
+      <code>$currentValue</code>
+      <code>$this[$key]</code>
+      <code>$this[$key]</code>
+    </MixedAssignment>
+    <MixedOperand occurrences="1">
+      <code>$value</code>
+    </MixedOperand>
+  </file>
+  <file src="src/Map/NamedParameterMap.php">
+    <MixedArgument occurrences="1">
+      <code>$offset</code>
+    </MixedArgument>
+    <MixedArrayOffset occurrences="1">
+      <code>$this-&gt;data[$offset]</code>
+    </MixedArrayOffset>
+    <MixedOperand occurrences="2">
+      <code>$offset</code>
+      <code>$offset</code>
+    </MixedOperand>
+  </file>
+  <file src="src/Queue.php">
+    <MixedAssignment occurrences="3">
+      <code>$this[]</code>
+      <code>$head</code>
+      <code>$head</code>
+    </MixedAssignment>
+  </file>
+  <file src="src/Tool/ValueToStringTrait.php">
+    <MixedArgument occurrences="1">
+      <code>$value</code>
+    </MixedArgument>
+  </file>
+</files>

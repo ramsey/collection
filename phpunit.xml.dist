@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="./vendor/autoload.php" colors="true" verbose="true">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.1/phpunit.xsd"
+         bootstrap="./vendor/autoload.php"
+         cacheResultFile="./build/cache/phpunit.result.cache"
+         colors="true"
+         verbose="true">
+
     <testsuites>
-        <testsuite name="ramsey/collection unit tests">
+        <testsuite name="unit-tests">
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
+
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>
         </whitelist>
     </filter>
+
 </phpunit>

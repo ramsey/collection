@@ -1,0 +1,76 @@
+{
+    "config": {
+        "verbosity": "normal"
+    },
+    "commit-msg": {
+        "enabled": true,
+        "actions": [
+        ]
+    },
+    "pre-push": {
+        "enabled": false,
+        "actions": []
+    },
+    "pre-commit": {
+        "enabled": true,
+        "actions": [
+            {
+                "action": "composer normalize --indent-size=4 --indent-style=space --ansi",
+                "conditions": [
+                    {
+                        "exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\Any",
+                        "args": [
+                            ["composer.json"]
+                        ]
+                    }
+                ]
+            },
+            {
+                "action": "composer pre-commit {$STAGED_FILES|of-type:php}"
+            },
+            {
+                "action": "git add {$STAGED_FILES}"
+            }
+        ]
+    },
+    "prepare-commit-msg": {
+        "enabled": false,
+        "actions": []
+    },
+    "post-commit": {
+        "enabled": false,
+        "actions": []
+    },
+    "post-merge": {
+        "enabled": true,
+        "actions": [
+            {
+                "action": "composer install --ansi",
+                "conditions": [
+                    {
+                        "exec": "\\CaptainHook\\App\\Hook\\Condition\\FileChanged\\Any",
+                        "args": [
+                            ["composer.json", "composer.lock"]
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "post-checkout": {
+        "enabled": true,
+        "actions": [
+            {
+                "action": "composer install --ansi",
+                "conditions": [
+                    {
+                        "exec": "\\CaptainHook\\App\\Hook\\Condition\\FileChanged\\Any",
+                        "args": [
+                            ["composer.json", "composer.lock"]
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

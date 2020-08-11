@@ -101,7 +101,8 @@ class AssociativeArrayMapTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Map elements are key/value pairs; a key must be provided for value 123');
-        $previousValue = $associativeArrayMapObject->put(null, 123);
+
+        $associativeArrayMapObject->put(null, 123);
     }
 
     public function testPutIfAbsent(): void
@@ -125,7 +126,8 @@ class AssociativeArrayMapTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Map elements are key/value pairs; a key must be provided for value 123');
-        $previousValue = $associativeArrayMapObject->putIfAbsent(null, 123);
+
+        $associativeArrayMapObject->putIfAbsent(null, 123);
     }
 
     public function testRemove(): void
