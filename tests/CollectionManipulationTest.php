@@ -13,6 +13,8 @@ use Ramsey\Collection\Test\Mock\Bar;
 use Ramsey\Collection\Test\Mock\BarCollection;
 use Ramsey\Collection\Test\Mock\FooCollection;
 
+use function strtoupper;
+
 /**
  * This test collection will test all manipulation methods on Collection.
  *
@@ -374,9 +376,7 @@ class CollectionManipulationTest extends TestCase
             }
         };
 
-        $upperStringCollection = $stringCollection->map(function ($item) {
-            return strtoupper($item);
-        });
+        $upperStringCollection = $stringCollection->map(fn ($item) => strtoupper($item));
 
         $this->assertNotSame($stringCollection, $upperStringCollection);
         $this->assertSame(['FOO', 'BAR'], $upperStringCollection->toArray());
