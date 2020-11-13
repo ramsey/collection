@@ -1,0 +1,8 @@
+version: 2
+updates:
+  - package-ecosystem: "composer"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+    versioning-strategy: "increase-if-necessary"

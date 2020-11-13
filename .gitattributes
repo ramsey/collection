@@ -2,7 +2,7 @@
 .gitattributes        export-ignore
 .github/              export-ignore
 .gitignore            export-ignore
-.travis.yml           export-ignore
+CHANGELOG.md          export-ignore
 CODE_OF_CONDUCT.md    export-ignore
 CONTRIBUTING.md       export-ignore
 bin/lint-fix.sh       export-ignore
@@ -10,6 +10,7 @@ bin/repl              export-ignore
 bin/repl.php          export-ignore
 build/                export-ignore
 captainhook.json      export-ignore
+codecov.yml           export-ignore
 docs/                 export-ignore
 phpcs.xml.dist        export-ignore
 phpstan.neon.dist     export-ignore
