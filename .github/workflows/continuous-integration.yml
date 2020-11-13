@@ -1,0 +1,82 @@
+# https://help.github.com/en/categories/automating-your-workflow-with-github-actions
+
+name: "CI"
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "main"
+
+env:
+  COMPOSER_ROOT_VERSION: "1.99.99"
+
+jobs:
+
+  coding-standards:
+    name: "Coding Standards"
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: "actions/checkout@v2"
+      - uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "7.4"
+          coverage: "none"
+          ini-values: "memory_limit=-1"
+          tools: "composer:v2"
+      - uses: "ramsey/composer-install@v1"
+      - name: "Check coding standards"
+        run: "composer br:lint"
+
+  static-analysis:
+    name: "Static Analysis"
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: "actions/checkout@v2"
+      - uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "7.4"
+          coverage: "none"
+          ini-values: "memory_limit=-1"
+          tools: "composer:v2"
+      - uses: "ramsey/composer-install@v1"
+      - name: "Run PHPStan"
+        run: "composer br:analyze:phpstan"
+      - name: "Run Psalm"
+        run: "composer br:analyze:psalm -- --shepherd"
+
+  unit-tests:
+    name: "Unit Tests"
+    runs-on: ${{ matrix.operating-system }}
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - "7.2"
+          - "7.3"
+          - "7.4"
+        operating-system:
+          - "ubuntu-latest"
+        experimental:
+          - false
+        include:
+          - php-version: "8.0"
+            operating-system: "ubuntu-latest"
+            experimental: true
+            composer-options: "--ignore-platform-reqs"
+    steps:
+      - uses: "actions/checkout@v2"
+      - uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          coverage: "pcov"
+          ini-values: "memory_limit=-1"
+          tools: "composer:v2"
+      - uses: "ramsey/composer-install@v1"
+        with:
+          composer-options: "${{ matrix.composer-options }}"
+      - name: "Run unit tests"
+        run: "composer br:test:coverage:ci -- --coverage-text"
+      - name: "Publish coverage report to Codecov"
+        uses: "codecov/codecov-action@v1"
