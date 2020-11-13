@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - "main"
+      - "2.x"
 
 env:
   COMPOSER_ROOT_VERSION: "1.99.99"
