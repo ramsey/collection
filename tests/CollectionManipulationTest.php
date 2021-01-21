@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Ramsey\Collection\Test;
 
-use Prophecy\PhpUnit\ProphecyTrait;
 use Ramsey\Collection\AbstractCollection;
 use Ramsey\Collection\Collection;
 use Ramsey\Collection\Exception\CollectionMismatchException;
@@ -22,8 +21,6 @@ use Ramsey\Collection\Test\Mock\FooCollection;
  */
 class CollectionManipulationTest extends TestCase
 {
-    use ProphecyTrait;
-
     public function testSortNameAscWithAscendingIdAndNames(): void
     {
         $bar1 = new Bar(1, 'a');
