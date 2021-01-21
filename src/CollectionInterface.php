@@ -156,16 +156,19 @@ interface CollectionInterface extends ArrayInterface
     /**
      * Apply a given callback method on each item of the collection.
      *
-     * This will always leave the original collection untouched and will return
-     * a new one.
+     * This will always leave the original collection untouched. The new
+     * collection is created by mapping the callback to each item of the
+     * original collection.
      *
      * See the {@link http://php.net/manual/en/function.array-map.php PHP array_map() documentation}
      * for examples of how the `$callback` parameter works.
      *
-     * @param callable(T):T $callback A callable to apply to each item of the
-     *     collection.
+     * @param callable(T):TCallbackReturn $callback A callable to apply to each
+     *     item of the collection.
      *
-     * @return CollectionInterface<T>
+     * @return CollectionInterface<TCallbackReturn>
+     *
+     * @template TCallbackReturn
      */
     public function map(callable $callback): self;
 
