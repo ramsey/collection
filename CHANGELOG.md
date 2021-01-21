@@ -13,6 +13,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Security
 
+## [1.1.2] - 2021-01-20
+
+### Fixed
+
+* Fixed [Psalm](https://psalm.dev) annotations causing Psalm errors in
+  downstream projects.
+* Fixed `AbstractCollection::column()` attempting to access a property or method
+  on a non-object.
+
 ## [1.1.1] - 2020-09-10
 
 ### Fixed
@@ -110,7 +119,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Support generic arrays and maps.
 
-[Unreleased]: https://github.com/ramsey/collection/compare/1.1.0...HEAD
+[Unreleased]: https://github.com/ramsey/collection/compare/1.1.2...HEAD
+[1.1.2]: https://github.com/ramsey/collection/compare/1.1.1...1.1.2
+[1.1.1]: https://github.com/ramsey/collection/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/ramsey/collection/compare/1.0.1...1.1.0
 [1.0.1]: https://github.com/ramsey/collection/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/ramsey/collection/compare/0.3.0...1.0.0
