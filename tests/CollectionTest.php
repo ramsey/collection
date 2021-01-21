@@ -154,6 +154,8 @@ class CollectionTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Value must be of type ' . Foo::class);
+
+        // @phpstan-ignore-next-line
         $fooCollection[] = new stdClass();
     }
 

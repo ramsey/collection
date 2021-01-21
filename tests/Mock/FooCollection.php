@@ -6,6 +6,9 @@ namespace Ramsey\Collection\Test\Mock;
 
 use Ramsey\Collection\AbstractCollection;
 
+/**
+ * @extends AbstractCollection<Foo>
+ */
 class FooCollection extends AbstractCollection
 {
     public function getType(): string

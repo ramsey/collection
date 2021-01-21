@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Ramsey\Collection\Test;
 
-use Ramsey\Collection\AbstractCollection;
 use Ramsey\Collection\Collection;
 use Ramsey\Collection\Exception\CollectionMismatchException;
 use Ramsey\Collection\Exception\InvalidSortOrderException;
@@ -185,6 +184,7 @@ class CollectionManipulationTest extends TestCase
         $this->expectException(CollectionMismatchException::class);
         $this->expectExceptionMessage('Collection must be of type Ramsey\Collection\Test\Mock\BarCollection');
 
+        // @phpstan-ignore-next-line
         $barCollection->diff(new FooCollection());
     }
 
@@ -249,6 +249,7 @@ class CollectionManipulationTest extends TestCase
         $this->expectException(CollectionMismatchException::class);
         $this->expectExceptionMessage('Collection must be of type Ramsey\Collection\Test\Mock\BarCollection');
 
+        // @phpstan-ignore-next-line
         $barCollection->intersect(new FooCollection());
     }
 
@@ -316,6 +317,7 @@ class CollectionManipulationTest extends TestCase
             'Collection with index 1 must be of type Ramsey\Collection\Test\Mock\BarCollection'
         );
 
+        // @phpstan-ignore-next-line
         $barCollection->merge(new BarCollection(), new FooCollection());
     }
 
@@ -367,18 +369,24 @@ class CollectionManipulationTest extends TestCase
 
     public function testMapConvertsValues(): void
     {
-        $stringCollection = new class (['foo', 'bar']) extends AbstractCollection {
-            public function getType(): string
-            {
-                return 'string';
-            }
-        };
+        $bar1 = new Bar(1, 'Jane');
+        $bar2 = new Bar(2, 'John');
+        $bar3 = new Bar(3, 'Janice');
 
-        $upperStringCollection = $stringCollection->map(function ($item) {
-            return strtoupper($item);
+        $barCollection = new BarCollection();
+        $barCollection[] = $bar1;
+        $barCollection[] = $bar2;
+        $barCollection[] = $bar3;
+
+        $names = $barCollection->map(function (Bar $bar): string {
+            return $bar->getName();
         });
 
-        $this->assertNotSame($stringCollection, $upperStringCollection);
-        $this->assertSame(['FOO', 'BAR'], $upperStringCollection->toArray());
+        $ids = $barCollection->map(function (Bar $bar): int {
+            return $bar->getId();
+        });
+
+        $this->assertSame(['Jane', 'John', 'Janice'], $names->toArray());
+        $this->assertSame([1, 2, 3], $ids->toArray());
     }
 }
