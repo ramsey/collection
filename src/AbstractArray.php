@@ -54,6 +54,8 @@ abstract class AbstractArray implements ArrayInterface
      * Returns an iterator for this array.
      *
      * @link http://php.net/manual/en/iteratoraggregate.getiterator.php IteratorAggregate::getIterator()
+     *
+     * @return Traversable<T>
      */
     public function getIterator(): Traversable
     {
