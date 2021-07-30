@@ -258,7 +258,6 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             $temp[] = $collection->toArray();
         }
 
-        /** @var array<array-key, T> $merge */
         $merge = array_merge(...$temp);
 
         $collection = clone $this;
