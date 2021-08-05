@@ -18,7 +18,7 @@
 
 ## About
 
-ramsey/collection is a PHP 7.2+ library for representing and manipulating collections.
+ramsey/collection is a PHP 7.3+ library for representing and manipulating collections.
 
 Much inspiration for this library came from the [Java Collections Framework][java].
 
@@ -44,7 +44,7 @@ Examples of how to use this framework can be found in the
 Contributions are welcome! Before contributing to this project, familiarize
 yourself with [CONTRIBUTING.md](CONTRIBUTING.md).
 
-To develop this project, you will need [PHP](https://www.php.net) 7.2 or greater
+To develop this project, you will need [PHP](https://www.php.net) 7.3 or greater
 and [Composer](https://getcomposer.org).
 
 After cloning this repository locally, execute the following commands:
