@@ -1,7 +1,7 @@
 {
     "name": "ramsey/collection",
     "type": "library",
-    "description": "A PHP 7.2+ library for representing and manipulating collections.",
+    "description": "A PHP library for representing and manipulating collections.",
     "keywords": [
         "array",
         "collection",
