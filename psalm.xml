@@ -4,13 +4,15 @@
        xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
        totallyTyped="true"
        cacheDirectory="./build/cache/psalm"
-       errorBaseline="psalm-baseline.xml">
+       errorBaseline="psalm-baseline.xml"
+       autoloader="./tests/bootstrap.php">
 
     <projectFiles>
         <directory name="./src"/>
         <directory name="./resources/console"/>
         <ignoreFiles>
             <directory name="./tests"/>
+            <directory name="./vendor"/>
         </ignoreFiles>
     </projectFiles>
 

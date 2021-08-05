@@ -5,6 +5,7 @@
 
     <description>Project coding standards.</description>
 
+    <arg name="bootstrap" value="./tests/bootstrap.php"/>
     <arg name="extensions" value="php"/>
     <arg name="colors"/>
     <arg value="sp"/>

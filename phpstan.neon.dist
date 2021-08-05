@@ -7,3 +7,5 @@ parameters:
         - ./src
         - ./tests
         - ./resources/console
+    bootstrapFiles:
+        - ./tests/bootstrap.php

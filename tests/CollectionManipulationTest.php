@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ramsey\Collection\Test;
 
+use Prophecy\PhpUnit\ProphecyTrait;
 use Ramsey\Collection\Collection;
 use Ramsey\Collection\Exception\CollectionMismatchException;
 use Ramsey\Collection\Exception\InvalidSortOrderException;
@@ -20,6 +21,8 @@ use Ramsey\Collection\Test\Mock\FooCollection;
  */
 class CollectionManipulationTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testSortNameAscWithAscendingIdAndNames(): void
     {
         $bar1 = new Bar(1, 'a');
