@@ -13,6 +13,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Security
 
+## [1.2.0] - 2021-08-05
+
+### Added
+
+* Support PHP 8.1.0
+
+### Changed
+
+* Minimum PHP version supported is 7.3
+
 ## [1.1.4] - 2021-07-29
 
 ### Fixed
