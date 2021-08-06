@@ -82,7 +82,7 @@ use Ramsey\Collection\Tool\TypeTrait;
  *
  * @template K
  * @template T
- * @template-extends AbstractTypedMap<K, T>
+ * @extends AbstractTypedMap<K, T>
  */
 class TypedMap extends AbstractTypedMap
 {

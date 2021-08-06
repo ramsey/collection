@@ -160,7 +160,7 @@ use Ramsey\Collection\Exception\NoSuchElementException;
  * empty.
  *
  * @template T
- * @template-extends QueueInterface<T>
+ * @extends QueueInterface<T>
  */
 interface DoubleEndedQueueInterface extends QueueInterface
 {

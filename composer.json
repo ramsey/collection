@@ -52,7 +52,8 @@
     "autoload-dev": {
         "psr-4": {
             "Ramsey\\Console\\": "resources/console/",
-            "Ramsey\\Collection\\Test\\": "tests/"
+            "Ramsey\\Collection\\Test\\": "tests/",
+            "Ramsey\\Test\\Generics\\": "tests/generics/"
         },
         "files": [
             "vendor/hamcrest/hamcrest-php/hamcrest/Hamcrest.php"

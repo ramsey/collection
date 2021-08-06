@@ -13,6 +13,10 @@ trait QueueBehavior
 {
     /**
      * @param mixed[] $data
+     *
+     * @return QueueInterface<T>
+     *
+     * @template T
      */
     abstract protected function queue(string $type, array $data = []): QueueInterface;
 

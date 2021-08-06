@@ -8,6 +8,7 @@ use Mockery;
 use Ramsey\Collection\DoubleEndedQueue;
 use Ramsey\Collection\Exception\InvalidArgumentException;
 use Ramsey\Collection\Exception\NoSuchElementException;
+use Ramsey\Collection\QueueInterface;
 use stdClass;
 
 /**
@@ -19,14 +20,19 @@ class DoubleEndedQueueTest extends TestCase
 
     /**
      * @param mixed[] $data
+     *
+     * @return DoubleEndedQueue<T>
+     *
+     * @template T
      */
-    protected function queue(string $type, array $data = []): DoubleEndedQueue
+    protected function queue(string $type, array $data = []): QueueInterface
     {
         return new DoubleEndedQueue($type, $data);
     }
 
     public function testValuesCanBeAddedToTheHead(): void
     {
+        /** @var DoubleEndedQueue<string> $queue */
         $queue = $this->queue('string', ['Bar']);
 
         $this->assertTrue($queue->addFirst('Foo'));
@@ -37,15 +43,19 @@ class DoubleEndedQueueTest extends TestCase
 
     public function testAddFirstThrowsExceptionForIncorrectTypes(): void
     {
+        /** @var DoubleEndedQueue<string> $queue */
         $queue = $this->queue('string');
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Value must be of type string; value is 42');
+
+        // @phpstan-ignore-next-line
         $queue->addFirst(42);
     }
 
     public function testValuesCanBeAddedToTheTail(): void
     {
+        /** @var DoubleEndedQueue<string> $queue */
         $queue = $this->queue('string', ['Bar']);
 
         $this->assertTrue($queue->addLast('Foo'));
@@ -56,6 +66,7 @@ class DoubleEndedQueueTest extends TestCase
 
     public function testFirstElementDontRemoveFromQueue(): void
     {
+        /** @var DoubleEndedQueue<string> $queue */
         $queue = $this->queue('string', ['foo', 'bar']);
 
         $this->assertSame('foo', $queue->firstElement());
@@ -65,6 +76,7 @@ class DoubleEndedQueueTest extends TestCase
 
     public function testLastElementDontRemoveFromQueue(): void
     {
+        /** @var DoubleEndedQueue<string> $queue */
         $queue = $this->queue('string', ['foo', 'bar']);
 
         $this->assertSame('bar', $queue->lastElement());
@@ -74,6 +86,7 @@ class DoubleEndedQueueTest extends TestCase
 
     public function testFirstElementThrowsExceptionIfEmpty(): void
     {
+        /** @var DoubleEndedQueue<string> $queue */
         $queue = $this->queue('string');
 
         $this->expectException(NoSuchElementException::class);
@@ -84,6 +97,7 @@ class DoubleEndedQueueTest extends TestCase
 
     public function testLastElementThrowsExceptionIfEmpty(): void
     {
+        /** @var DoubleEndedQueue<string> $queue */
         $queue = $this->queue('string');
 
         $this->expectException(NoSuchElementException::class);
@@ -94,6 +108,7 @@ class DoubleEndedQueueTest extends TestCase
 
     public function testPeekFirstReturnsObjects(): void
     {
+        /** @var DoubleEndedQueue<string> $queue */
         $queue = $this->queue('string', ['foo', 'bar']);
 
         $this->assertSame('foo', $queue->peekFirst());
@@ -102,6 +117,7 @@ class DoubleEndedQueueTest extends TestCase
 
     public function testPeekLastReturnsObjects(): void
     {
+        /** @var DoubleEndedQueue<string> $queue */
         $queue = $this->queue('string', ['foo', 'bar']);
 
         $this->assertSame('bar', $queue->peekLast());
@@ -110,6 +126,7 @@ class DoubleEndedQueueTest extends TestCase
 
     public function testPeekFirstReturnsNullIfEmpty(): void
     {
+        /** @var DoubleEndedQueue<bool> $queue */
         $queue = $this->queue('bool');
 
         $this->assertNull($queue->peekFirst());
@@ -117,6 +134,7 @@ class DoubleEndedQueueTest extends TestCase
 
     public function testPeekLastReturnsNullIfEmpty(): void
     {
+        /** @var DoubleEndedQueue<bool> $queue */
         $queue = $this->queue('bool');
 
         $this->assertNull($queue->peekLast());
@@ -124,6 +142,7 @@ class DoubleEndedQueueTest extends TestCase
 
     public function testPollFirstRemovesTheHead(): void
     {
+        /** @var DoubleEndedQueue<string> $queue */
         $queue = $this->queue('string', ['foo', 'bar']);
 
         $this->assertCount(2, $queue);
@@ -135,6 +154,7 @@ class DoubleEndedQueueTest extends TestCase
 
     public function testPollLastRemovesTheTail(): void
     {
+        /** @var DoubleEndedQueue<string> $queue */
         $queue = $this->queue('string', ['foo', 'bar']);
 
         $this->assertCount(2, $queue);
@@ -146,6 +166,7 @@ class DoubleEndedQueueTest extends TestCase
 
     public function testPollFirstReturnsNullIfEmpty(): void
     {
+        /** @var DoubleEndedQueue<stdClass> $queue */
         $queue = $this->queue(stdClass::class);
 
         $this->assertNull($queue->pollFirst());
@@ -153,6 +174,7 @@ class DoubleEndedQueueTest extends TestCase
 
     public function testPollLastReturnsNullIfEmpty(): void
     {
+        /** @var DoubleEndedQueue<stdClass> $queue */
         $queue = $this->queue(stdClass::class);
 
         $this->assertNull($queue->pollLast());
@@ -160,6 +182,7 @@ class DoubleEndedQueueTest extends TestCase
 
     public function testRemoveFirst(): void
     {
+        /** @var DoubleEndedQueue<string> $queue */
         $queue = $this->queue('string', ['foo', 'bar', 'biz']);
 
         $this->assertCount(3, $queue);
@@ -171,6 +194,7 @@ class DoubleEndedQueueTest extends TestCase
 
     public function testRemoveLast(): void
     {
+        /** @var DoubleEndedQueue<string> $queue */
         $queue = $this->queue('string', ['foo', 'bar', 'biz']);
 
         $this->assertCount(3, $queue);
@@ -182,6 +206,7 @@ class DoubleEndedQueueTest extends TestCase
 
     public function testRemoveFirstThrowsExceptionIfEmpty(): void
     {
+        /** @var DoubleEndedQueue<string> $queue */
         $queue = $this->queue('string', ['foo', 'bar']);
 
         $this->assertSame('foo', $queue->removeFirst());
@@ -195,6 +220,7 @@ class DoubleEndedQueueTest extends TestCase
 
     public function testRemoveLastThrowsExceptionIfEmpty(): void
     {
+        /** @var DoubleEndedQueue<string> $queue */
         $queue = $this->queue('string', ['foo', 'bar']);
 
         $this->assertSame('bar', $queue->removeLast());
@@ -208,6 +234,7 @@ class DoubleEndedQueueTest extends TestCase
 
     public function testMixedUsageOfAllQueueAndDequeueMethods(): void
     {
+        /** @var DoubleEndedQueue<string> $deque */
         $deque = $this->queue('string');
 
         $deque->add('foo');

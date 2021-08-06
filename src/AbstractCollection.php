@@ -42,8 +42,8 @@ use function usort;
  * minimize the effort required to implement this interface
  *
  * @template T
- * @template-extends AbstractArray<T>
- * @template-implements CollectionInterface<T>
+ * @extends AbstractArray<T>
+ * @implements CollectionInterface<T>
  */
 abstract class AbstractCollection extends AbstractArray implements CollectionInterface
 {

@@ -18,6 +18,10 @@ class QueueTest extends TestCase
 
     /**
      * @param mixed[] $data
+     *
+     * @return Queue<T>
+     *
+     * @template T
      */
     protected function queue(string $type, array $data = []): QueueInterface
     {

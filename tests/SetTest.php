@@ -18,7 +18,7 @@ use Ramsey\Collection\Test\Mock\Foo;
  */
 class SetTest extends PhpUnitTestCase
 {
-    /** @var Set */
+    /** @var Set<int> */
     private $set;
 
     protected function setUp(): void
@@ -60,6 +60,7 @@ class SetTest extends PhpUnitTestCase
 
     public function testUsingEqualButNotIdentical(): void
     {
+        /** @var Set<Foo> $uniqueFoos */
         $uniqueFoos = new Set(Foo::class);
 
         // the comparisons are identical (===), not equal(==)
@@ -69,6 +70,7 @@ class SetTest extends PhpUnitTestCase
 
     public function testUsingIdentical(): void
     {
+        /** @var Set<Foo> $uniqueFoos */
         $uniqueFoos = new Set(Foo::class);
 
         // the comparisons are identical (===), not equal(==)

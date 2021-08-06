@@ -26,7 +26,7 @@ use function is_int;
  * `NamedParameterMap` represents a mapping of values to a set of named keys
  * that may optionally be typed
  *
- * @template-extends AbstractMap<mixed>
+ * @extends AbstractMap<mixed>
  */
 class NamedParameterMap extends AbstractMap
 {

@@ -94,7 +94,7 @@ use Ramsey\Collection\Exception\NoSuchElementException;
  * `poll()` method to indicate that the queue contains no elements.
  *
  * @template T
- * @template-extends ArrayInterface<T>
+ * @extends ArrayInterface<T>
  */
 interface QueueInterface extends ArrayInterface
 {

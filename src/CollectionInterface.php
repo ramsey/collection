@@ -21,7 +21,7 @@ namespace Ramsey\Collection;
  * and others unordered.
  *
  * @template T
- * @template-extends ArrayInterface<T>
+ * @extends ArrayInterface<T>
  */
 interface CollectionInterface extends ArrayInterface
 {

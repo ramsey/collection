@@ -71,7 +71,7 @@ namespace Ramsey\Collection;
  * ```
  *
  * @template T
- * @template-extends AbstractCollection<T>
+ * @extends AbstractCollection<T>
  */
 class Collection extends AbstractCollection
 {

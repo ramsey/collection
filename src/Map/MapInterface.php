@@ -22,7 +22,7 @@ use Ramsey\Collection\ArrayInterface;
  * A map cannot contain duplicate keys; each key can map to at most one value.
  *
  * @template T
- * @template-extends ArrayInterface<T>
+ * @extends ArrayInterface<T>
  */
 interface MapInterface extends ArrayInterface
 {

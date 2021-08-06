@@ -24,8 +24,8 @@ use Ramsey\Collection\Tool\ValueToStringTrait;
  * the effort required to implement this interface.
  *
  * @template T
- * @template-extends AbstractArray<T>
- * @template-implements QueueInterface<T>
+ * @extends AbstractArray<T>
+ * @implements QueueInterface<T>
  */
 class Queue extends AbstractArray implements QueueInterface
 {
