@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Security
 
+## 1.2.1 - 2021-08-05
+
+### Fixed
+
+* Standardize template annotations and fix iterable types
+
 ## 1.2.0 - 2021-08-05
 
 ### Added
