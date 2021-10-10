@@ -13,7 +13,6 @@
     <!-- Source and tests must follow the coding standard. -->
     <file>./src</file>
     <file>./tests</file>
-    <file>./resources/console</file>
 
     <!-- Rules -->
     <rule ref="PSR12">

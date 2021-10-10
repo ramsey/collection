@@ -4,6 +4,5 @@ parameters:
     paths:
         - ./src
         - ./tests
-        - ./resources/console
     bootstrapFiles:
         - ./tests/bootstrap.php
