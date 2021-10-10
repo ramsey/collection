@@ -1,35 +1,51 @@
 {
     "config": {
+        "ansi-colors": true,
+        "fail-on-first-error": false,
+        "plugins": [],
         "verbosity": "normal"
     },
     "commit-msg": {
-        "enabled": true,
-        "actions": [
-        ]
-    },
-    "pre-push": {
         "enabled": false,
         "actions": []
+    },
+    "pre-push": {
+        "enabled": true,
+        "actions": [
+            {
+                "action": "composer test"
+            }
+        ]
     },
     "pre-commit": {
         "enabled": true,
         "actions": [
             {
-                "action": "composer normalize --indent-size=4 --indent-style=space --ansi",
+                "action": "composer validate",
                 "conditions": [
                     {
                         "exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\Any",
-                        "args": [
-                            ["composer.json"]
-                        ]
+                        "args": [["composer.json"]]
                     }
                 ]
             },
             {
-                "action": "composer pre-commit {$STAGED_FILES|of-type:php}"
+                "action": "composer normalize --dry-run",
+                "conditions": [
+                    {
+                        "exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\Any",
+                        "args": [["composer.json"]]
+                    }
+                ]
             },
             {
-                "action": "git add {$STAGED_FILES}"
+                "action": "composer dev:lint -- {$STAGED_FILES|of-type:php}",
+                "conditions": [
+                    {
+                        "exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",
+                        "args": ["php"]
+                    }
+                ]
             }
         ]
     },
@@ -49,9 +65,7 @@
                 "conditions": [
                     {
                         "exec": "\\CaptainHook\\App\\Hook\\Condition\\FileChanged\\Any",
-                        "args": [
-                            ["composer.json", "composer.lock"]
-                        ]
+                        "args": [["composer.json", "composer.lock"]]
                     }
                 ]
             }
@@ -65,12 +79,18 @@
                 "conditions": [
                     {
                         "exec": "\\CaptainHook\\App\\Hook\\Condition\\FileChanged\\Any",
-                        "args": [
-                            ["composer.json", "composer.lock"]
-                        ]
+                        "args": [["composer.json", "composer.lock"]]
                     }
                 ]
             }
         ]
+    },
+    "post-rewrite": {
+        "enabled": false,
+        "actions": []
+    },
+    "post-change": {
+        "enabled": false,
+        "actions": []
     }
 }

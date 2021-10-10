@@ -61,48 +61,42 @@
     },
     "scripts": {
         "post-autoload-dump": "captainhook install --ansi -f -s",
-        "br:analyze": [
-            "@br:analyze:phpstan",
-            "@br:analyze:psalm"
+        "dev:analyze": [
+            "@dev:analyze:phpstan",
+            "@dev:analyze:psalm"
         ],
-        "br:analyze:phpstan": "phpstan --memory-limit=1G analyse",
-        "br:analyze:psalm": "psalm --diff --config=psalm.xml",
-        "br:build:clean": "git clean -fX build/.",
-        "br:build:clear-cache": "git clean -fX build/cache/.",
-        "br:lint": "phpcs --cache=build/cache/phpcs.cache",
-        "br:lint:fix": "./bin/lint-fix.sh",
-        "br:repl": [
+        "dev:analyze:phpstan": "phpstan --memory-limit=1G analyse",
+        "dev:analyze:psalm": "psalm --diff --config=psalm.xml",
+        "dev:build:clean": "git clean -fX build/.",
+        "dev:build:clear-cache": "git clean -fX build/cache/.",
+        "dev:lint": "phpcs --cache=build/cache/phpcs.cache",
+        "dev:lint:fix": "./bin/lint-fix.sh",
+        "dev:repl": [
             "echo ; echo 'Type ./bin/repl to start the REPL.'"
         ],
-        "br:test": "phpunit",
-        "br:test:all": [
-            "@br:lint",
-            "@br:analyze",
-            "@br:test"
+        "dev:test": "phpunit",
+        "dev:test:all": [
+            "@dev:lint",
+            "@dev:analyze",
+            "@dev:test"
         ],
-        "br:test:coverage:ci": "phpunit --coverage-clover build/logs/clover.xml",
-        "br:test:coverage:html": "phpunit --coverage-html build/coverage",
-        "pre-commit": [
-            "@br:lint:fix",
-            "@br:lint",
-            "@br:analyze"
-        ],
-        "test": "@br:test:all"
+        "dev:test:coverage:ci": "phpunit --coverage-clover build/logs/clover.xml",
+        "dev:test:coverage:html": "phpunit --coverage-html build/coverage",
+        "test": "@dev:test:all"
     },
     "scripts-descriptions": {
-        "br:analyze": "Performs static analysis on the code base.",
-        "br:analyze:phpstan": "Runs the PHPStan static analyzer.",
-        "br:analyze:psalm": "Runs the Psalm static analyzer.",
-        "br:build:clean": "Removes everything not under version control from the build directory.",
-        "br:build:clear-cache": "Removes everything not under version control from build/cache/.",
-        "br:lint": "Checks all source code for coding standards issues.",
-        "br:lint:fix": "Checks source code for coding standards issues and fixes them, if possible.",
-        "br:repl": "Note: Use ./bin/repl to run the REPL.",
-        "br:test": "Runs the full unit test suite.",
-        "br:test:all": "Runs linting, static analysis, and unit tests.",
-        "br:test:coverage:ci": "Runs the unit test suite and generates a Clover coverage report.",
-        "br:test:coverage:html": "Runs the unit tests suite and generates an HTML coverage report.",
-        "pre-commit": "These commands are run as part of a Git pre-commit hook installed using captainhook/captainhook. Each command should be prepared to accept a list of space-separated staged files.",
+        "dev:analyze": "Performs static analysis on the code base.",
+        "dev:analyze:phpstan": "Runs the PHPStan static analyzer.",
+        "dev:analyze:psalm": "Runs the Psalm static analyzer.",
+        "dev:build:clean": "Removes everything not under version control from the build directory.",
+        "dev:build:clear-cache": "Removes everything not under version control from build/cache/.",
+        "dev:lint": "Checks all source code for coding standards issues.",
+        "dev:lint:fix": "Checks source code for coding standards issues and fixes them, if possible.",
+        "dev:repl": "Note: Use ./bin/repl to run the REPL.",
+        "dev:test": "Runs the full unit test suite.",
+        "dev:test:all": "Runs linting, static analysis, and unit tests.",
+        "dev:test:coverage:ci": "Runs the unit test suite and generates a Clover coverage report.",
+        "dev:test:coverage:html": "Runs the unit tests suite and generates an HTML coverage report.",
         "test": "Shortcut to run the full test suite."
     }
 }
