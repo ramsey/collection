@@ -20,7 +20,7 @@ use Ramsey\Collection\Tool\TypeTrait;
  * A `TypedMap` represents a map of elements where key and value are typed.
  *
  * Each element is identified by a key with defined type and a value of defined
- * type. The keys of the map must be unique. The values on the map can be=
+ * type. The keys of the map must be unique. The values on the map can be
  * repeated but each with its own different key.
  *
  * The most common case is to use a string type key, but it's not limited to
