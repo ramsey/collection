@@ -13,6 +13,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Security
 
+## 1.2.2 - 2021-10-10
+
+### Fixed
+
+* Merging of sets now excludes duplicates, since a set does not allow duplicate
+  values.
+
 ## 1.2.1 - 2021-08-05
 
 ### Fixed
