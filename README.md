@@ -34,32 +34,20 @@ composer require ramsey/collection
 
 ## Usage
 
-Examples of how to use this framework can be found in the
+Examples of how to use this library may be found in the
 [Wiki pages](https://github.com/ramsey/collection/wiki/Examples).
 
 ## Contributing
 
-Contributions are welcome! Before contributing to this project, familiarize
-yourself with [CONTRIBUTING.md](CONTRIBUTING.md).
-
-To develop this project, you will need [PHP](https://www.php.net) 7.3 or greater
-and [Composer](https://getcomposer.org).
-
-After cloning this repository locally, execute the following commands:
-
-``` bash
-cd /path/to/repository
-composer install
-```
-
-Now, you are ready to develop!
+Contributions are welcome! To contribute, please familiarize yourself with
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Coordinated Disclosure
 
 Keeping user information safe and secure is a top priority, and we welcome the
 contribution of external security researchers. If you believe you've found a
 security issue in software that is maintained in this repository, please read
-[SECURITY.md][] for instructions on submitting a vulnerability report.
+[SECURITY.md](SECURITY.md) for instructions on submitting a vulnerability report.
 
 ## ramsey/collection for Enterprise
 
@@ -79,4 +67,3 @@ MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
 
 
 [java]: http://docs.oracle.com/javase/8/docs/technotes/guides/collections/index.html
-[security.md]: https://github.com/ramsey/collection/blob/master/SECURITY.md
