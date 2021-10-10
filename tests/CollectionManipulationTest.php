@@ -344,6 +344,34 @@ class CollectionManipulationTest extends TestCase
         $this->assertEquals([$bar3], $barCollection3->toArray());
     }
 
+    public function testMergeWhenTheSameObjectAppearsInMultipleCollections(): void
+    {
+        $bar1 = new Bar(1, 'a');
+        $bar2 = new Bar(2, 'b');
+        $bar3 = new Bar(3, 'c');
+
+        $barCollection1 = new BarCollection([$bar1]);
+        $barCollection2 = new BarCollection([$bar2, $bar1]);
+        $barCollection3 = new BarCollection([$bar3, $bar2]);
+
+        $mergeCollection = $barCollection1->merge($barCollection2, $barCollection3);
+        $this->assertEquals([$bar1, $bar2, $bar1, $bar3, $bar2], $mergeCollection->toArray());
+    }
+
+    public function testMergeFunctionalityWithKeys(): void
+    {
+        $bar1 = new Bar(1, 'a');
+        $bar2 = new Bar(2, 'b');
+        $bar3 = new Bar(3, 'c');
+
+        $barCollection1 = new BarCollection(['a' => $bar1]);
+        $barCollection2 = new BarCollection(['b' => $bar2, 'c' => $bar1]);
+        $barCollection3 = new BarCollection(['c' => $bar3, 'd' => $bar2]);
+
+        $mergeCollection = $barCollection1->merge($barCollection2, $barCollection3);
+        $this->assertEquals(['a' => $bar1, 'b' => $bar2, 'c' => $bar3, 'd' => $bar2], $mergeCollection->toArray());
+    }
+
     public function testMergeShouldRaiseExceptionOnDiverseCollectionType(): void
     {
         $barCollection = new Collection('int');
