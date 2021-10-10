@@ -78,6 +78,7 @@
         ],
         "dev:test:coverage:ci": "phpunit --coverage-clover build/logs/clover.xml",
         "dev:test:coverage:html": "phpunit --coverage-html build/coverage",
+        "dev:test:unit": "@dev:test",
         "test": "@dev:test:all"
     },
     "scripts-descriptions": {
