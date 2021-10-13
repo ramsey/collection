@@ -107,17 +107,13 @@ jobs:
           - "7.3"
           - "7.4"
           - "8.0"
+          - "8.1"
         operating-system:
           - "ubuntu-latest"
           - "windows-latest"
         dependencies:
           - "lowest"
           - "highest"
-        include:
-          - php-version: "8.1"
-            operating-system: "ubuntu-latest"
-            dependencies: "highest"
-            composer-options: "--ignore-platform-req=php"
 
     steps:
       - name: "Configure Git (for Windows)"
