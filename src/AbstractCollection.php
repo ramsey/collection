@@ -208,6 +208,14 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         return new Collection('mixed', array_map($callback, $this->data));
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function reduce(callable $callback, $initial = null)
+    {
+        return array_reduce($this->data, $callback, $initial);
+    }
+
     public function diff(CollectionInterface $other): CollectionInterface
     {
         $this->compareCollectionTypes($other);
