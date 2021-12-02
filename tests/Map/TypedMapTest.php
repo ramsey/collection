@@ -22,8 +22,8 @@ class TypedMapTest extends TestCase
         $typed = new TypedMap('int', 'string');
 
         $this->assertInstanceOf(TypedMapInterface::class, $typed);
-        $this->assertEquals('int', $typed->getKeyType());
-        $this->assertEquals('string', $typed->getValueType());
+        $this->assertSame('int', $typed->getKeyType());
+        $this->assertSame('string', $typed->getValueType());
 
         /** @psalm-suppress TypeDoesNotContainType */
         $this->assertEmpty($typed);
@@ -40,9 +40,9 @@ class TypedMapTest extends TestCase
         /** @var TypedMap<int, string> $map */
         $map = new TypedMap('int', 'string', $content);
 
-        $this->assertEquals($keys, $map->keys());
+        $this->assertSame($keys, $map->keys());
         foreach ($keys as $key) {
-            $this->assertEquals($content[$key], $map->get($key));
+            $this->assertSame($content[$key], $map->get($key));
         }
     }
 
@@ -65,7 +65,7 @@ class TypedMapTest extends TestCase
         /** @var TypedMap<string, mixed> $map */
         $map = new TypedMap('string', 'mixed');
         $map[''] = 'foo';
-        $this->assertEquals([''], $map->keys());
+        $this->assertSame([''], $map->keys());
     }
 
     public function testConstructorAddWrongValueType(): void

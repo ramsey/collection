@@ -33,9 +33,9 @@ class CollectionManipulationTest extends TestCase
         $sortedCollection = $barCollection->sort('name');
 
         $this->assertNotSame($barCollection, $sortedCollection);
-        $this->assertEquals([$bar1, $bar2, $bar3], $sortedCollection->toArray());
+        $this->assertSame([$bar1, $bar2, $bar3], $sortedCollection->toArray());
         // Make sure original collection is untouched
-        $this->assertEquals([$bar3, $bar2, $bar1], $barCollection->toArray());
+        $this->assertSame([$bar3, $bar2, $bar1], $barCollection->toArray());
     }
 
     public function testSortNameAscWithDescendingNames(): void
@@ -48,9 +48,9 @@ class CollectionManipulationTest extends TestCase
         $sortedCollection = $barCollection->sort('name');
 
         $this->assertNotSame($barCollection, $sortedCollection);
-        $this->assertEquals([$bar3, $bar2, $bar1], $sortedCollection->toArray());
+        $this->assertSame([$bar3, $bar2, $bar1], $sortedCollection->toArray());
         // Make sure original collection is untouched
-        $this->assertEquals([$bar1, $bar2, $bar3], $barCollection->toArray());
+        $this->assertSame([$bar1, $bar2, $bar3], $barCollection->toArray());
     }
 
     public function testSortNameDescWithDescendingNames(): void
@@ -63,9 +63,9 @@ class CollectionManipulationTest extends TestCase
         $sortedCollection = $barCollection->sort('name', 'desc');
 
         $this->assertNotSame($barCollection, $sortedCollection);
-        $this->assertEquals([$bar1, $bar2, $bar3], $sortedCollection->toArray());
+        $this->assertSame([$bar1, $bar2, $bar3], $sortedCollection->toArray());
         // Make sure original collection is untouched
-        $this->assertEquals([$bar1, $bar2, $bar3], $barCollection->toArray());
+        $this->assertSame([$bar1, $bar2, $bar3], $barCollection->toArray());
     }
 
     public function testSortNameDescWithMethod(): void
@@ -78,9 +78,9 @@ class CollectionManipulationTest extends TestCase
         $sortedCollection = $barCollection->sort('getName', 'desc');
 
         $this->assertNotSame($barCollection, $sortedCollection);
-        $this->assertEquals([$bar1, $bar2, $bar3], $sortedCollection->toArray());
+        $this->assertSame([$bar1, $bar2, $bar3], $sortedCollection->toArray());
         // Make sure original collection is untouched
-        $this->assertEquals([$bar1, $bar2, $bar3], $barCollection->toArray());
+        $this->assertSame([$bar1, $bar2, $bar3], $barCollection->toArray());
     }
 
     public function testSortNameWithInvalidProperty(): void
@@ -114,10 +114,10 @@ class CollectionManipulationTest extends TestCase
         $filteredCollection = $barCollection->filter(fn ($item) => $item->name === 'a');
 
         $this->assertNotSame($barCollection, $filteredCollection);
-        $this->assertEquals([$bar1], $filteredCollection->toArray());
+        $this->assertSame([$bar1], $filteredCollection->toArray());
 
         // Make sure original collection is untouched
-        $this->assertEquals([$bar1, $bar2], $barCollection->toArray());
+        $this->assertSame([$bar1, $bar2], $barCollection->toArray());
     }
 
     public function testWhereWithTypeSafePropertyValue(): void
@@ -129,9 +129,9 @@ class CollectionManipulationTest extends TestCase
         $whereCollection = $barCollection->where('name', 'b');
 
         $this->assertNotSame($barCollection, $whereCollection);
-        $this->assertEquals([$bar2], $whereCollection->toArray());
+        $this->assertSame([$bar2], $whereCollection->toArray());
         // Make sure original collection is untouched
-        $this->assertEquals([$bar1, $bar2], $barCollection->toArray());
+        $this->assertSame([$bar1, $bar2], $barCollection->toArray());
     }
 
     public function testWhereWithTypeUnsafePropertyValue(): void
@@ -143,9 +143,9 @@ class CollectionManipulationTest extends TestCase
         $whereCollection = $barCollection->where('id', '1');
 
         $this->assertNotSame($barCollection, $whereCollection);
-        $this->assertEquals([], $whereCollection->toArray());
+        $this->assertSame([], $whereCollection->toArray());
         // Make sure original collection is untouched
-        $this->assertEquals([$bar1, $bar2], $barCollection->toArray());
+        $this->assertSame([$bar1, $bar2], $barCollection->toArray());
     }
 
     public function testWhereWithTypeSafeMethodValue(): void
@@ -157,9 +157,9 @@ class CollectionManipulationTest extends TestCase
         $whereCollection = $barCollection->where('getName', 'b');
 
         $this->assertNotSame($barCollection, $whereCollection);
-        $this->assertEquals([$bar2], $whereCollection->toArray());
+        $this->assertSame([$bar2], $whereCollection->toArray());
         // Make sure original collection is untouched
-        $this->assertEquals([$bar1, $bar2], $barCollection->toArray());
+        $this->assertSame([$bar1, $bar2], $barCollection->toArray());
     }
 
     public function testMapShouldRunOverEachItem(): void
@@ -236,17 +236,17 @@ class CollectionManipulationTest extends TestCase
         $this->assertNotSame($diffCollection1, $barCollection1);
         $this->assertNotSame($diffCollection1, $barCollection2);
         $this->assertNotSame($diffCollection1, $barCollection3);
-        $this->assertEquals([$bar2], $diffCollection1->toArray());
+        $this->assertSame([$bar2], $diffCollection1->toArray());
 
         $this->assertNotSame($diffCollection2, $barCollection1);
         $this->assertNotSame($diffCollection2, $barCollection2);
         $this->assertNotSame($diffCollection2, $barCollection3);
-        $this->assertEquals([$bar2], $diffCollection2->toArray());
+        $this->assertSame([$bar2], $diffCollection2->toArray());
 
         // Make sure original collections are untouched
-        $this->assertEquals([$bar1], $barCollection1->toArray());
-        $this->assertEquals([$bar1, $bar2], $barCollection2->toArray());
-        $this->assertEquals([$bar2, $bar1], $barCollection3->toArray());
+        $this->assertSame([$bar1], $barCollection1->toArray());
+        $this->assertSame([$bar1, $bar2], $barCollection2->toArray());
+        $this->assertSame([$bar2, $bar1], $barCollection3->toArray());
     }
 
     public function testdiffShouldRaiseExceptionOnDiverseCollectionType(): void
@@ -272,7 +272,7 @@ class CollectionManipulationTest extends TestCase
 
         $diffCollection = $barCollection1->diff($barCollection2);
 
-        $this->assertEquals([$bar2], $diffCollection->toArray());
+        $this->assertSame([$bar2], $diffCollection->toArray());
     }
 
     public function testIntersectShouldRaiseExceptionOnDiverseCollections(): void
@@ -302,17 +302,17 @@ class CollectionManipulationTest extends TestCase
         $this->assertNotSame($intersectCollection1, $barCollection1);
         $this->assertNotSame($intersectCollection1, $barCollection2);
         $this->assertNotSame($intersectCollection1, $barCollection3);
-        $this->assertEquals([$bar1, $bar2], $intersectCollection1->toArray());
+        $this->assertSame([$bar1, $bar2], $intersectCollection1->toArray());
 
         $this->assertNotSame($intersectCollection2, $barCollection1);
         $this->assertNotSame($intersectCollection2, $barCollection2);
         $this->assertNotSame($intersectCollection2, $barCollection3);
-        $this->assertEquals([$bar1, $bar2], $intersectCollection2->toArray());
+        $this->assertSame([$bar1, $bar2], $intersectCollection2->toArray());
 
         // Make sure original collections are untouched
-        $this->assertEquals([$bar1, $bar2], $barCollection1->toArray());
-        $this->assertEquals([$bar1, $bar2, $bar3], $barCollection2->toArray());
-        $this->assertEquals([$bar3, $bar2, $bar1], $barCollection3->toArray());
+        $this->assertSame([$bar1, $bar2], $barCollection1->toArray());
+        $this->assertSame([$bar1, $bar2, $bar3], $barCollection2->toArray());
+        $this->assertSame([$bar3, $bar2, $bar1], $barCollection3->toArray());
     }
 
     public function testIntersectShouldRaiseExceptionOnDiverseCollectionType(): void
@@ -338,7 +338,7 @@ class CollectionManipulationTest extends TestCase
 
         $diffCollection = $barCollection1->intersect($barCollection2);
 
-        $this->assertEquals([$bar1], $diffCollection->toArray());
+        $this->assertSame([$bar1], $diffCollection->toArray());
     }
 
     public function testMergeShouldRaiseExceptionOnDiverseCollection(): void
@@ -366,12 +366,12 @@ class CollectionManipulationTest extends TestCase
 
         $mergeCollection = $barCollection1->merge($barCollection2, $barCollection3);
         $this->assertNotSame($mergeCollection, $barCollection1);
-        $this->assertEquals([$bar1, $bar2, $bar3], $mergeCollection->toArray());
+        $this->assertSame([$bar1, $bar2, $bar3], $mergeCollection->toArray());
 
         // Make sure the original collections are untouched
-        $this->assertEquals([$bar1], $barCollection1->toArray());
-        $this->assertEquals([$bar2], $barCollection2->toArray());
-        $this->assertEquals([$bar3], $barCollection3->toArray());
+        $this->assertSame([$bar1], $barCollection1->toArray());
+        $this->assertSame([$bar2], $barCollection2->toArray());
+        $this->assertSame([$bar3], $barCollection3->toArray());
     }
 
     public function testMergeWhenTheSameObjectAppearsInMultipleCollections(): void
@@ -385,7 +385,7 @@ class CollectionManipulationTest extends TestCase
         $barCollection3 = new BarCollection([$bar3, $bar2]);
 
         $mergeCollection = $barCollection1->merge($barCollection2, $barCollection3);
-        $this->assertEquals([$bar1, $bar2, $bar1, $bar3, $bar2], $mergeCollection->toArray());
+        $this->assertSame([$bar1, $bar2, $bar1, $bar3, $bar2], $mergeCollection->toArray());
     }
 
     public function testMergeFunctionalityWithKeys(): void
@@ -399,7 +399,7 @@ class CollectionManipulationTest extends TestCase
         $barCollection3 = new BarCollection(['c' => $bar3, 'd' => $bar2]);
 
         $mergeCollection = $barCollection1->merge($barCollection2, $barCollection3);
-        $this->assertEquals(['a' => $bar1, 'b' => $bar2, 'c' => $bar3, 'd' => $bar2], $mergeCollection->toArray());
+        $this->assertSame(['a' => $bar1, 'b' => $bar2, 'c' => $bar3, 'd' => $bar2], $mergeCollection->toArray());
     }
 
     public function testMergeShouldRaiseExceptionOnDiverseCollectionType(): void
@@ -425,7 +425,7 @@ class CollectionManipulationTest extends TestCase
 
         $diffCollection = $barCollection1->merge($barCollection2);
 
-        $this->assertEquals([$bar1, $bar2], $diffCollection->toArray());
+        $this->assertSame([$bar1, $bar2], $diffCollection->toArray());
     }
 
     public function testMapConvertsValues(): void

@@ -95,7 +95,7 @@ class NamedParameterMapTest extends TestCase
         $namedParameterMap['myMixedNull'] = null;
         $namedParameterMap['myMixedResource'] = fopen('php://memory', 'rb');
 
-        $this->assertEquals(
+        $this->assertSame(
             $expectedParams,
             $namedParameterMap->getNamedParameters(),
         );

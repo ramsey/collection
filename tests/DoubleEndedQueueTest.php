@@ -21,7 +21,7 @@ class DoubleEndedQueueTest extends TestCase
         /** @var DoubleEndedQueue<int> $queue */
         $queue = new DoubleEndedQueue('integer');
 
-        $this->assertEquals('integer', $queue->getType());
+        $this->assertSame('integer', $queue->getType());
     }
 
     public function testConstructorWithData(): void
@@ -119,7 +119,7 @@ class DoubleEndedQueueTest extends TestCase
 
         $id = 0;
         foreach ($queue as $item) {
-            $this->assertEquals($id, $item->id);
+            $this->assertSame($id, $item->id);
             $id++;
         }
     }
