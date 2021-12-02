@@ -40,7 +40,7 @@ class SetTest extends TestCase
     {
         $expected = [2, 4, 6, 8];
         $localSet = new Set('int', $expected);
-        $this->assertEquals($expected, $localSet->toArray());
+        $this->assertSame($expected, $localSet->toArray());
     }
 
     public function testAddDuplicates(): void

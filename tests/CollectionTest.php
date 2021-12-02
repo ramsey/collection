@@ -26,7 +26,7 @@ class CollectionTest extends TestCase
     {
         $collection = new Collection('string');
 
-        $this->assertEquals('string', $collection->getType());
+        $this->assertSame('string', $collection->getType());
     }
 
     public function testConstructorWithData(): void
@@ -166,7 +166,7 @@ class CollectionTest extends TestCase
         $bar3 = new Bar(3, 'c');
         $barCollection = new BarCollection([$bar1, $bar2, $bar3]);
 
-        $this->assertEquals(['a', 'b', 'c'], $barCollection->column('name'));
+        $this->assertSame(['a', 'b', 'c'], $barCollection->column('name'));
     }
 
     public function testColumnByMethod(): void
@@ -176,7 +176,7 @@ class CollectionTest extends TestCase
         $bar3 = new Bar(3, 'c');
         $barCollection = new BarCollection([$bar1, $bar2, $bar3]);
 
-        $this->assertEquals([1, 2, 3], $barCollection->column('getId'));
+        $this->assertSame([1, 2, 3], $barCollection->column('getId'));
     }
 
     public function testColumnShouldRaiseExceptionOnUndefinedPropertyOrMethod(): void
@@ -207,7 +207,7 @@ class CollectionTest extends TestCase
 
         $this->assertSame($bar1, $barCollection->first());
         // Make sure the collection stays unchanged
-        $this->assertEquals([$bar1, $bar2, $bar3], $barCollection->toArray());
+        $this->assertSame([$bar1, $bar2, $bar3], $barCollection->toArray());
     }
 
     public function testLastShouldRaiseExceptionOnEmptyCollection(): void
@@ -228,7 +228,7 @@ class CollectionTest extends TestCase
 
         $this->assertSame($bar3, $barCollection->last());
         // Make sure the collection stays unchanged
-        $this->assertEquals([$bar1, $bar2, $bar3], $barCollection->toArray());
+        $this->assertSame([$bar1, $bar2, $bar3], $barCollection->toArray());
     }
 
     public function testSerializable(): void

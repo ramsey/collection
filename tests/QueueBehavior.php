@@ -24,7 +24,7 @@ trait QueueBehavior
     {
         $queue = $this->queue('integer');
 
-        $this->assertEquals('integer', $queue->getType());
+        $this->assertSame('integer', $queue->getType());
     }
 
     public function testConstructorWithData(): void
@@ -108,7 +108,7 @@ trait QueueBehavior
 
         $id = 0;
         foreach ($queue as $item) {
-            $this->assertEquals($id, $item->id);
+            $this->assertSame($id, $item->id);
             $id++;
         }
     }
