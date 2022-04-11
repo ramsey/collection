@@ -94,7 +94,7 @@ jobs:
         run: "composer dev:test:coverage:ci"
 
       - name: "Publish coverage report to Codecov"
-        uses: "codecov/codecov-action@v2.1.0"
+        uses: "codecov/codecov-action@v3.0.0"
 
   unit-tests:
     name: "Unit tests"
