@@ -47,7 +47,7 @@ Contributions are welcome! To contribute, please familiarize yourself with
 Keeping user information safe and secure is a top priority, and we welcome the
 contribution of external security researchers. If you believe you've found a
 security issue in software that is maintained in this repository, please read
-[SECURITY.md](SECURITY.md) for instructions on submitting a vulnerability report.
+[SECURITY.md][] for instructions on submitting a vulnerability report.
 
 ## ramsey/collection for Enterprise
 
@@ -67,3 +67,4 @@ MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
 
 
 [java]: http://docs.oracle.com/javase/8/docs/technotes/guides/collections/index.html
+[security.md]: https://github.com/ramsey/collection/blob/main/SECURITY.md
