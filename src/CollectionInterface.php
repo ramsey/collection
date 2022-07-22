@@ -120,7 +120,7 @@ interface CollectionInterface extends ArrayInterface
      * @param string $order The sort order for the resulting collection (one of
      *     this interface's `SORT_*` constants).
      *
-     * @return CollectionInterface<T>
+     * @return static<T>
      */
     public function sort(string $propertyOrMethod, string $order = self::SORT_ASC): self;
 
@@ -136,7 +136,7 @@ interface CollectionInterface extends ArrayInterface
      *
      * @param callable(T):bool $callback A callable to use for filtering elements.
      *
-     * @return CollectionInterface<T>
+     * @return static<T>
      */
     public function filter(callable $callback): self;
 
@@ -149,7 +149,7 @@ interface CollectionInterface extends ArrayInterface
      * @param string $propertyOrMethod The property or method to evaluate.
      * @param mixed $value The value to match.
      *
-     * @return CollectionInterface<T>
+     * @return static<T>
      */
     public function where(string $propertyOrMethod, $value): self;
 
@@ -200,7 +200,7 @@ interface CollectionInterface extends ArrayInterface
      * @param CollectionInterface<T> $other The collection to check for divergent
      *     items.
      *
-     * @return CollectionInterface<T>
+     * @return static<T>
      */
     public function diff(CollectionInterface $other): self;
 
@@ -211,7 +211,7 @@ interface CollectionInterface extends ArrayInterface
      * @param CollectionInterface<T> $other The collection to check for
      *     intersecting items.
      *
-     * @return CollectionInterface<T>
+     * @return static<T>
      */
     public function intersect(CollectionInterface $other): self;
 
@@ -220,7 +220,7 @@ interface CollectionInterface extends ArrayInterface
      *
      * @param CollectionInterface<T> ...$collections The collections to merge.
      *
-     * @return CollectionInterface<T>
+     * @return static<T>
      */
     public function merge(CollectionInterface ...$collections): self;
 }
