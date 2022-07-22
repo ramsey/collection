@@ -366,6 +366,11 @@
 
     <rule ref="SlevomatCodingStandard.Commenting.UselessFunctionDocComment"/>
 
+    <!-- There is no such thing as a useless @inheritDoc comment -->
+    <rule ref="SlevomatCodingStandard.Commenting.UselessInheritDocComment">
+        <exclude name="SlevomatCodingStandard.Commenting.UselessInheritDocComment.UselessInheritDocComment"/>
+    </rule>
+
     <!-- Require the return type hint to have one space (i.e. function foo(): ?int) -->
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
 
@@ -467,5 +472,4 @@
     <rule ref="Squiz.NamingConventions.ValidVariableName">
         <exclude name="Squiz.NamingConventions.ValidVariableName.PrivateNoUnderscore" />
     </rule>
-
 </ruleset>

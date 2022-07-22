@@ -154,6 +154,9 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         return $item;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function sort(string $propertyOrMethod, string $order = self::SORT_ASC): CollectionInterface
     {
         if (!in_array($order, [self::SORT_ASC, self::SORT_DESC], true)) {
@@ -182,6 +185,9 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         return $collection;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function filter(callable $callback): CollectionInterface
     {
         $collection = clone $this;
@@ -191,7 +197,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function where(string $propertyOrMethod, $value): CollectionInterface
     {
@@ -203,6 +209,9 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         });
     }
 
+    /**
+     * @inheritDoc
+     */
     public function map(callable $callback): CollectionInterface
     {
         return new Collection('mixed', array_map($callback, $this->data));
@@ -216,6 +225,9 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         return array_reduce($this->data, $callback, $initial);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function diff(CollectionInterface $other): CollectionInterface
     {
         $this->compareCollectionTypes($other);
@@ -232,6 +244,9 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         return $collection;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function intersect(CollectionInterface $other): CollectionInterface
     {
         $this->compareCollectionTypes($other);
@@ -245,6 +260,9 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         return $collection;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function merge(CollectionInterface ...$collections): CollectionInterface
     {
         $mergedCollection = clone $this;
