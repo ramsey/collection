@@ -446,4 +446,28 @@ class CollectionManipulationTest extends TestCase
         $this->assertSame(['Jane', 'John', 'Janice'], $names->toArray());
         $this->assertSame([1, 2, 3], $ids->toArray());
     }
+
+    public function testWorksUniformlyWithTypeAliases(): void
+    {
+        $collection1 = new Collection('integer', [1, 2, 3]);
+        $collection2 = new Collection('int', [1, 2]);
+
+        $this->assertEquals([3], $collection1->diff($collection2)->toArray());
+        $this->assertEquals([1, 2], $collection1->intersect($collection2)->toArray());
+        $this->assertEquals([1, 2, 3, 1, 2], $collection1->merge($collection2)->toArray());
+
+        $collection1 = new Collection('float', [1.5, 2.5, 3.5]);
+        $collection2 = new Collection('double', [1.5, 2.5]);
+
+        $this->assertEquals([3.5], $collection1->diff($collection2)->toArray());
+        $this->assertEquals([1.5, 2.5], $collection1->intersect($collection2)->toArray());
+        $this->assertEquals([1.5, 2.5, 3.5, 1.5, 2.5], $collection1->merge($collection2)->toArray());
+
+        $collection1 = new Collection('bool', [true]);
+        $collection2 = new Collection('boolean', [false]);
+
+        $this->assertEquals([true, false], $collection1->diff($collection2)->toArray());
+        $this->assertEquals([], $collection1->intersect($collection2)->toArray());
+        $this->assertEquals([true, false], $collection1->merge($collection2)->toArray());
+    }
 }

@@ -261,7 +261,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
 
             // When using generics (Collection.php, Set.php, etc),
             // we also need to make sure that the internal types match each other
-            if ($collection->getType() !== $this->getType()) {
+            if ($this->getUniformType($collection) !== $this->getUniformType($this)) {
                 throw new CollectionMismatchException(
                     sprintf(
                         'Collection items in collection with index %d must be of type %s',
@@ -305,7 +305,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
 
         // When using generics (Collection.php, Set.php, etc),
         // we also need to make sure that the internal types match each other
-        if ($other->getType() !== $this->getType()) {
+        if ($this->getUniformType($other) !== $this->getUniformType($this)) {
             throw new CollectionMismatchException('Collection items must be of type ' . $this->getType());
         }
     }
@@ -329,5 +329,22 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
 
                 return $a === $b ? 0 : ($a < $b ? 1 : -1);
             };
+    }
+
+    /**
+     * @param CollectionInterface<mixed> $collection
+     */
+    private function getUniformType(CollectionInterface $collection): string
+    {
+        switch ($collection->getType()) {
+            case 'integer':
+                return 'int';
+            case 'boolean':
+                return 'bool';
+            case 'double':
+                return 'float';
+            default:
+                return $collection->getType();
+        }
     }
 }
