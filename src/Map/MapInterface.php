@@ -56,9 +56,9 @@ interface MapInterface extends ArrayInterface
      * this map contains no mapping for the key.
      *
      * @param array-key $key The key to return from the map.
-     * @param T|null $defaultValue The default value to use if `$key` is not found.
+     * @param T | null $defaultValue The default value to use if `$key` is not found.
      *
-     * @return T|null the value or `null` if the key could not be found.
+     * @return T | null the value or `null` if the key could not be found.
      */
     // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
     public function get($key, $defaultValue = null);
@@ -72,7 +72,7 @@ interface MapInterface extends ArrayInterface
      * @param array-key $key The key to put or replace in the map.
      * @param T $value The value to store at `$key`.
      *
-     * @return T|null the previous value associated with key, or `null` if
+     * @return T | null the previous value associated with key, or `null` if
      *     there was no mapping for `$key`.
      */
     // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
@@ -88,7 +88,7 @@ interface MapInterface extends ArrayInterface
      * @param array-key $key The key to put in the map.
      * @param T $value The value to store at `$key`.
      *
-     * @return T|null the previous value associated with key, or `null` if
+     * @return T | null the previous value associated with key, or `null` if
      *     there was no mapping for `$key`.
      */
     // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
@@ -99,7 +99,7 @@ interface MapInterface extends ArrayInterface
      *
      * @param array-key $key The key to remove from the map.
      *
-     * @return T|null the previous value associated with key, or `null` if
+     * @return T | null the previous value associated with key, or `null` if
      *     there was no mapping for `$key`.
      */
     // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
@@ -126,7 +126,7 @@ interface MapInterface extends ArrayInterface
      * @param array-key $key The key to replace.
      * @param T $value The value to set at `$key`.
      *
-     * @return T|null the previous value associated with key, or `null` if
+     * @return T | null the previous value associated with key, or `null` if
      *     there was no mapping for `$key`.
      */
     // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint

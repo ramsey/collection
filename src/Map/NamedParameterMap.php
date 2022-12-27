@@ -68,6 +68,7 @@ class NamedParameterMap extends AbstractMap
      */
     public function offsetSet($offset, $value): void
     {
+        /** @psalm-suppress DocblockTypeContradiction */
         if ($offset === null) {
             throw new InvalidArgumentException(
                 'Map elements are key/value pairs; a key must be provided for '

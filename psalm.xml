@@ -9,9 +9,8 @@
 
     <projectFiles>
         <directory name="./src"/>
-        <directory name="./tests/generics"/>
+        <directory name="./tests"/>
         <ignoreFiles>
-            <directory name="./tests"/>
             <directory name="./vendor"/>
         </ignoreFiles>
     </projectFiles>

@@ -169,7 +169,7 @@ interface QueueInterface extends ArrayInterface
      *
      * @see self::element()
      *
-     * @return T|null the head of this queue, or `null` if this queue is empty.
+     * @return T | null the head of this queue, or `null` if this queue is empty.
      */
     public function peek();
 
@@ -179,7 +179,7 @@ interface QueueInterface extends ArrayInterface
      *
      * @see self::remove()
      *
-     * @return T|null the head of this queue, or `null` if this queue is empty.
+     * @return T | null the head of this queue, or `null` if this queue is empty.
      */
     public function poll();
 

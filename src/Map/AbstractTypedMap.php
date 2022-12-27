@@ -35,7 +35,7 @@ abstract class AbstractTypedMap extends AbstractMap implements TypedMapInterface
     use ValueToStringTrait;
 
     /**
-     * @param K|null $offset
+     * @param K | null $offset
      * @param T $value
      *
      * @inheritDoc

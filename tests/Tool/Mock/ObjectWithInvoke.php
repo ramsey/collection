@@ -6,10 +6,7 @@ namespace Ramsey\Collection\Test\Tool\Mock;
 
 class ObjectWithInvoke
 {
-    /**
-     * @return mixed
-     */
-    public function __invoke()
+    public function __invoke(): void
     {
     }
 }

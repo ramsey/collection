@@ -74,7 +74,7 @@ class NamedParameterMapTest extends TestCase
 
         $namedParameterMap['myArray'] = $this->faker->words();
         $namedParameterMap['myBool'] = $this->faker->boolean();
-        $namedParameterMap['myCallable'] = fn () => true;
+        $namedParameterMap['myCallable'] = fn (): bool => true;
         $namedParameterMap['myFloat'] = $this->faker->randomFloat();
         $namedParameterMap['myDouble'] = $this->faker->randomFloat();
         $namedParameterMap['myInt'] = $this->faker->randomNumber();

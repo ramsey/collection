@@ -94,8 +94,8 @@ abstract class AbstractArray implements ArrayInterface
      *
      * @link http://php.net/manual/en/arrayaccess.offsetset.php ArrayAccess::offsetSet()
      *
-     * @param array-key|null $offset The offset to set. If `null`, the value may be
-     *     set at a numerically-indexed offset.
+     * @param array-key | null $offset The offset to set. If `null`, the value
+     *     may be set at a numerically-indexed offset.
      * @param T $value The value to set at the given offset.
      */
     // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint

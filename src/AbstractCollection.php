@@ -213,7 +213,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     /**
      * @inheritDoc
      */
-    public function reduce(callable $callback, $initial = null)
+    public function reduce(callable $callback, $initial)
     {
         return array_reduce($this->data, $callback, $initial);
     }

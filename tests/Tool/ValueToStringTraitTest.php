@@ -85,7 +85,7 @@ class ValueToStringTraitTest extends TestCase
         $startWith = '(Closure';
         $endsWith = ' Object)';
 
-        $value = fn () => null;
+        $value = fn (): bool => false;
         $casted = $this->toolValueToString($value);
 
         $this->assertStringStartsWith($startWith, $casted);

@@ -263,7 +263,7 @@ interface DoubleEndedQueueInterface extends QueueInterface
      * Retrieves and removes the head of this queue, or returns `null` if this
      * queue is empty.
      *
-     * @return T|null the head of this queue, or `null` if this queue is empty.
+     * @return T | null the head of this queue, or `null` if this queue is empty.
      */
     public function pollFirst();
 
@@ -271,7 +271,7 @@ interface DoubleEndedQueueInterface extends QueueInterface
      * Retrieves and removes the tail of this queue, or returns `null` if this
      * queue is empty.
      *
-     * @return T|null the tail of this queue, or `null` if this queue is empty.
+     * @return T | null the tail of this queue, or `null` if this queue is empty.
      */
     public function pollLast();
 
@@ -303,7 +303,7 @@ interface DoubleEndedQueueInterface extends QueueInterface
      * Retrieves, but does not remove, the head of this queue, or returns `null`
      * if this queue is empty.
      *
-     * @return T|null the head of this queue, or `null` if this queue is empty.
+     * @return T | null the head of this queue, or `null` if this queue is empty.
      */
     public function peekFirst();
 
@@ -311,7 +311,7 @@ interface DoubleEndedQueueInterface extends QueueInterface
      * Retrieves, but does not remove, the tail of this queue, or returns `null`
      * if this queue is empty.
      *
-     * @return T|null the tail of this queue, or `null` if this queue is empty.
+     * @return T | null the tail of this queue, or `null` if this queue is empty.
      */
     public function peekLast();
 }

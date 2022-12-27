@@ -283,7 +283,10 @@ class DoubleEndedQueueTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Value must be of type string; value is 42');
 
-        // @phpstan-ignore-next-line
+        /**
+         * @phpstan-ignore-next-line
+         * @psalm-suppress InvalidArgument
+         */
         $queue->addFirst(42);
     }
 

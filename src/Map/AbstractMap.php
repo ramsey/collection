@@ -33,7 +33,11 @@ use function var_export;
 abstract class AbstractMap extends AbstractArray implements MapInterface
 {
     /**
+     * @param array-key $offset The offset to set
+     * @param T $value The value to set at the given offset.
+     *
      * @inheritDoc
+     * @psalm-suppress MoreSpecificImplementedParamType,DocblockTypeContradiction
      */
     public function offsetSet($offset, $value): void
     {

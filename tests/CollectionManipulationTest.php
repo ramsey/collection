@@ -13,6 +13,8 @@ use Ramsey\Collection\Test\Mock\Bar;
 use Ramsey\Collection\Test\Mock\BarCollection;
 use Ramsey\Collection\Test\Mock\FooCollection;
 
+use function trim;
+
 /**
  * This test collection will test all manipulation methods on Collection.
  *
@@ -171,9 +173,7 @@ class CollectionManipulationTest extends TestCase
 
         $barCollection = new BarCollection([$bar1->reveal(), $bar2->reveal()]);
 
-        $mapCollection = $barCollection->map(function (Bar $item) {
-            $item->getName();
-        });
+        $mapCollection = $barCollection->map(fn (Bar $item): string => $item->getName());
 
         $this->assertNotSame($barCollection, $mapCollection);
     }
@@ -185,29 +185,74 @@ class CollectionManipulationTest extends TestCase
 
         $barCollection = new BarCollection([$bar1, $bar2]);
 
-        $reduceCollection = $barCollection->reduce(function (?int $carry, Bar $item): int {
-            $carry += $item->getId();
+        $reduced = $barCollection->reduce(
+            fn (string $carry, Bar $item): string => trim("$carry {$item->getName()}"),
+            '',
+        );
 
-            return $carry;
-        });
-
-        $this->assertSame(3, $reduceCollection);
+        $this->assertSame('a b', $reduced);
     }
 
-    public function testReduceShouldUseInitialIfProvided(): void
+    public function testReduceShouldAllowNullInitialValue(): void
     {
         $bar1 = new Bar(1, 'a');
         $bar2 = new Bar(2, 'b');
+        $bar3 = new Bar(3, 'c');
+        $bar4 = new Bar(4, 'd');
 
-        $barCollection = new BarCollection([$bar1, $bar2]);
+        $barCollection = new BarCollection([$bar2, $bar3, $bar1, $bar4]);
 
-        $reduceCollection = $barCollection->reduce(function (?int $carry, Bar $item): int {
-            $carry += $item->getId();
+        // Reduced should be the item with the lowest scoring name value.
+        $reduced = $barCollection->reduce(
+            function (?Bar $carry, Bar $item): Bar {
+                if ($carry === null) {
+                    return $item;
+                }
 
-            return $carry;
-        }, 1);
+                if ($carry->getName() < $item->getName()) {
+                    return $carry;
+                }
 
-        $this->assertSame(4, $reduceCollection);
+                return $item;
+            },
+            null,
+        );
+
+        $this->assertSame($bar1, $reduced);
+    }
+
+    public function testReduceWithAnEmptyCollectionA(): void
+    {
+        $barCollection = new BarCollection();
+
+        $reduced = $barCollection->reduce(
+            function (?Bar $carry, Bar $item): Bar {
+                if ($carry === null) {
+                    return $item;
+                }
+
+                if ($carry->getName() < $item->getName()) {
+                    return $carry;
+                }
+
+                return $item;
+            },
+            null,
+        );
+
+        $this->assertNull($reduced);
+    }
+
+    public function testReduceWithAnEmptyCollectionB(): void
+    {
+        $barCollection = new BarCollection();
+
+        $reduced = $barCollection->reduce(
+            fn (string $carry, Bar $item): string => trim("$carry {$item->getName()}"),
+            '',
+        );
+
+        $this->assertSame('', $reduced);
     }
 
     public function testDiffShouldRaiseExceptionOnDiverseCollections(): void
@@ -217,7 +262,10 @@ class CollectionManipulationTest extends TestCase
         $this->expectException(CollectionMismatchException::class);
         $this->expectExceptionMessage('Collection must be of type Ramsey\Collection\Test\Mock\BarCollection');
 
-        // @phpstan-ignore-next-line
+        /**
+         * @phpstan-ignore-next-line
+         * @psalm-suppress InvalidArgument
+         */
         $barCollection->diff(new FooCollection());
     }
 
@@ -249,16 +297,21 @@ class CollectionManipulationTest extends TestCase
         $this->assertSame([$bar2, $bar1], $barCollection3->toArray());
     }
 
-    public function testdiffShouldRaiseExceptionOnDiverseCollectionType(): void
+    public function testDiffShouldRaiseExceptionOnDiverseCollectionType(): void
     {
+        /** @var Collection<int> $barCollection */
         $barCollection = new Collection('int');
+
+        /** @var Collection<string> $fooCollection */
         $fooCollection = new Collection('string');
 
         $this->expectException(CollectionMismatchException::class);
-        $this->expectExceptionMessage(
-            'Collection items must be of type int',
-        );
+        $this->expectExceptionMessage('Collection items must be of type int');
 
+        /**
+         * @phpstan-ignore-next-line
+         * @psalm-suppress InvalidArgument
+         */
         $barCollection->diff($fooCollection);
     }
 
@@ -282,7 +335,10 @@ class CollectionManipulationTest extends TestCase
         $this->expectException(CollectionMismatchException::class);
         $this->expectExceptionMessage('Collection must be of type Ramsey\Collection\Test\Mock\BarCollection');
 
-        // @phpstan-ignore-next-line
+        /**
+         * @phpstan-ignore-next-line
+         * @psalm-suppress InvalidArgument
+         */
         $barCollection->intersect(new FooCollection());
     }
 
@@ -317,7 +373,10 @@ class CollectionManipulationTest extends TestCase
 
     public function testIntersectShouldRaiseExceptionOnDiverseCollectionType(): void
     {
+        /** @var Collection<int> $barCollection */
         $barCollection = new Collection('int');
+
+        /** @var Collection<string> $fooCollection */
         $fooCollection = new Collection('string');
 
         $this->expectException(CollectionMismatchException::class);
@@ -325,6 +384,10 @@ class CollectionManipulationTest extends TestCase
             'Collection items must be of type int',
         );
 
+        /**
+         * @phpstan-ignore-next-line
+         * @psalm-suppress InvalidArgument
+         */
         $barCollection->intersect($fooCollection);
     }
 
@@ -350,7 +413,10 @@ class CollectionManipulationTest extends TestCase
             'Collection with index 1 must be of type Ramsey\Collection\Test\Mock\BarCollection',
         );
 
-        // @phpstan-ignore-next-line
+        /**
+         * @phpstan-ignore-next-line
+         * @psalm-suppress InvalidArgument
+         */
         $barCollection->merge(new BarCollection(), new FooCollection());
     }
 
@@ -404,7 +470,10 @@ class CollectionManipulationTest extends TestCase
 
     public function testMergeShouldRaiseExceptionOnDiverseCollectionType(): void
     {
+        /** @var Collection<int> $barCollection */
         $barCollection = new Collection('int');
+
+        /** @var Collection<string> $fooCollection */
         $fooCollection = new Collection('string');
 
         $this->expectException(CollectionMismatchException::class);
@@ -412,6 +481,10 @@ class CollectionManipulationTest extends TestCase
             'Collection items in collection with index 1 must be of type int',
         );
 
+        /**
+         * @phpstan-ignore-next-line
+         * @psalm-suppress InvalidArgument
+         */
         $barCollection->merge($barCollection, $fooCollection);
     }
 
@@ -449,21 +522,30 @@ class CollectionManipulationTest extends TestCase
 
     public function testWorksUniformlyWithTypeAliases(): void
     {
+        /** @var Collection<int> $collection1 */
         $collection1 = new Collection('integer', [1, 2, 3]);
+
+        /** @var Collection<int> $collection2 */
         $collection2 = new Collection('int', [1, 2]);
 
         $this->assertEquals([3], $collection1->diff($collection2)->toArray());
         $this->assertEquals([1, 2], $collection1->intersect($collection2)->toArray());
         $this->assertEquals([1, 2, 3, 1, 2], $collection1->merge($collection2)->toArray());
 
+        /** @var Collection<float> $collection1 */
         $collection1 = new Collection('float', [1.5, 2.5, 3.5]);
+
+        /** @var Collection<float> $collection2 */
         $collection2 = new Collection('double', [1.5, 2.5]);
 
         $this->assertEquals([3.5], $collection1->diff($collection2)->toArray());
         $this->assertEquals([1.5, 2.5], $collection1->intersect($collection2)->toArray());
         $this->assertEquals([1.5, 2.5, 3.5, 1.5, 2.5], $collection1->merge($collection2)->toArray());
 
+        /** @var Collection<bool> $collection1 */
         $collection1 = new Collection('bool', [true]);
+
+        /** @var Collection<bool> $collection2 */
         $collection2 = new Collection('boolean', [false]);
 
         $this->assertEquals([true, false], $collection1->diff($collection2)->toArray());

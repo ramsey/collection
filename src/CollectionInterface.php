@@ -134,7 +134,7 @@ interface CollectionInterface extends ArrayInterface
      * See the {@link http://php.net/manual/en/function.array-filter.php PHP array_filter() documentation}
      * for examples of how the `$callback` parameter works.
      *
-     * @param callable(T):bool $callback A callable to use for filtering elements.
+     * @param callable(T): bool $callback A callable to use for filtering elements.
      *
      * @return CollectionInterface<T>
      */
@@ -164,7 +164,7 @@ interface CollectionInterface extends ArrayInterface
      * See the {@link http://php.net/manual/en/function.array-map.php PHP array_map() documentation}
      * for examples of how the `$callback` parameter works.
      *
-     * @param callable(T):TCallbackReturn $callback A callable to apply to each
+     * @param callable(T): TCallbackReturn $callback A callable to apply to each
      *     item of the collection.
      *
      * @return CollectionInterface<TCallbackReturn>
@@ -175,24 +175,21 @@ interface CollectionInterface extends ArrayInterface
 
     /**
      * Apply a given callback method on each item of the collection
-     * to reduce it to a single value. If an initial value is provided
-     * it will be used at the beginning of the process, or as a final
-     * result in case the array is empty.
+     * to reduce it to a single value.
      *
      * See the {@link http://php.net/manual/en/function.array-reduce.php PHP array_reduce() documentation}
      * for examples of how the `$callback` and `$initial` parameters work.
      *
-     * @param callable(TCarry|null, T): (TCarry|null) $callback A callable to apply to each
+     * @param callable(TCarry, T): TCarry $callback A callable to apply to each
      *     item of the collection to reduce it to a single value.
-     * @param TCarry|null $initial If provided, this is the initial value provided
-     *     to the callback.
+     * @param TCarry $initial This is the initial value provided to the callback.
      *
-     * @return TCarry|mixed
+     * @return TCarry
      *
      * @template TCarry
      */
     // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-    public function reduce(callable $callback, $initial = null);
+    public function reduce(callable $callback, $initial);
 
     /**
      * Create a new collection with divergent items between current and given

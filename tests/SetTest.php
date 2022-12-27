@@ -82,8 +82,13 @@ class SetTest extends TestCase
 
     public function testMergingSets(): void
     {
+        /** @var Set<string> $set1 */
         $set1 = new Set('string', ['X', 'Y']);
+
+        /** @var Set<string> $set2 */
         $set2 = new Set('string', ['Y', 'Z']);
+
+        /** @var Set<string> $set3 */
         $set3 = $set1->merge($set2);
 
         $this->assertSame(['X', 'Y', 'Z'], $set3->toArray());
