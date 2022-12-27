@@ -18,7 +18,7 @@ use Ramsey\Collection\Test\Mock\Foo;
 class SetTest extends TestCase
 {
     /** @var Set<int> */
-    private $set;
+    private Set $set;
 
     protected function setUp(): void
     {

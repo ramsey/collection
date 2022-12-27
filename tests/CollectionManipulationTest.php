@@ -111,9 +111,7 @@ class CollectionManipulationTest extends TestCase
         $bar2 = new Bar(2, 'b');
         $barCollection = new BarCollection([$bar1, $bar2]);
 
-        $filteredCollection = $barCollection->filter(function ($item) {
-            return $item->name === 'a';
-        });
+        $filteredCollection = $barCollection->filter(fn ($item) => $item->name === 'a');
 
         $this->assertNotSame($barCollection, $filteredCollection);
         $this->assertEquals([$bar1], $filteredCollection->toArray());
@@ -258,7 +256,7 @@ class CollectionManipulationTest extends TestCase
 
         $this->expectException(CollectionMismatchException::class);
         $this->expectExceptionMessage(
-            'Collection items must be of type int'
+            'Collection items must be of type int',
         );
 
         $barCollection->diff($fooCollection);
@@ -324,7 +322,7 @@ class CollectionManipulationTest extends TestCase
 
         $this->expectException(CollectionMismatchException::class);
         $this->expectExceptionMessage(
-            'Collection items must be of type int'
+            'Collection items must be of type int',
         );
 
         $barCollection->intersect($fooCollection);
@@ -349,7 +347,7 @@ class CollectionManipulationTest extends TestCase
 
         $this->expectException(CollectionMismatchException::class);
         $this->expectExceptionMessage(
-            'Collection with index 1 must be of type Ramsey\Collection\Test\Mock\BarCollection'
+            'Collection with index 1 must be of type Ramsey\Collection\Test\Mock\BarCollection',
         );
 
         // @phpstan-ignore-next-line
@@ -411,7 +409,7 @@ class CollectionManipulationTest extends TestCase
 
         $this->expectException(CollectionMismatchException::class);
         $this->expectExceptionMessage(
-            'Collection items in collection with index 1 must be of type int'
+            'Collection items in collection with index 1 must be of type int',
         );
 
         $barCollection->merge($barCollection, $fooCollection);
@@ -441,13 +439,9 @@ class CollectionManipulationTest extends TestCase
         $barCollection[] = $bar2;
         $barCollection[] = $bar3;
 
-        $names = $barCollection->map(function (Bar $bar): string {
-            return $bar->getName();
-        });
+        $names = $barCollection->map(fn (Bar $bar): string => $bar->getName());
 
-        $ids = $barCollection->map(function (Bar $bar): int {
-            return $bar->getId();
-        });
+        $ids = $barCollection->map(fn (Bar $bar): int => $bar->getId());
 
         $this->assertSame(['Jane', 'John', 'Janice'], $names->toArray());
         $this->assertSame([1, 2, 3], $ids->toArray());

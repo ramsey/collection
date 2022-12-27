@@ -6,10 +6,7 @@ namespace Ramsey\Test\Generics;
 
 class Person
 {
-    /**
-     * @var Attributes
-     */
-    private $attributes;
+    private Attributes $attributes;
 
     public function __construct(?Attributes $attributes = null)
     {

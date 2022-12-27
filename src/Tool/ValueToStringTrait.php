@@ -21,8 +21,10 @@ use function get_resource_type;
 use function is_array;
 use function is_bool;
 use function is_callable;
+use function is_object;
 use function is_resource;
 use function is_scalar;
+use function var_export;
 
 /**
  * Provides functionality to express a value as string

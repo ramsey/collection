@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Ramsey\Collection;
 
 use Ramsey\Collection\Exception\NoSuchElementException;
+use RuntimeException;
 
 /**
  * A queue is a collection in which the entities in the collection are kept in
@@ -123,7 +124,7 @@ interface QueueInterface extends ArrayInterface
      *
      * @return bool `true` if this queue changed as a result of the call.
      *
-     * @throws \RuntimeException if a queue refuses to add a particular element
+     * @throws RuntimeException if a queue refuses to add a particular element
      *     for any reason other than that it already contains the element.
      *     Implementations should use a more-specific exception that extends
      *     `\RuntimeException`.
