@@ -5,13 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-### Added
-### Changed
-### Deprecated
-### Removed
+## 1.3.0 - 2022-12-27
+
 ### Fixed
-### Security
+
+* Make type aliases compatible in diff, intersect, and merge ([#111](https://github.com/ramsey/collection/pull/111))
+* Use `offsetUnset()` method to remove from the collection in `AbstractCollection` ([#104](https://github.com/ramsey/collection/pull/104))
+* Use the correct base type of `array-key` for template `K` on `AbstractTypedMap`
+
+### Changed
+
+* Minimum PHP version supported is 7.4
 
 ## 1.2.2 - 2021-10-10
 
