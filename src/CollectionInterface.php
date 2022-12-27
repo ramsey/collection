@@ -151,6 +151,7 @@ interface CollectionInterface extends ArrayInterface
      *
      * @return CollectionInterface<T>
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
     public function where(string $propertyOrMethod, $value): self;
 
     /**
