@@ -18,10 +18,12 @@ use Ramsey\Collection\Test\Mock\Foo;
 class SetTest extends TestCase
 {
     /** @var Set<int> */
-    private $set;
+    private Set $set;
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->set = new Set('int');
     }
 
@@ -40,7 +42,7 @@ class SetTest extends TestCase
     {
         $expected = [2, 4, 6, 8];
         $localSet = new Set('int', $expected);
-        $this->assertEquals($expected, $localSet->toArray());
+        $this->assertSame($expected, $localSet->toArray());
     }
 
     public function testAddDuplicates(): void

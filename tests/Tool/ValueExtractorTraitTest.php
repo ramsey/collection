@@ -60,10 +60,7 @@ class ValueExtractorTraitTest extends TestCase
         $test = new class {
             use ValueExtractorTrait;
 
-            /**
-             * @var string
-             */
-            public $testProperty = 'works!';
+            public string $testProperty = 'works!';
 
             /**
              * @return mixed

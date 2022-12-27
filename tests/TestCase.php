@@ -10,11 +10,12 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class TestCase extends MockeryTestCase
 {
-    /** @var Generator */
-    protected $faker;
+    protected Generator $faker;
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->faker = Factory::create();
     }
 }

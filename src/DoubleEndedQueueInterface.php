@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Ramsey\Collection;
 
 use Ramsey\Collection\Exception\NoSuchElementException;
+use RuntimeException;
 
 /**
  * A linear collection that supports element insertion and removal at both ends.
@@ -175,7 +176,7 @@ interface DoubleEndedQueueInterface extends QueueInterface
      *
      * @return bool `true` if this queue changed as a result of the call.
      *
-     * @throws \RuntimeException if a queue refuses to add a particular element
+     * @throws RuntimeException if a queue refuses to add a particular element
      *     for any reason other than that it already contains the element.
      *     Implementations should use a more-specific exception that extends
      *     `\RuntimeException`.
@@ -196,7 +197,7 @@ interface DoubleEndedQueueInterface extends QueueInterface
      *
      * @return bool `true` if this queue changed as a result of the call.
      *
-     * @throws \RuntimeException if a queue refuses to add a particular element
+     * @throws RuntimeException if a queue refuses to add a particular element
      *     for any reason other than that it already contains the element.
      *     Implementations should use a more-specific exception that extends
      *     `\RuntimeException`.

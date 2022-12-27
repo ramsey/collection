@@ -3,9 +3,9 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
        errorLevel="1"
+       findUnusedPsalmSuppress="true"
        cacheDirectory="./build/cache/psalm"
-       errorBaseline="psalm-baseline.xml"
-       autoloader="./tests/bootstrap.php">
+       errorBaseline="psalm-baseline.xml">
 
     <projectFiles>
         <directory name="./src"/>
@@ -15,5 +15,10 @@
             <directory name="./vendor"/>
         </ignoreFiles>
     </projectFiles>
+
+    <plugins>
+        <pluginClass class="Psalm\MockeryPlugin\Plugin"/>
+        <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
+    </plugins>
 
 </psalm>

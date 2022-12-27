@@ -17,6 +17,7 @@ namespace Ramsey\Collection;
 use ArrayIterator;
 use Traversable;
 
+use function count;
 use function serialize;
 use function unserialize;
 
@@ -34,7 +35,7 @@ abstract class AbstractArray implements ArrayInterface
      *
      * @var array<array-key, T>
      */
-    protected $data = [];
+    protected array $data = [];
 
     /**
      * Constructs a new array object.
@@ -83,8 +84,6 @@ abstract class AbstractArray implements ArrayInterface
      *
      * @return T|null the value stored at the offset, or null if the offset
      *     does not exist.
-     *
-     * @psalm-suppress InvalidAttribute
      */
     #[\ReturnTypeWillChange] // phpcs:ignore
     public function offsetGet($offset)

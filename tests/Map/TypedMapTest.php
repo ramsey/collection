@@ -18,12 +18,17 @@ class TypedMapTest extends TestCase
 {
     public function testConstructor(): void
     {
+        /** @var TypedMap<int, string> $typed */
         $typed = new TypedMap('int', 'string');
 
         $this->assertInstanceOf(TypedMapInterface::class, $typed);
-        $this->assertEquals('int', $typed->getKeyType());
-        $this->assertEquals('string', $typed->getValueType());
+        $this->assertSame('int', $typed->getKeyType());
+        $this->assertSame('string', $typed->getValueType());
+
+        /** @psalm-suppress TypeDoesNotContainType */
         $this->assertEmpty($typed);
+
+        /** @psalm-suppress NoValue */
         $this->assertCount(0, $typed);
     }
 
@@ -31,36 +36,50 @@ class TypedMapTest extends TestCase
     {
         $content = [0 => '0', 1 => '1', 2 => '4', 3 => '8', 4 => '16'];
         $keys = array_keys($content);
+
+        /** @var TypedMap<int, string> $map */
         $map = new TypedMap('int', 'string', $content);
 
-        $this->assertEquals($keys, $map->keys());
+        $this->assertSame($keys, $map->keys());
         foreach ($keys as $key) {
-            $this->assertEquals($content[$key], $map->get($key));
+            $this->assertSame($content[$key], $map->get($key));
         }
     }
 
     public function testConstructorAddWrongKeyType(): void
     {
+        /** @var TypedMap<string, mixed> $map */
         $map = new TypedMap('string', 'mixed');
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Key must be of type string; key is');
+
+        /**
+         * @psalm-suppress InvalidArgument
+         */
         $map[9] = 'foo';
     }
 
     public function testConstructorAllowAddEmptyKey(): void
     {
+        /** @var TypedMap<string, mixed> $map */
         $map = new TypedMap('string', 'mixed');
         $map[''] = 'foo';
-        $this->assertEquals([''], $map->keys());
+        $this->assertSame([''], $map->keys());
     }
 
     public function testConstructorAddWrongValueType(): void
     {
-        $map = new TypedMap('mixed', 'string');
+        /** @var TypedMap<string, string> $map */
+        $map = new TypedMap('string', 'string');
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Value must be of type string; value is');
+
+        /**
+         * @phpstan-ignore-next-line
+         * @psalm-suppress InvalidArgument
+         */
         $map['foo'] = 9;
     }
 }

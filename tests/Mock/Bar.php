@@ -6,15 +6,9 @@ namespace Ramsey\Collection\Test\Mock;
 
 class Bar
 {
-    /**
-     * @var int
-     */
-    public $id;
+    public int $id;
 
-    /**
-     * @var string
-     */
-    public $name;
+    public string $name;
 
     public function __construct(int $id, string $name)
     {

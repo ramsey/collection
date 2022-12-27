@@ -6,8 +6,12 @@
         "verbosity": "normal"
     },
     "commit-msg": {
-        "enabled": false,
-        "actions": []
+        "enabled": true,
+        "actions": [
+            {
+                "action": "\\Ramsey\\CaptainHook\\ValidateConventionalCommit"
+            }
+        ]
     },
     "pre-push": {
         "enabled": true,
@@ -39,7 +43,16 @@
                 ]
             },
             {
-                "action": "composer dev:lint -- {$STAGED_FILES|of-type:php}",
+                "action": "composer dev:lint:syntax -- {$STAGED_FILES|of-type:php}",
+                "conditions": [
+                    {
+                        "exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",
+                        "args": ["php"]
+                    }
+                ]
+            },
+            {
+                "action": "composer dev:lint:style -- {$STAGED_FILES|of-type:php}",
                 "conditions": [
                     {
                         "exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",
@@ -50,8 +63,12 @@
         ]
     },
     "prepare-commit-msg": {
-        "enabled": false,
-        "actions": []
+        "enabled": true,
+        "actions": [
+            {
+                "action": "\\Ramsey\\CaptainHook\\PrepareConventionalCommit"
+            }
+        ]
     },
     "post-commit": {
         "enabled": false,
