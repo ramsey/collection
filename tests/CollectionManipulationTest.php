@@ -178,38 +178,6 @@ class CollectionManipulationTest extends TestCase
         $this->assertNotSame($barCollection, $mapCollection);
     }
 
-    public function testReduceShouldRunOverEachItem(): void
-    {
-        $bar1 = new Bar(1, 'a');
-        $bar2 = new Bar(2, 'b');
-
-        $barCollection = new BarCollection([$bar1, $bar2]);
-
-        $reduceCollection = $barCollection->reduce(function (?int $carry, Bar $item): int {
-            $carry += $item->getId();
-
-            return $carry;
-        });
-
-        $this->assertSame(3, $reduceCollection);
-    }
-
-    public function testReduceShouldUseInitialIfProvided(): void
-    {
-        $bar1 = new Bar(1, 'a');
-        $bar2 = new Bar(2, 'b');
-
-        $barCollection = new BarCollection([$bar1, $bar2]);
-
-        $reduceCollection = $barCollection->reduce(function (?int $carry, Bar $item): int {
-            $carry += $item->getId();
-
-            return $carry;
-        }, 1);
-
-        $this->assertSame(4, $reduceCollection);
-    }
-
     public function testDiffShouldRaiseExceptionOnDiverseCollections(): void
     {
         $barCollection = new BarCollection();

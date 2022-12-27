@@ -26,7 +26,6 @@ use Ramsey\Collection\Tool\ValueToStringTrait;
 use function array_filter;
 use function array_map;
 use function array_merge;
-use function array_reduce;
 use function array_search;
 use function array_udiff;
 use function array_uintersect;
@@ -209,14 +208,6 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     public function map(callable $callback): CollectionInterface
     {
         return new Collection('mixed', array_map($callback, $this->data));
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function reduce(callable $callback, $initial = null)
-    {
-        return array_reduce($this->data, $callback, $initial);
     }
 
     public function diff(CollectionInterface $other): CollectionInterface

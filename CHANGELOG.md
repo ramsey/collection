@@ -13,12 +13,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Security
 
-## 2.0.0 - 2021-10-14
-
-### Added
-
-* Add support for CollectionInterface::reduce().
-
 ## 1.2.2 - 2021-10-10
 
 ### Fixed
