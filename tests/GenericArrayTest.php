@@ -31,7 +31,7 @@ class GenericArrayTest extends TestCase
         $phpArray = ['foo' => 'bar', 'baz'];
         $genericArrayObject = new GenericArray($phpArray);
 
-        $this->assertEquals($phpArray, $genericArrayObject->toArray());
+        $this->assertSame($phpArray, $genericArrayObject->toArray());
         $this->assertFalse($genericArrayObject->isEmpty());
     }
 
@@ -49,12 +49,12 @@ class GenericArrayTest extends TestCase
 
         $this->assertTrue(isset($genericArrayObject['foo']));
         $this->assertFalse(isset($genericArrayObject['bar']));
-        $this->assertEquals($phpArray['foo'], $genericArrayObject['foo']);
+        $this->assertSame($phpArray['foo'], $genericArrayObject['foo']);
 
         $genericArrayObject['bar'] = 456;
         unset($genericArrayObject['foo']);
 
-        $this->assertEquals(456, $genericArrayObject['bar']);
+        $this->assertSame(456, $genericArrayObject['bar']);
         $this->assertArrayNotHasKey('key', $genericArrayObject);
     }
 
@@ -63,7 +63,7 @@ class GenericArrayTest extends TestCase
         $genericArrayObject = new GenericArray();
         $genericArrayObject[] = 123;
 
-        $this->assertEquals(123, $genericArrayObject[0]);
+        $this->assertSame(123, $genericArrayObject[0]);
     }
 
     /**
@@ -104,7 +104,7 @@ class GenericArrayTest extends TestCase
         $phpArray = ['foo' => 'bar'];
         $genericArrayObject = new GenericArray($phpArray);
 
-        $this->assertEquals($phpArray, $genericArrayObject->toArray());
+        $this->assertSame($phpArray, $genericArrayObject->toArray());
 
         $genericArrayObject->clear();
 

@@ -7,9 +7,9 @@ namespace Ramsey\Test\Generics;
 class Person
 {
     /**
-     * @var Attributes
+     * @phpstan-ignore-next-line
      */
-    private $attributes;
+    private Attributes $attributes;
 
     public function __construct(?Attributes $attributes = null)
     {

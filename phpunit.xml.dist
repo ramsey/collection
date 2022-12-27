@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
-         bootstrap="./tests/bootstrap.php"
+         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="./vendor/autoload.php"
          cacheResultFile="./build/cache/phpunit.result.cache"
          colors="true"
          verbose="true">
 
     <testsuites>
-        <testsuite name="unit-tests">
+        <testsuite name="Unit Tests">
             <directory>./tests</directory>
         </testsuite>
     </testsuites>

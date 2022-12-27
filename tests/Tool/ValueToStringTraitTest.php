@@ -23,25 +23,25 @@ class ValueToStringTraitTest extends TestCase
 
     public function testValueNull(): void
     {
-        $this->assertEquals('NULL', $this->toolValueToString(null));
+        $this->assertSame('NULL', $this->toolValueToString(null));
     }
 
     public function testValueBoolean(): void
     {
-        $this->assertEquals('TRUE', $this->toolValueToString(true));
-        $this->assertEquals('FALSE', $this->toolValueToString(false));
+        $this->assertSame('TRUE', $this->toolValueToString(true));
+        $this->assertSame('FALSE', $this->toolValueToString(false));
     }
 
     public function testValueArray(): void
     {
-        $this->assertEquals('Array', $this->toolValueToString([]));
+        $this->assertSame('Array', $this->toolValueToString([]));
     }
 
     public function testValueScalar(): void
     {
-        $this->assertEquals('', $this->toolValueToString(''));
-        $this->assertEquals('foo', $this->toolValueToString('foo'));
-        $this->assertEquals('9', $this->toolValueToString(9));
+        $this->assertSame('', $this->toolValueToString(''));
+        $this->assertSame('foo', $this->toolValueToString('foo'));
+        $this->assertSame('9', $this->toolValueToString(9));
     }
 
     public function testValueResource(): void
@@ -53,12 +53,12 @@ class ValueToStringTraitTest extends TestCase
 
         $expected = '(' . get_resource_type($resource) . ' resource #' . (int) $resource . ')';
 
-        $this->assertEquals($expected, $this->toolValueToString($resource));
+        $this->assertSame($expected, $this->toolValueToString($resource));
     }
 
     public function testValueObjectWithToString(): void
     {
-        $this->assertEquals('BAZ', $this->toolValueToString(new ObjectWithToString()));
+        $this->assertSame('BAZ', $this->toolValueToString(new ObjectWithToString()));
     }
 
     public function testValueDateTime(): void
@@ -66,7 +66,7 @@ class ValueToStringTraitTest extends TestCase
         // datetimes are objects but are returned as iso dates, not as generic objects
         $expected = '2016-12-31T23:59:59+00:00';
         $date = new DateTimeImmutable('2016-12-31T23:59:59+00:00');
-        $this->assertEquals($expected, $this->toolValueToString($date));
+        $this->assertSame($expected, $this->toolValueToString($date));
     }
 
     public function testValueObject(): void
@@ -76,7 +76,7 @@ class ValueToStringTraitTest extends TestCase
         $value = new stdClass();
         $casted = $this->toolValueToString($value);
 
-        $this->assertEquals($expected, $casted);
+        $this->assertSame($expected, $casted);
     }
 
     public function testValueClosure(): void
@@ -85,9 +85,7 @@ class ValueToStringTraitTest extends TestCase
         $startWith = '(Closure';
         $endsWith = ' Object)';
 
-        $value = function () {
-            return;
-        };
+        $value = fn () => null;
         $casted = $this->toolValueToString($value);
 
         $this->assertStringStartsWith($startWith, $casted);

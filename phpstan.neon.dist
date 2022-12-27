@@ -1,8 +1,7 @@
 parameters:
     tmpDir: ./build/cache/phpstan
     level: max
+    treatPhpDocTypesAsCertain: false
     paths:
         - ./src
         - ./tests
-    bootstrapFiles:
-        - ./tests/bootstrap.php

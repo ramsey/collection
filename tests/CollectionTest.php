@@ -26,7 +26,7 @@ class CollectionTest extends TestCase
     {
         $collection = new Collection('string');
 
-        $this->assertEquals('string', $collection->getType());
+        $this->assertSame('string', $collection->getType());
     }
 
     public function testConstructorWithData(): void
@@ -38,6 +38,7 @@ class CollectionTest extends TestCase
 
     public function testOffsetSet(): void
     {
+        /** @var Collection<int> $collection */
         $collection = new Collection('integer');
         $collection[] = $this->faker->numberBetween();
 
@@ -45,6 +46,11 @@ class CollectionTest extends TestCase
         // an invalid type for this collection
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Value must be of type integer');
+
+        /**
+         * @phpstan-ignore-next-line
+         * @psalm-suppress InvalidArgument
+         */
         $collection[] = $this->faker->text();
     }
 
@@ -53,6 +59,7 @@ class CollectionTest extends TestCase
         $offset = $this->faker->numberBetween(0, 100);
         $value = $this->faker->numberBetween(0, 100);
 
+        /** @var Collection<int> $collection */
         $collection = new Collection('int');
         $collection->offsetSet($offset, $value);
 
@@ -61,6 +68,7 @@ class CollectionTest extends TestCase
 
     public function testAdd(): void
     {
+        /** @var Collection<int> $collection */
         $collection = new Collection('integer');
 
         $this->assertTrue($collection->add($this->faker->numberBetween()));
@@ -73,7 +81,10 @@ class CollectionTest extends TestCase
         $obj1 = new stdClass();
         $obj1->name = $this->faker->name();
 
+        /** @var Collection<stdClass> $collection1 */
         $collection1 = new Collection('stdClass');
+
+        /** @var Collection<stdClass> $collection2 */
         $collection2 = new Collection('stdClass');
 
         // Add the same object multiple times
@@ -101,6 +112,7 @@ class CollectionTest extends TestCase
         $obj2 = new stdClass();
         $obj2->name = $name;
 
+        /** @var Collection<stdClass> $collection */
         $collection = new Collection('stdClass');
         $collection->add($obj1);
 
@@ -119,6 +131,7 @@ class CollectionTest extends TestCase
         $obj2 = new stdClass();
         $obj2->name = $name;
 
+        /** @var Collection<stdClass> $collection */
         $collection = new Collection('stdClass');
         $collection->add($obj1);
 
@@ -131,6 +144,7 @@ class CollectionTest extends TestCase
         $obj1 = new stdClass();
         $obj1->name = $this->faker->name();
 
+        /** @var Collection<stdClass> $collection */
         $collection = new Collection('stdClass');
 
         // Add the same object multiple times
@@ -155,7 +169,10 @@ class CollectionTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Value must be of type ' . Foo::class);
 
-        // @phpstan-ignore-next-line
+        /**
+         * @phpstan-ignore-next-line
+         * @psalm-suppress InvalidArgument
+         */
         $fooCollection[] = new stdClass();
     }
 
@@ -166,7 +183,7 @@ class CollectionTest extends TestCase
         $bar3 = new Bar(3, 'c');
         $barCollection = new BarCollection([$bar1, $bar2, $bar3]);
 
-        $this->assertEquals(['a', 'b', 'c'], $barCollection->column('name'));
+        $this->assertSame(['a', 'b', 'c'], $barCollection->column('name'));
     }
 
     public function testColumnByMethod(): void
@@ -176,7 +193,7 @@ class CollectionTest extends TestCase
         $bar3 = new Bar(3, 'c');
         $barCollection = new BarCollection([$bar1, $bar2, $bar3]);
 
-        $this->assertEquals([1, 2, 3], $barCollection->column('getId'));
+        $this->assertSame([1, 2, 3], $barCollection->column('getId'));
     }
 
     public function testColumnShouldRaiseExceptionOnUndefinedPropertyOrMethod(): void
@@ -207,7 +224,7 @@ class CollectionTest extends TestCase
 
         $this->assertSame($bar1, $barCollection->first());
         // Make sure the collection stays unchanged
-        $this->assertEquals([$bar1, $bar2, $bar3], $barCollection->toArray());
+        $this->assertSame([$bar1, $bar2, $bar3], $barCollection->toArray());
     }
 
     public function testLastShouldRaiseExceptionOnEmptyCollection(): void
@@ -228,7 +245,7 @@ class CollectionTest extends TestCase
 
         $this->assertSame($bar3, $barCollection->last());
         // Make sure the collection stays unchanged
-        $this->assertEquals([$bar1, $bar2, $bar3], $barCollection->toArray());
+        $this->assertSame([$bar1, $bar2, $bar3], $barCollection->toArray());
     }
 
     public function testSerializable(): void

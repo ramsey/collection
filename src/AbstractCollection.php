@@ -26,6 +26,7 @@ use Ramsey\Collection\Tool\ValueToStringTrait;
 use function array_filter;
 use function array_map;
 use function array_merge;
+use function array_reduce;
 use function array_search;
 use function array_udiff;
 use function array_uintersect;
@@ -33,7 +34,9 @@ use function current;
 use function end;
 use function in_array;
 use function is_int;
+use function is_object;
 use function reset;
+use function spl_object_id;
 use function sprintf;
 use function unserialize;
 use function usort;
@@ -78,7 +81,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         if ($this->checkType($this->getType(), $value) === false) {
             throw new InvalidArgumentException(
                 'Value must be of type ' . $this->getType() . '; value is '
-                . $this->toolValueToString($value)
+                . $this->toolValueToString($value),
             );
         }
 
@@ -176,7 +179,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
                 $bValue = $this->extractValue($b, $propertyOrMethod);
 
                 return ($aValue <=> $bValue) * ($order === self::SORT_DESC ? -1 : 1);
-            }
+            },
         );
 
         return $collection;
@@ -252,7 +255,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         foreach ($collections as $index => $collection) {
             if (!$collection instanceof static) {
                 throw new CollectionMismatchException(
-                    sprintf('Collection with index %d must be of type %s', $index, static::class)
+                    sprintf('Collection with index %d must be of type %s', $index, static::class),
                 );
             }
 
@@ -260,7 +263,11 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
             // we also need to make sure that the internal types match each other
             if ($collection->getType() !== $this->getType()) {
                 throw new CollectionMismatchException(
-                    sprintf('Collection items in collection with index %d must be of type %s', $index, $this->getType())
+                    sprintf(
+                        'Collection items in collection with index %d must be of type %s',
+                        $index,
+                        $this->getType(),
+                    ),
                 );
             }
 
