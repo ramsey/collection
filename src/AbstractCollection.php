@@ -38,7 +38,6 @@ use function is_object;
 use function reset;
 use function spl_object_id;
 use function sprintf;
-use function unserialize;
 use function usort;
 
 /**
@@ -281,17 +280,6 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         }
 
         return $mergedCollection;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function unserialize($serialized): void
-    {
-        /** @var array<array-key, T> $data */
-        $data = unserialize($serialized, ['allowed_classes' => [$this->getType()]]);
-
-        $this->data = $data;
     }
 
     /**

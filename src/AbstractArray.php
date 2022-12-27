@@ -18,8 +18,6 @@ use ArrayIterator;
 use Traversable;
 
 use function count;
-use function serialize;
-use function unserialize;
 
 /**
  * This class provides a basic implementation of `ArrayInterface`, to minimize
@@ -123,20 +121,6 @@ abstract class AbstractArray implements ArrayInterface
     }
 
     /**
-     * Returns a serialized string representation of this array object.
-     *
-     * @deprecated The Serializable interface will go away in PHP 9.
-     *
-     * @link http://php.net/manual/en/serializable.serialize.php Serializable::serialize()
-     *
-     * @return string a PHP serialized string.
-     */
-    public function serialize(): string
-    {
-        return serialize($this->data);
-    }
-
-    /**
      * Returns data suitable for PHP serialization.
      *
      * @link https://www.php.net/manual/en/language.oop5.magic.php#language.oop5.magic.serialize
@@ -147,25 +131,6 @@ abstract class AbstractArray implements ArrayInterface
     public function __serialize(): array
     {
         return $this->data;
-    }
-
-    /**
-     * Converts a serialized string representation into an instance object.
-     *
-     * @deprecated The Serializable interface will go away in PHP 9.
-     *
-     * @link http://php.net/manual/en/serializable.unserialize.php Serializable::unserialize()
-     *
-     * @param string $serialized A PHP serialized string to unserialize.
-     *
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-     */
-    public function unserialize($serialized): void
-    {
-        /** @var array<array-key, T> $data */
-        $data = unserialize($serialized, ['allowed_classes' => false]);
-
-        $this->data = $data;
     }
 
     /**
