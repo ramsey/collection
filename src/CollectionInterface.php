@@ -174,6 +174,27 @@ interface CollectionInterface extends ArrayInterface
     public function map(callable $callback): self;
 
     /**
+     * Apply a given callback method on each item of the collection
+     * to reduce it to a single value. If an initial value is provided
+     * it will be used at the beginning of the process, or as a final
+     * result in case the array is empty.
+     *
+     * See the {@link http://php.net/manual/en/function.array-reduce.php PHP array_reduce() documentation}
+     * for examples of how the `$callback` and `$initial` parameters work.
+     *
+     * @param callable(TCarry|null, T): (TCarry|null) $callback A callable to apply to each
+     *     item of the collection to reduce it to a single value.
+     * @param TCarry|null $initial If provided, this is the initial value provided
+     *     to the callback.
+     *
+     * @return TCarry|mixed
+     *
+     * @template TCarry
+     */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    public function reduce(callable $callback, $initial = null);
+
+    /**
      * Create a new collection with divergent items between current and given
      * collection.
      *
