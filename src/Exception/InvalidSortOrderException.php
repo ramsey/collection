@@ -19,6 +19,6 @@ use RuntimeException;
 /**
  * Thrown when attempting to use a sort order that is not recognized.
  */
-class InvalidSortOrderException extends RuntimeException
+class InvalidSortOrderException extends RuntimeException implements CollectionException
 {
 }
