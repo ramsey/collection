@@ -14,6 +14,8 @@ class TestCase extends MockeryTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->faker = Factory::create();
     }
 }

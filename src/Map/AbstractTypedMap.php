@@ -24,7 +24,7 @@ use function var_export;
  * This class provides a basic implementation of `TypedMapInterface`, to
  * minimize the effort required to implement this interface.
  *
- * @template K
+ * @template K of array-key
  * @template T
  * @extends AbstractMap<T>
  * @implements TypedMapInterface<T>
@@ -39,8 +39,6 @@ abstract class AbstractTypedMap extends AbstractMap implements TypedMapInterface
      * @param T $value
      *
      * @inheritDoc
-     *
-     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function offsetSet($offset, $value): void
     {
@@ -65,7 +63,6 @@ abstract class AbstractTypedMap extends AbstractMap implements TypedMapInterface
             );
         }
 
-        /** @psalm-suppress MixedArgumentTypeCoercion */
         parent::offsetSet($offset, $value);
     }
 }

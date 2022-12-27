@@ -181,7 +181,7 @@ interface CollectionInterface extends ArrayInterface
      * See the {@link http://php.net/manual/en/function.array-reduce.php PHP array_reduce() documentation}
      * for examples of how the `$callback` and `$initial` parameters work.
      *
-     * @param callable(TCarry, T):TCarry $callback A callable to apply to each
+     * @param callable(TCarry|null, T): (TCarry|null) $callback A callable to apply to each
      *     item of the collection to reduce it to a single value.
      * @param TCarry|null $initial If provided, this is the initial value provided
      *     to the callback.

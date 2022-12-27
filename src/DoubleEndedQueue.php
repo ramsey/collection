@@ -50,6 +50,8 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
     }
 
     /**
+     * @throws InvalidArgumentException if $element is of the wrong type
+     *
      * @inheritDoc
      */
     public function addFirst($element): bool

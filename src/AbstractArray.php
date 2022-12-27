@@ -84,8 +84,6 @@ abstract class AbstractArray implements ArrayInterface
      *
      * @return T|null the value stored at the offset, or null if the offset
      *     does not exist.
-     *
-     * @psalm-suppress InvalidAttribute
      */
     #[\ReturnTypeWillChange] // phpcs:ignore
     public function offsetGet($offset)

@@ -64,6 +64,8 @@ class Queue extends AbstractArray implements QueueInterface
      * Since arbitrary offsets may not be manipulated in a queue, this method
      * serves only to fulfill the `ArrayAccess` interface requirements. It is
      * invoked by other operations when adding values to the queue.
+     *
+     * @throws InvalidArgumentException if $value is of the wrong type
      */
     public function offsetSet($offset, $value): void
     {
@@ -78,6 +80,8 @@ class Queue extends AbstractArray implements QueueInterface
     }
 
     /**
+     * @throws InvalidArgumentException if $value is of the wrong type
+     *
      * @inheritDoc
      */
     public function add($element): bool

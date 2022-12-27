@@ -2,7 +2,21 @@
 
 name: "build"
 
-on: ["pull_request", "push"]
+on:
+  push:
+    branches:
+      - "main"
+    tags:
+      - "*"
+  pull_request:
+    branches:
+      - "main"
+
+# Cancels all previous workflow runs for the same branch that have not yet completed.
+concurrency:
+  # The concurrency group contains the workflow name and the branch name.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   COMPOSER_ROOT_VERSION: "1.99.99"
@@ -13,35 +27,39 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - name: "Checkout repository"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v3.2.0"
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@v2"
+        uses: "shivammathur/setup-php@2.22.0"
         with:
           php-version: "latest"
           coverage: "none"
 
       - name: "Install dependencies (Composer)"
-        uses: "ramsey/composer-install@v1"
+        uses: "ramsey/composer-install@2.2.0"
+
+      - name: "Check syntax (php-parallel-lint)"
+        run: "composer dev:lint:syntax"
 
       - name: "Check coding standards (PHP_CodeSniffer)"
-        run: "composer dev:lint"
+        run: "composer dev:lint:style"
 
   static-analysis:
-    name: "Static Analysis"
+    name: "Static analysis"
     runs-on: "ubuntu-latest"
+
     steps:
       - name: "Checkout repository"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v3.2.0"
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@v2"
+        uses: "shivammathur/setup-php@2.22.0"
         with:
           php-version: "latest"
           coverage: "none"
 
       - name: "Install dependencies (Composer)"
-        uses: "ramsey/composer-install@v1"
+        uses: "ramsey/composer-install@2.2.0"
 
       - name: "Statically analyze code (PHPStan)"
         run: "composer dev:analyze:phpstan"
@@ -51,91 +69,89 @@ jobs:
 
   security-analysis:
     name: "Security analysis"
+    needs: ["coding-standards", "static-analysis"]
     runs-on: "ubuntu-latest"
+
     steps:
       - name: "Checkout repository"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v3.2.0"
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@v2"
+        uses: "shivammathur/setup-php@2.22.0"
         with:
           php-version: "latest"
           coverage: "none"
 
       - name: "Install dependencies (Composer)"
-        uses: "ramsey/composer-install@v1"
+        uses: "ramsey/composer-install@2.2.0"
 
       - name: "Analyze security of code (Psalm)"
         run: "./vendor/bin/psalm --taint-analysis --report=build/logs/psalm.sarif"
 
       - name: "Upload security analysis results to GitHub"
-        uses: "github/codeql-action/upload-sarif@v1"
+        uses: "github/codeql-action/upload-sarif@v2"
         with:
           sarif_file: "build/logs/psalm.sarif"
 
   code-coverage:
     name: "Code coverage"
+    needs: ["coding-standards", "static-analysis"]
     runs-on: "ubuntu-latest"
+
     steps:
       - name: "Checkout repository"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v3.2.0"
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@v2"
+        uses: "shivammathur/setup-php@2.22.0"
         with:
           php-version: "latest"
           coverage: "pcov"
           ini-values: "memory_limit=-1"
 
       - name: "Install dependencies (Composer)"
-        uses: "ramsey/composer-install@v1"
+        uses: "ramsey/composer-install@2.2.0"
 
       - name: "Run unit tests (PHPUnit)"
         run: "composer dev:test:coverage:ci"
 
       - name: "Publish coverage report to Codecov"
-        uses: "codecov/codecov-action@v2.1.0"
+        uses: "codecov/codecov-action@v3.1.1"
 
   unit-tests:
     name: "Unit tests"
-    runs-on: ${{ matrix.operating-system }}
+    needs: ["code-coverage"]
+    runs-on: "ubuntu-latest"
 
     strategy:
       fail-fast: false
       matrix:
-        php-version:
-          - "7.3"
+        php:
           - "7.4"
           - "8.0"
           - "8.1"
-        operating-system:
-          - "ubuntu-latest"
-          - "windows-latest"
-        dependencies:
-          - "lowest"
-          - "highest"
+          - "8.2"
+        composer-deps: ["lowest", "highest"]
 
     steps:
-      - name: "Configure Git (for Windows)"
-        if: ${{ matrix.operating-system == 'windows-latest' }}
-        run: |
-          git config --system core.autocrlf false
-          git config --system core.eol lf
-
       - name: "Checkout repository"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v3.2.0"
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@v2"
+        uses: "shivammathur/setup-php@2.22.0"
         with:
-          php-version: "${{ matrix.php-version }}"
+          php-version: "${{ matrix.php }}"
           coverage: "none"
 
       - name: "Install dependencies (Composer)"
-        uses: "ramsey/composer-install@v1"
+        uses: "ramsey/composer-install@2.2.0"
         with:
-          dependency-versions: "${{ matrix.dependencies }}"
-          composer-options: "${{ matrix.composer-options }}"
+          dependency-versions: "${{ matrix.composer-deps }}"
 
       - name: "Run unit tests (PHPUnit)"
+        if: "${{ matrix.composer-deps == 'highest' }}"
         run: "composer dev:test:unit"
+
+      - name: "Run unit tests, with deprecation notices turned off (PHPUnit)"
+        if: "${{ matrix.composer-deps == 'lowest' }}"
+        run: "composer dev:test:unit -- -d 'error_reporting=E_ALL & ~E_DEPRECATED'"

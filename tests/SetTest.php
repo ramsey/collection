@@ -22,6 +22,8 @@ class SetTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->set = new Set('int');
     }
 

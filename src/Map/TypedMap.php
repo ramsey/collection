@@ -80,7 +80,7 @@ use Ramsey\Collection\Tool\TypeTrait;
  * }
  * ```
  *
- * @template K
+ * @template K of array-key
  * @template T
  * @extends AbstractTypedMap<K, T>
  */
@@ -117,7 +117,6 @@ class TypedMap extends AbstractTypedMap
         $this->keyType = $keyType;
         $this->valueType = $valueType;
 
-        /** @psalm-suppress MixedArgumentTypeCoercion */
         parent::__construct($data);
     }
 
