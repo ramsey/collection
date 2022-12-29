@@ -68,7 +68,7 @@ abstract class AbstractArray implements ArrayInterface
      *
      * @param array-key $offset The offset to check.
      */
-    public function offsetExists($offset): bool
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->data[$offset]);
     }
@@ -80,11 +80,10 @@ abstract class AbstractArray implements ArrayInterface
      *
      * @param array-key $offset The offset for which a value should be returned.
      *
-     * @return T|null the value stored at the offset, or null if the offset
+     * @return T | null the value stored at the offset, or null if the offset
      *     does not exist.
      */
-    #[\ReturnTypeWillChange] // phpcs:ignore
-    public function offsetGet($offset)
+    public function offsetGet(mixed $offset): mixed
     {
         return $this->data[$offset] ?? null;
     }
@@ -98,8 +97,7 @@ abstract class AbstractArray implements ArrayInterface
      *     may be set at a numerically-indexed offset.
      * @param T $value The value to set at the given offset.
      */
-    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-    public function offsetSet($offset, $value): void
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if ($offset === null) {
             $this->data[] = $value;
@@ -115,7 +113,7 @@ abstract class AbstractArray implements ArrayInterface
      *
      * @param array-key $offset The offset to remove from the array.
      */
-    public function offsetUnset($offset): void
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->data[$offset]);
     }

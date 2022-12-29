@@ -14,6 +14,9 @@ declare(strict_types=1);
 
 namespace Ramsey\Collection;
 
+use Ramsey\Collection\Exception\CollectionMismatchException;
+use Ramsey\Collection\Exception\NoSuchElementException;
+
 /**
  * A collection represents a group of objects, known as its elements.
  *
@@ -25,16 +28,6 @@ namespace Ramsey\Collection;
  */
 interface CollectionInterface extends ArrayInterface
 {
-    /**
-     * Ascending sort type.
-     */
-    public const SORT_ASC = 'asc';
-
-    /**
-     * Descending sort type.
-     */
-    public const SORT_DESC = 'desc';
-
     /**
      * Ensures that this collection contains the specified element (optional
      * operation).
@@ -59,8 +52,7 @@ interface CollectionInterface extends ArrayInterface
      *
      * @return bool `true` if this collection changed as a result of the call.
      */
-    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-    public function add($element): bool;
+    public function add(mixed $element): bool;
 
     /**
      * Returns `true` if this collection contains the specified element.
@@ -68,8 +60,7 @@ interface CollectionInterface extends ArrayInterface
      * @param T $element The element to check whether the collection contains.
      * @param bool $strict Whether to perform a strict type check on the value.
      */
-    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-    public function contains($element, bool $strict = true): bool;
+    public function contains(mixed $element, bool $strict = true): bool;
 
     /**
      * Returns the type associated with this collection.
@@ -84,8 +75,7 @@ interface CollectionInterface extends ArrayInterface
      *
      * @return bool `true` if an element was removed as a result of this call.
      */
-    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-    public function remove($element): bool;
+    public function remove(mixed $element): bool;
 
     /**
      * Returns the values from the given property or method.
@@ -100,15 +90,19 @@ interface CollectionInterface extends ArrayInterface
      * Returns the first item of the collection.
      *
      * @return T
+     *
+     * @throws NoSuchElementException if this collection is empty.
      */
-    public function first();
+    public function first(): mixed;
 
     /**
      * Returns the last item of the collection.
      *
      * @return T
+     *
+     * @throws NoSuchElementException if this collection is empty.
      */
-    public function last();
+    public function last(): mixed;
 
     /**
      * Sort the collection by a property or method with the given sort order.
@@ -117,12 +111,11 @@ interface CollectionInterface extends ArrayInterface
      * a new one.
      *
      * @param string $propertyOrMethod The property or method to sort by.
-     * @param string $order The sort order for the resulting collection (one of
-     *     this interface's `SORT_*` constants).
+     * @param Sort $order The sort order for the resulting collection.
      *
      * @return CollectionInterface<T>
      */
-    public function sort(string $propertyOrMethod, string $order = self::SORT_ASC): self;
+    public function sort(string $propertyOrMethod, Sort $order = Sort::Ascending): self;
 
     /**
      * Filter out items of the collection which don't match the criteria of
@@ -141,7 +134,8 @@ interface CollectionInterface extends ArrayInterface
     public function filter(callable $callback): self;
 
     /**
-     * Create a new collection where items match the criteria of given callback.
+     * Create a new collection where the result of the given property or method
+     * of each item in the collection equals the given value.
      *
      * This will always leave the original collection untouched and will return
      * a new one.
@@ -151,8 +145,7 @@ interface CollectionInterface extends ArrayInterface
      *
      * @return CollectionInterface<T>
      */
-    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-    public function where(string $propertyOrMethod, $value): self;
+    public function where(string $propertyOrMethod, mixed $value): self;
 
     /**
      * Apply a given callback method on each item of the collection.
@@ -188,8 +181,7 @@ interface CollectionInterface extends ArrayInterface
      *
      * @template TCarry
      */
-    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-    public function reduce(callable $callback, $initial);
+    public function reduce(callable $callback, mixed $initial): mixed;
 
     /**
      * Create a new collection with divergent items between current and given
@@ -199,6 +191,9 @@ interface CollectionInterface extends ArrayInterface
      *     items.
      *
      * @return CollectionInterface<T>
+     *
+     * @throws CollectionMismatchException if the compared collections are of
+     *     differing types.
      */
     public function diff(CollectionInterface $other): self;
 
@@ -210,6 +205,9 @@ interface CollectionInterface extends ArrayInterface
      *     intersecting items.
      *
      * @return CollectionInterface<T>
+     *
+     * @throws CollectionMismatchException if the compared collections are of
+     *     differing types.
      */
     public function intersect(CollectionInterface $other): self;
 
@@ -219,6 +217,10 @@ interface CollectionInterface extends ArrayInterface
      * @param CollectionInterface<T> ...$collections The collections to merge.
      *
      * @return CollectionInterface<T>
+     *
+     * @throws CollectionMismatchException if unable to merge any of the given
+     *     collections or items within the given collections due to type
+     *     mismatch errors.
      */
     public function merge(CollectionInterface ...$collections): self;
 }

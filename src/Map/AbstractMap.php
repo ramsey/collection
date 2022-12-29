@@ -39,7 +39,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
      * @inheritDoc
      * @psalm-suppress MoreSpecificImplementedParamType,DocblockTypeContradiction
      */
-    public function offsetSet($offset, $value): void
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if ($offset === null) {
             throw new InvalidArgumentException(
@@ -51,18 +51,12 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
         $this->data[$offset] = $value;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function containsKey($key): bool
+    public function containsKey(int | string $key): bool
     {
         return array_key_exists($key, $this->data);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function containsValue($value): bool
+    public function containsValue(mixed $value): bool
     {
         return in_array($value, $this->data, true);
     }
@@ -76,9 +70,12 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
     }
 
     /**
-     * @inheritDoc
+     * @param array-key $key The key to return from the map.
+     * @param T | null $defaultValue The default value to use if `$key` is not found.
+     *
+     * @return T | null the value or `null` if the key could not be found.
      */
-    public function get($key, $defaultValue = null)
+    public function get(int | string $key, mixed $defaultValue = null): mixed
     {
         if (!$this->containsKey($key)) {
             return $defaultValue;
@@ -87,10 +84,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
         return $this[$key];
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function put($key, $value)
+    public function put(int | string $key, mixed $value): mixed
     {
         $previousValue = $this->get($key);
         $this[$key] = $value;
@@ -98,10 +92,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
         return $previousValue;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function putIfAbsent($key, $value)
+    public function putIfAbsent(int | string $key, mixed $value): mixed
     {
         $currentValue = $this->get($key);
 
@@ -112,10 +103,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
         return $currentValue;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function remove($key)
+    public function remove(int | string $key): mixed
     {
         $previousValue = $this->get($key);
         unset($this[$key]);
@@ -123,10 +111,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
         return $previousValue;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function removeIf($key, $value): bool
+    public function removeIf(int | string $key, mixed $value): bool
     {
         if ($this->get($key) === $value) {
             unset($this[$key]);
@@ -137,10 +122,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function replace($key, $value)
+    public function replace(int | string $key, mixed $value): mixed
     {
         $currentValue = $this->get($key);
 
@@ -151,10 +133,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
         return $currentValue;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function replaceIf($key, $oldValue, $newValue): bool
+    public function replaceIf(int | string $key, mixed $oldValue, mixed $newValue): bool
     {
         if ($this->get($key) === $oldValue) {
             $this[$key] = $newValue;

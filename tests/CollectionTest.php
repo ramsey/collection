@@ -6,7 +6,7 @@ namespace Ramsey\Collection\Test;
 
 use Ramsey\Collection\Collection;
 use Ramsey\Collection\Exception\InvalidArgumentException;
-use Ramsey\Collection\Exception\OutOfBoundsException;
+use Ramsey\Collection\Exception\NoSuchElementException;
 use Ramsey\Collection\Exception\ValueExtractionException;
 use Ramsey\Collection\Test\Mock\Bar;
 use Ramsey\Collection\Test\Mock\BarCollection;
@@ -210,7 +210,7 @@ class CollectionTest extends TestCase
     {
         $barCollection = new BarCollection();
 
-        $this->expectException(OutOfBoundsException::class);
+        $this->expectException(NoSuchElementException::class);
         $this->expectExceptionMessage('Can\'t determine first item. Collection is empty');
         $barCollection->first();
     }
@@ -231,7 +231,7 @@ class CollectionTest extends TestCase
     {
         $barCollection = new BarCollection();
 
-        $this->expectException(OutOfBoundsException::class);
+        $this->expectException(NoSuchElementException::class);
         $this->expectExceptionMessage('Can\'t determine last item. Collection is empty');
         $barCollection->last();
     }

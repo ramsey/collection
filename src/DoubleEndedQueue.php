@@ -33,9 +33,9 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
     private int $tail = -1;
 
     /**
-     * @inheritDoc
+     * @throws InvalidArgumentException if $value is of the wrong type
      */
-    public function offsetSet($offset, $value): void
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if ($this->checkType($this->getType(), $value) === false) {
             throw new InvalidArgumentException(
@@ -51,10 +51,8 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
 
     /**
      * @throws InvalidArgumentException if $element is of the wrong type
-     *
-     * @inheritDoc
      */
-    public function addFirst($element): bool
+    public function addFirst(mixed $element): bool
     {
         if ($this->checkType($this->getType(), $element) === false) {
             throw new InvalidArgumentException(
@@ -71,17 +69,14 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
     }
 
     /**
-     * @inheritDoc
+     * @throws InvalidArgumentException if $element is of the wrong type
      */
-    public function addLast($element): bool
+    public function addLast(mixed $element): bool
     {
         return $this->add($element);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function offerFirst($element): bool
+    public function offerFirst(mixed $element): bool
     {
         try {
             return $this->addFirst($element);
@@ -90,26 +85,27 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
         }
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function offerLast($element): bool
+    public function offerLast(mixed $element): bool
     {
         return $this->offer($element);
     }
 
     /**
-     * @inheritDoc
+     * @return T the first element in this queue.
+     *
+     * @throws NoSuchElementException if the queue is empty
      */
-    public function removeFirst()
+    public function removeFirst(): mixed
     {
         return $this->remove();
     }
 
     /**
-     * @inheritDoc
+     * @return T the last element in this queue.
+     *
+     * @throws NoSuchElementException if this queue is empty.
      */
-    public function removeLast()
+    public function removeLast(): mixed
     {
         $tail = $this->pollLast();
 
@@ -121,17 +117,17 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
     }
 
     /**
-     * @inheritDoc
+     * @return T | null the head of this queue, or `null` if this queue is empty.
      */
-    public function pollFirst()
+    public function pollFirst(): mixed
     {
         return $this->poll();
     }
 
     /**
-     * @inheritDoc
+     * @return T | null the tail of this queue, or `null` if this queue is empty.
      */
-    public function pollLast()
+    public function pollLast(): mixed
     {
         if ($this->count() === 0) {
             return null;
@@ -146,17 +142,21 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
     }
 
     /**
-     * @inheritDoc
+     * @return T the head of this queue.
+     *
+     * @throws NoSuchElementException if this queue is empty.
      */
-    public function firstElement()
+    public function firstElement(): mixed
     {
         return $this->element();
     }
 
     /**
-     * @inheritDoc
+     * @return T the tail of this queue.
+     *
+     * @throws NoSuchElementException if this queue is empty.
      */
-    public function lastElement()
+    public function lastElement(): mixed
     {
         if ($this->count() === 0) {
             throw new NoSuchElementException('Can\'t return element from Queue. Queue is empty.');
@@ -166,17 +166,17 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
     }
 
     /**
-     * @inheritDoc
+     * @return T | null the head of this queue, or `null` if this queue is empty.
      */
-    public function peekFirst()
+    public function peekFirst(): mixed
     {
         return $this->peek();
     }
 
     /**
-     * @inheritDoc
+     * @return T | null the tail of this queue, or `null` if this queue is empty.
      */
-    public function peekLast()
+    public function peekLast(): mixed
     {
         if ($this->count() === 0) {
             return null;

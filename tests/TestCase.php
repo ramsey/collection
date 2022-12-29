@@ -8,11 +8,9 @@ use Faker\Factory;
 use Faker\Generator;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
-/**
- * @psalm-suppress MissingConstructor
- */
 class TestCase extends MockeryTestCase
 {
+    /** @psalm-suppress MissingConstructor */
     protected Generator $faker;
 
     protected function setUp(): void

@@ -40,7 +40,7 @@ abstract class AbstractTypedMap extends AbstractMap implements TypedMapInterface
      *
      * @inheritDoc
      */
-    public function offsetSet($offset, $value): void
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if ($offset === null) {
             throw new InvalidArgumentException(

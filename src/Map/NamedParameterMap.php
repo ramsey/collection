@@ -63,10 +63,7 @@ class NamedParameterMap extends AbstractMap
         return $this->namedParameters;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function offsetSet($offset, $value): void
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         /** @psalm-suppress DocblockTypeContradiction */
         if ($offset === null) {

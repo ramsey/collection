@@ -7,8 +7,8 @@ namespace Ramsey\Collection\Test;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Ramsey\Collection\Collection;
 use Ramsey\Collection\Exception\CollectionMismatchException;
-use Ramsey\Collection\Exception\InvalidSortOrderException;
 use Ramsey\Collection\Exception\ValueExtractionException;
+use Ramsey\Collection\Sort;
 use Ramsey\Collection\Test\Mock\Bar;
 use Ramsey\Collection\Test\Mock\BarCollection;
 use Ramsey\Collection\Test\Mock\FooCollection;
@@ -62,7 +62,7 @@ class CollectionManipulationTest extends TestCase
         $bar3 = new Bar(3, 'a');
         $barCollection = new BarCollection([$bar1, $bar2, $bar3]);
 
-        $sortedCollection = $barCollection->sort('name', 'desc');
+        $sortedCollection = $barCollection->sort('name', Sort::Descending);
 
         $this->assertNotSame($barCollection, $sortedCollection);
         $this->assertSame([$bar1, $bar2, $bar3], $sortedCollection->toArray());
@@ -77,7 +77,7 @@ class CollectionManipulationTest extends TestCase
         $bar3 = new Bar(3, 'a');
         $barCollection = new BarCollection([$bar1, $bar2, $bar3]);
 
-        $sortedCollection = $barCollection->sort('getName', 'desc');
+        $sortedCollection = $barCollection->sort('getName', Sort::Descending);
 
         $this->assertNotSame($barCollection, $sortedCollection);
         $this->assertSame([$bar1, $bar2, $bar3], $sortedCollection->toArray());
@@ -96,15 +96,6 @@ class CollectionManipulationTest extends TestCase
         $this->expectExceptionMessage('Method or property "unknown" not defined in Ramsey\Collection\Test\Mock\Bar');
 
         $barCollection->sort('unknown');
-    }
-
-    public function testUnknownSortOrderShouldRaiseException(): void
-    {
-        $barCollection = new BarCollection();
-
-        $this->expectException(InvalidSortOrderException::class);
-        $this->expectExceptionMessage('Invalid sort order given: bar');
-        $barCollection->sort('fu', 'bar');
     }
 
     public function testFilter(): void

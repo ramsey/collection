@@ -16,7 +16,6 @@ namespace Ramsey\Collection\Tool;
 
 use DateTimeInterface;
 
-use function get_class;
 use function get_resource_type;
 use function is_array;
 use function is_bool;
@@ -46,8 +45,7 @@ trait ValueToStringTrait
      *
      * @param mixed $value the value to return as a string.
      */
-    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-    protected function toolValueToString($value): string
+    protected function toolValueToString(mixed $value): string
     {
         // null
         if ($value === null) {
@@ -92,7 +90,6 @@ trait ValueToStringTrait
         }
 
         // unknown type
-        // phpcs:ignore SlevomatCodingStandard.Classes.ModernClassNameReference.ClassNameReferencedViaFunctionCall
-        return '(' . get_class($value) . ' Object)';
+        return '(' . $value::class . ' Object)';
     }
 }
