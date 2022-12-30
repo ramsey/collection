@@ -82,4 +82,15 @@ class TypedMapTest extends TestCase
          */
         $map['foo'] = 9;
     }
+
+    public function testNullKeyRaisesException(): void
+    {
+        /** @var TypedMap<string, mixed> $map */
+        $map = new TypedMap('string', 'mixed');
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Map elements are key/value pairs; a key must be provided for value 'foo'");
+
+        $map[] = 'foo';
+    }
 }

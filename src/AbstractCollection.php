@@ -17,7 +17,9 @@ namespace Ramsey\Collection;
 use Closure;
 use Ramsey\Collection\Exception\CollectionMismatchException;
 use Ramsey\Collection\Exception\InvalidArgumentException;
+use Ramsey\Collection\Exception\InvalidPropertyOrMethod;
 use Ramsey\Collection\Exception\NoSuchElementException;
+use Ramsey\Collection\Exception\UnsupportedOperationException;
 use Ramsey\Collection\Tool\TypeTrait;
 use Ramsey\Collection\Tool\ValueExtractorTrait;
 use Ramsey\Collection\Tool\ValueToStringTrait;
@@ -99,6 +101,11 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
+     * @throws InvalidPropertyOrMethod if the $propertyOrMethod does not exist
+     *     on the elements in this collection.
+     * @throws UnsupportedOperationException if unable to call column() on this
+     *     collection.
+     *
      * @inheritDoc
      */
     public function column(string $propertyOrMethod): array
@@ -155,8 +162,13 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
 
     /**
      * @return CollectionInterface<T>
+     *
+     * @throws InvalidPropertyOrMethod if the $propertyOrMethod does not exist
+     *     on the elements in this collection.
+     * @throws UnsupportedOperationException if unable to call sort() on this
+     *     collection.
      */
-    public function sort(string $propertyOrMethod, Sort $order = Sort::Ascending): CollectionInterface
+    public function sort(?string $propertyOrMethod = null, Sort $order = Sort::Ascending): CollectionInterface
     {
         $collection = clone $this;
 
@@ -195,8 +207,13 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
 
     /**
      * @return CollectionInterface<T>
+     *
+     * @throws InvalidPropertyOrMethod if the $propertyOrMethod does not exist
+     *     on the elements in this collection.
+     * @throws UnsupportedOperationException if unable to call where() on this
+     *     collection.
      */
-    public function where(string $propertyOrMethod, mixed $value): CollectionInterface
+    public function where(?string $propertyOrMethod, mixed $value): CollectionInterface
     {
         return $this->filter(function (mixed $item) use ($propertyOrMethod, $value): bool {
             /** @var mixed $accessorValue */

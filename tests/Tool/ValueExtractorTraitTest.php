@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Ramsey\Collection\Test\Tool;
 
-use Ramsey\Collection\Exception\ValueExtractionException;
+use Ramsey\Collection\Exception\InvalidPropertyOrMethod;
 use Ramsey\Collection\Test\TestCase;
 use Ramsey\Collection\Tool\ValueExtractorTrait;
 
@@ -25,9 +25,14 @@ class ValueExtractorTraitTest extends TestCase
             {
                 return $this->extractValue($this, $propertyOrMethod);
             }
+
+            public function getType(): string
+            {
+                return 'foo';
+            }
         };
 
-        $this->expectException(ValueExtractionException::class);
+        $this->expectException(InvalidPropertyOrMethod::class);
         $this->expectExceptionMessage('Method or property "undefinedMethod" not defined in');
 
         $test('undefinedMethod');
@@ -50,6 +55,11 @@ class ValueExtractorTraitTest extends TestCase
             {
                 return 'works!';
             }
+
+            public function getType(): string
+            {
+                return 'bar';
+            }
         };
 
         $this->assertSame('works!', $test('testMethod'), 'Could not extract value by method');
@@ -68,6 +78,11 @@ class ValueExtractorTraitTest extends TestCase
             public function __invoke(string $propertyOrMethod)
             {
                 return $this->extractValue($this, $propertyOrMethod);
+            }
+
+            public function getType(): string
+            {
+                return 'baz';
             }
         };
 

@@ -15,7 +15,9 @@ declare(strict_types=1);
 namespace Ramsey\Collection;
 
 use Ramsey\Collection\Exception\CollectionMismatchException;
+use Ramsey\Collection\Exception\InvalidPropertyOrMethod;
 use Ramsey\Collection\Exception\NoSuchElementException;
+use Ramsey\Collection\Exception\UnsupportedOperationException;
 
 /**
  * A collection represents a group of objects, known as its elements.
@@ -78,11 +80,17 @@ interface CollectionInterface extends ArrayInterface
     public function remove(mixed $element): bool;
 
     /**
-     * Returns the values from the given property or method.
+     * Returns the values from the given property, method, or array key.
      *
-     * @param string $propertyOrMethod The property or method name to filter by.
+     * @param string $propertyOrMethod The name of the property, method, or
+     *     array key to evaluate and return.
      *
      * @return list<mixed>
+     *
+     * @throws InvalidPropertyOrMethod if the $propertyOrMethod does not exist
+     *     on the elements in this collection.
+     * @throws UnsupportedOperationException if unable to call column() on this
+     *     collection.
      */
     public function column(string $propertyOrMethod): array;
 
@@ -105,17 +113,26 @@ interface CollectionInterface extends ArrayInterface
     public function last(): mixed;
 
     /**
-     * Sort the collection by a property or method with the given sort order.
+     * Sort the collection by a property, method, or array key with the given
+     * sort order.
+     *
+     * If $propertyOrMethod is `null`, this will sort by comparing each element.
      *
      * This will always leave the original collection untouched and will return
      * a new one.
      *
-     * @param string $propertyOrMethod The property or method to sort by.
+     * @param string | null $propertyOrMethod The property, method, or array key
+     *     to sort by.
      * @param Sort $order The sort order for the resulting collection.
      *
      * @return CollectionInterface<T>
+     *
+     * @throws InvalidPropertyOrMethod if the $propertyOrMethod does not exist
+     *     on the elements in this collection.
+     * @throws UnsupportedOperationException if unable to call sort() on this
+     *     collection.
      */
-    public function sort(string $propertyOrMethod, Sort $order = Sort::Ascending): self;
+    public function sort(?string $propertyOrMethod = null, Sort $order = Sort::Ascending): self;
 
     /**
      * Filter out items of the collection which don't match the criteria of
@@ -134,18 +151,24 @@ interface CollectionInterface extends ArrayInterface
     public function filter(callable $callback): self;
 
     /**
-     * Create a new collection where the result of the given property or method
-     * of each item in the collection equals the given value.
+     * Create a new collection where the result of the given property, method,
+     * or array key of each item in the collection equals the given value.
      *
      * This will always leave the original collection untouched and will return
      * a new one.
      *
-     * @param string $propertyOrMethod The property or method to evaluate.
+     * @param string | null $propertyOrMethod The property, method, or array key
+     *     to evaluate. If `null`, the element itself is compared to $value.
      * @param mixed $value The value to match.
      *
      * @return CollectionInterface<T>
+     *
+     * @throws InvalidPropertyOrMethod if the $propertyOrMethod does not exist
+     *     on the elements in this collection.
+     * @throws UnsupportedOperationException if unable to call where() on this
+     *     collection.
      */
-    public function where(string $propertyOrMethod, mixed $value): self;
+    public function where(?string $propertyOrMethod, mixed $value): self;
 
     /**
      * Apply a given callback method on each item of the collection.

@@ -127,4 +127,18 @@ class NamedParameterMapTest extends TestCase
         $this->expectExceptionMessage('Value for \'foo\' must be of type int');
         $namedParameterMap['foo'] = new DateTime();
     }
+
+    public function testNamedParametersWithNullKeyThrowsException(): void
+    {
+        $namedParameterMap = new NamedParameterMap(['foo']);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Map elements are key/value pairs; a key must be provided for value 123');
+
+        /**
+         * @phpstan-ignore-next-line
+         * @psalm-suppress NullArgument
+         */
+        $namedParameterMap[] = 123;
+    }
 }

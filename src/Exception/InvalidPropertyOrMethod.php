@@ -17,8 +17,10 @@ namespace Ramsey\Collection\Exception;
 use RuntimeException;
 
 /**
- * Thrown when attempting to extract a value for a method or property that does not exist.
+ * Thrown when attempting to evaluate a property, method, or array key
+ * that doesn't exist on an element or cannot otherwise be evaluated in the
+ * current context.
  */
-class ValueExtractionException extends RuntimeException implements CollectionException
+class InvalidPropertyOrMethod extends RuntimeException implements CollectionException
 {
 }

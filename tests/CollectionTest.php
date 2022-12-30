@@ -6,8 +6,9 @@ namespace Ramsey\Collection\Test;
 
 use Ramsey\Collection\Collection;
 use Ramsey\Collection\Exception\InvalidArgumentException;
+use Ramsey\Collection\Exception\InvalidPropertyOrMethod;
 use Ramsey\Collection\Exception\NoSuchElementException;
-use Ramsey\Collection\Exception\ValueExtractionException;
+use Ramsey\Collection\Exception\UnsupportedOperationException;
 use Ramsey\Collection\Test\Mock\Bar;
 use Ramsey\Collection\Test\Mock\BarCollection;
 use Ramsey\Collection\Test\Mock\Foo;
@@ -196,14 +197,39 @@ class CollectionTest extends TestCase
         $this->assertSame([1, 2, 3], $barCollection->column('getId'));
     }
 
+    public function testColumnByArrayKey(): void
+    {
+        /** @var Collection<array{id: int, name: string}> $collection */
+        $collection = new Collection('array', [
+            ['id' => 1, 'name' => 'a'],
+            ['id' => 2, 'name' => 'b'],
+            ['id' => 3, 'name' => 'c'],
+        ]);
+
+        $this->assertSame([1, 2, 3], $collection->column('id'));
+        $this->assertSame(['a', 'b', 'c'], $collection->column('name'));
+    }
+
     public function testColumnShouldRaiseExceptionOnUndefinedPropertyOrMethod(): void
     {
         $bar1 = new Bar(1, 'a');
         $barCollection = new BarCollection([$bar1]);
 
-        $this->expectException(ValueExtractionException::class);
+        $this->expectException(InvalidPropertyOrMethod::class);
         $this->expectExceptionMessage('Method or property "fu" not defined in Ramsey\Collection\Test\Mock\Bar');
+
         $barCollection->column('fu');
+    }
+
+    public function testColumnShouldRaiseExceptionWhenNotSupported(): void
+    {
+        /** @var Collection<int> $collection */
+        $collection = new Collection('int', [1, 2, 3, 4]);
+
+        $this->expectException(UnsupportedOperationException::class);
+        $this->expectExceptionMessage('The collection type "int" does not support the $propertyOrMethod parameter');
+
+        $collection->column('foo');
     }
 
     public function testFirstShouldRaiseExceptionOnEmptyCollection(): void
