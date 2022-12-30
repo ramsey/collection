@@ -19,6 +19,8 @@ use Ramsey\Collection\Exception\NoSuchElementException;
 use Ramsey\Collection\Tool\TypeTrait;
 use Ramsey\Collection\Tool\ValueToStringTrait;
 
+use function array_key_first;
+
 /**
  * This class provides a basic implementation of `QueueInterface`, to minimize
  * the effort required to implement this interface.
@@ -33,16 +35,11 @@ class Queue extends AbstractArray implements QueueInterface
     use ValueToStringTrait;
 
     /**
-     * The index of the head of the queue.
-     */
-    protected int $index = 0;
-
-    /**
      * Constructs a queue object of the specified type, optionally with the
      * specified data.
      *
-     * @param string $queueType The type (FQCN) associated with this queue.
-     * @param array<array-key, T> $data The initial items to store in the collection.
+     * @param string $queueType The type or class name associated with this queue.
+     * @param array<array-key, T> $data The initial items to store in the queue.
      */
     public function __construct(private readonly string $queueType, array $data = [])
     {
@@ -87,22 +84,16 @@ class Queue extends AbstractArray implements QueueInterface
      */
     public function element(): mixed
     {
-        $element = $this->peek();
-
-        if ($element === null) {
-            throw new NoSuchElementException(
-                'Can\'t return element from Queue. Queue is empty.',
-            );
-        }
-
-        return $element;
+        return $this->peek() ?? throw new NoSuchElementException(
+            'Can\'t return element from Queue. Queue is empty.',
+        );
     }
 
     public function offer(mixed $element): bool
     {
         try {
             return $this->add($element);
-        } catch (InvalidArgumentException $e) {
+        } catch (InvalidArgumentException) {
             return false;
         }
     }
@@ -112,11 +103,13 @@ class Queue extends AbstractArray implements QueueInterface
      */
     public function peek(): mixed
     {
-        if ($this->count() === 0) {
+        $index = array_key_first($this->data);
+
+        if ($index === null) {
             return null;
         }
 
-        return $this[$this->index];
+        return $this[$index];
     }
 
     /**
@@ -124,14 +117,14 @@ class Queue extends AbstractArray implements QueueInterface
      */
     public function poll(): mixed
     {
-        if ($this->count() === 0) {
+        $index = array_key_first($this->data);
+
+        if ($index === null) {
             return null;
         }
 
-        $head = $this[$this->index];
-
-        unset($this[$this->index]);
-        $this->index++;
+        $head = $this[$index];
+        unset($this[$index]);
 
         return $head;
     }
@@ -143,13 +136,9 @@ class Queue extends AbstractArray implements QueueInterface
      */
     public function remove(): mixed
     {
-        $head = $this->poll();
-
-        if ($head === null) {
-            throw new NoSuchElementException('Can\'t return element from Queue. Queue is empty.');
-        }
-
-        return $head;
+        return $this->poll() ?? throw new NoSuchElementException(
+            'Can\'t return element from Queue. Queue is empty.',
+        );
     }
 
     public function getType(): string

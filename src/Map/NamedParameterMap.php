@@ -21,7 +21,6 @@ use Ramsey\Collection\Tool\ValueToStringTrait;
 use function array_combine;
 use function array_key_exists;
 use function is_int;
-use function var_export;
 
 /**
  * `NamedParameterMap` represents a mapping of values to a set of named keys
@@ -65,18 +64,10 @@ class NamedParameterMap extends AbstractMap
 
     public function offsetSet(mixed $offset, mixed $value): void
     {
-        /** @psalm-suppress DocblockTypeContradiction */
-        if ($offset === null) {
-            throw new InvalidArgumentException(
-                'Map elements are key/value pairs; a key must be provided for '
-                . 'value ' . var_export($value, true),
-            );
-        }
-
         if (!array_key_exists($offset, $this->namedParameters)) {
             throw new InvalidArgumentException(
                 'Attempting to set value for unconfigured parameter \''
-                . $offset . '\'',
+                . $this->toolValueToString($offset) . '\'',
             );
         }
 

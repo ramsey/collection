@@ -133,7 +133,7 @@ class NamedParameterMapTest extends TestCase
         $namedParameterMap = new NamedParameterMap(['foo']);
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Map elements are key/value pairs; a key must be provided for value 123');
+        $this->expectExceptionMessage("Attempting to set value for unconfigured parameter 'NULL'");
 
         /**
          * @phpstan-ignore-next-line

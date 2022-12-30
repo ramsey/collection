@@ -267,12 +267,14 @@ class DoubleEndedQueueTest extends TestCase
     public function testValuesCanBeAddedToTheHead(): void
     {
         /** @var DoubleEndedQueue<string> $queue */
-        $queue = new DoubleEndedQueue('string', ['Bar']);
+        $queue = new DoubleEndedQueue('string', ['Baz']);
 
+        $this->assertTrue($queue->addFirst('Bar'));
         $this->assertTrue($queue->addFirst('Foo'));
-        $this->assertCount(2, $queue);
+        $this->assertCount(3, $queue);
         $this->assertSame('Foo', $queue->firstElement());
-        $this->assertSame('Bar', $queue->lastElement());
+        $this->assertSame('Baz', $queue->lastElement());
+        $this->assertSame(['Foo', 'Bar', 'Baz'], $queue->toArray());
     }
 
     public function testAddFirstThrowsExceptionForIncorrectTypes(): void

@@ -77,13 +77,16 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
      */
     public function get(int | string $key, mixed $defaultValue = null): mixed
     {
-        if (!$this->containsKey($key)) {
-            return $defaultValue;
-        }
-
-        return $this[$key];
+        return $this[$key] ?? $defaultValue;
     }
 
+    /**
+     * @param array-key $key The key to put or replace in the map.
+     * @param T $value The value to store at `$key`.
+     *
+     * @return T | null the previous value associated with key, or `null` if
+     *     there was no mapping for `$key`.
+     */
     public function put(int | string $key, mixed $value): mixed
     {
         $previousValue = $this->get($key);
@@ -92,6 +95,13 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
         return $previousValue;
     }
 
+    /**
+     * @param array-key $key The key to put in the map.
+     * @param T $value The value to store at `$key`.
+     *
+     * @return T | null the previous value associated with key, or `null` if
+     *     there was no mapping for `$key`.
+     */
     public function putIfAbsent(int | string $key, mixed $value): mixed
     {
         $currentValue = $this->get($key);
@@ -103,6 +113,12 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
         return $currentValue;
     }
 
+    /**
+     * @param array-key $key The key to remove from the map.
+     *
+     * @return T | null the previous value associated with key, or `null` if
+     *     there was no mapping for `$key`.
+     */
     public function remove(int | string $key): mixed
     {
         $previousValue = $this->get($key);
@@ -122,6 +138,13 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
         return false;
     }
 
+    /**
+     * @param array-key $key The key to replace.
+     * @param T $value The value to set at `$key`.
+     *
+     * @return T | null the previous value associated with key, or `null` if
+     *     there was no mapping for `$key`.
+     */
     public function replace(int | string $key, mixed $value): mixed
     {
         $currentValue = $this->get($key);

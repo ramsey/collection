@@ -166,6 +166,6 @@ abstract class AbstractArray implements ArrayInterface
 
     public function isEmpty(): bool
     {
-        return count($this->data) === 0;
+        return $this->data === [];
     }
 }

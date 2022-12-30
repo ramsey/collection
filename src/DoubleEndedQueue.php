@@ -17,6 +17,10 @@ namespace Ramsey\Collection;
 use Ramsey\Collection\Exception\InvalidArgumentException;
 use Ramsey\Collection\Exception\NoSuchElementException;
 
+use function array_key_last;
+use function array_pop;
+use function array_unshift;
+
 /**
  * This class provides a basic implementation of `DoubleEndedQueueInterface`, to
  * minimize the effort required to implement this interface.
@@ -27,28 +31,6 @@ use Ramsey\Collection\Exception\NoSuchElementException;
  */
 class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
 {
-    /**
-     * Index of the last element in the queue.
-     */
-    private int $tail = -1;
-
-    /**
-     * @throws InvalidArgumentException if $value is of the wrong type
-     */
-    public function offsetSet(mixed $offset, mixed $value): void
-    {
-        if ($this->checkType($this->getType(), $value) === false) {
-            throw new InvalidArgumentException(
-                'Value must be of type ' . $this->getType() . '; value is '
-                . $this->toolValueToString($value),
-            );
-        }
-
-        $this->tail++;
-
-        $this->data[$this->tail] = $value;
-    }
-
     /**
      * @throws InvalidArgumentException if $element is of the wrong type
      */
@@ -61,9 +43,7 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
             );
         }
 
-        $this->index--;
-
-        $this->data[$this->index] = $element;
+        array_unshift($this->data, $element);
 
         return true;
     }
@@ -80,7 +60,7 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
     {
         try {
             return $this->addFirst($element);
-        } catch (InvalidArgumentException $e) {
+        } catch (InvalidArgumentException) {
             return false;
         }
     }
@@ -107,13 +87,9 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
      */
     public function removeLast(): mixed
     {
-        $tail = $this->pollLast();
-
-        if ($tail === null) {
-            throw new NoSuchElementException('Can\'t return element from Queue. Queue is empty.');
-        }
-
-        return $tail;
+        return $this->pollLast() ?? throw new NoSuchElementException(
+            'Can\'t return element from Queue. Queue is empty.',
+        );
     }
 
     /**
@@ -129,16 +105,7 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
      */
     public function pollLast(): mixed
     {
-        if ($this->count() === 0) {
-            return null;
-        }
-
-        $tail = $this[$this->tail];
-
-        unset($this[$this->tail]);
-        $this->tail--;
-
-        return $tail;
+        return array_pop($this->data);
     }
 
     /**
@@ -158,11 +125,9 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
      */
     public function lastElement(): mixed
     {
-        if ($this->count() === 0) {
-            throw new NoSuchElementException('Can\'t return element from Queue. Queue is empty.');
-        }
-
-        return $this->data[$this->tail];
+        return $this->peekLast() ?? throw new NoSuchElementException(
+            'Can\'t return element from Queue. Queue is empty.',
+        );
     }
 
     /**
@@ -178,10 +143,12 @@ class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
      */
     public function peekLast(): mixed
     {
-        if ($this->count() === 0) {
+        $lastIndex = array_key_last($this->data);
+
+        if ($lastIndex === null) {
             return null;
         }
 
-        return $this->data[$this->tail];
+        return $this->data[$lastIndex];
     }
 }

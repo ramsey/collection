@@ -28,7 +28,7 @@ namespace Ramsey\Collection;
  * $foo = new \My\Foo();
  * $set = new Set(\My\Foo::class);
  *
- * $set->add($foo); // returns TRUE, the element don't exists
+ * $set->add($foo); // returns TRUE, the element doesn't exist
  * $set->add($foo); // returns FALSE, the element already exists
  *
  * $bar = new \My\Foo();
@@ -44,7 +44,7 @@ class Set extends AbstractSet
      * Constructs a set object of the specified type, optionally with the
      * specified data.
      *
-     * @param string $setType The type (FQCN) associated with this set.
+     * @param string $setType The type or class name associated with this set.
      * @param array<array-key, T> $data The initial items to store in the set.
      */
     public function __construct(private readonly string $setType, array $data = [])

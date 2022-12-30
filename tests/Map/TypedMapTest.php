@@ -55,6 +55,7 @@ class TypedMapTest extends TestCase
         $this->expectExceptionMessage('Key must be of type string; key is');
 
         /**
+         * @phpstan-ignore-next-line
          * @psalm-suppress InvalidArgument
          */
         $map[9] = 'foo';
@@ -89,8 +90,12 @@ class TypedMapTest extends TestCase
         $map = new TypedMap('string', 'mixed');
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Map elements are key/value pairs; a key must be provided for value 'foo'");
+        $this->expectExceptionMessage('Key must be of type string; key is NULL');
 
+        /**
+         * @phpstan-ignore-next-line
+         * @psalm-suppress NullArgument
+         */
         $map[] = 'foo';
     }
 }

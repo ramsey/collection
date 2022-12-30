@@ -25,18 +25,17 @@ use Ramsey\Collection\Tool\ValueExtractorTrait;
 use Ramsey\Collection\Tool\ValueToStringTrait;
 
 use function array_filter;
+use function array_key_first;
+use function array_key_last;
 use function array_map;
 use function array_merge;
 use function array_reduce;
 use function array_search;
 use function array_udiff;
 use function array_uintersect;
-use function current;
-use function end;
 use function in_array;
 use function is_int;
 use function is_object;
-use function reset;
 use function spl_object_id;
 use function sprintf;
 use function usort;
@@ -130,16 +129,13 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      */
     public function first(): mixed
     {
-        if ($this->isEmpty()) {
+        $firstIndex = array_key_first($this->data);
+
+        if ($firstIndex === null) {
             throw new NoSuchElementException('Can\'t determine first item. Collection is empty');
         }
 
-        reset($this->data);
-
-        /** @var T $first */
-        $first = current($this->data);
-
-        return $first;
+        return $this->data[$firstIndex];
     }
 
     /**
@@ -149,15 +145,13 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      */
     public function last(): mixed
     {
-        if ($this->isEmpty()) {
+        $lastIndex = array_key_last($this->data);
+
+        if ($lastIndex === null) {
             throw new NoSuchElementException('Can\'t determine last item. Collection is empty');
         }
 
-        /** @var T $item */
-        $item = end($this->data);
-        reset($this->data);
-
-        return $item;
+        return $this->data[$lastIndex];
     }
 
     /**
@@ -215,25 +209,54 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      */
     public function where(?string $propertyOrMethod, mixed $value): CollectionInterface
     {
-        return $this->filter(function (mixed $item) use ($propertyOrMethod, $value): bool {
-            /** @var mixed $accessorValue */
-            $accessorValue = $this->extractValue($item, $propertyOrMethod);
+        return $this->filter(
+            /**
+             * @param T $item
+             */
+            function (mixed $item) use ($propertyOrMethod, $value): bool {
+                /** @var mixed $accessorValue */
+                $accessorValue = $this->extractValue($item, $propertyOrMethod);
 
-            return $accessorValue === $value;
-        });
+                return $accessorValue === $value;
+            },
+        );
     }
 
+    /**
+     * @param callable(T): TCallbackReturn $callback A callable to apply to each
+     *     item of the collection.
+     *
+     * @return CollectionInterface<TCallbackReturn>
+     *
+     * @template TCallbackReturn
+     */
     public function map(callable $callback): CollectionInterface
     {
+        /** @var Collection<TCallbackReturn> */
         return new Collection('mixed', array_map($callback, $this->data));
     }
 
+    /**
+     * @param callable(TCarry, T): TCarry $callback A callable to apply to each
+     *     item of the collection to reduce it to a single value.
+     * @param TCarry $initial This is the initial value provided to the callback.
+     *
+     * @return TCarry
+     *
+     * @template TCarry
+     */
     public function reduce(callable $callback, mixed $initial): mixed
     {
+        /** @var TCarry */
         return array_reduce($this->data, $callback, $initial);
     }
 
     /**
+     * @param CollectionInterface<T> $other The collection to check for divergent
+     *     items.
+     *
+     * @return CollectionInterface<T>
+     *
      * @throws CollectionMismatchException if the compared collections are of
      *     differing types.
      */
@@ -254,6 +277,11 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
+     * @param CollectionInterface<T> $other The collection to check for
+     *     intersecting items.
+     *
+     * @return CollectionInterface<T>
+     *
      * @throws CollectionMismatchException if the compared collections are of
      *     differing types.
      */
@@ -271,6 +299,10 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
+     * @param CollectionInterface<T> ...$collections The collections to merge.
+     *
+     * @return CollectionInterface<T>
+     *
      * @throws CollectionMismatchException if unable to merge any of the given
      *     collections or items within the given collections due to type
      *     mismatch errors.

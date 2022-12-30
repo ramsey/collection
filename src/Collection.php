@@ -79,7 +79,7 @@ class Collection extends AbstractCollection
      * Constructs a collection object of the specified type, optionally with the
      * specified data.
      *
-     * @param string $collectionType The type (FQCN) associated with this
+     * @param string $collectionType The type or class name associated with this
      *     collection.
      * @param array<array-key, T> $data The initial items to store in the collection.
      */

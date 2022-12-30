@@ -15,12 +15,13 @@ declare(strict_types=1);
 namespace Ramsey\Collection;
 
 use Ramsey\Collection\Exception\CollectionMismatchException;
+use Ramsey\Collection\Exception\InvalidArgumentException;
 use Ramsey\Collection\Exception\InvalidPropertyOrMethod;
 use Ramsey\Collection\Exception\NoSuchElementException;
 use Ramsey\Collection\Exception\UnsupportedOperationException;
 
 /**
- * A collection represents a group of objects, known as its elements.
+ * A collection represents a group of values, known as its elements.
  *
  * Some collections allow duplicate elements and others do not. Some are ordered
  * and others unordered.
@@ -53,6 +54,9 @@ interface CollectionInterface extends ArrayInterface
      * @param T $element The element to add to the collection.
      *
      * @return bool `true` if this collection changed as a result of the call.
+     *
+     * @throws InvalidArgumentException if the collection refuses to add the
+     *     $element for any reason other than that it already contains the element.
      */
     public function add(mixed $element): bool;
 

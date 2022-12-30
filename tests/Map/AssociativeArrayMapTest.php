@@ -135,7 +135,6 @@ class AssociativeArrayMapTest extends TestCase
 
         $this->assertSame($data['foo'], $previousValue);
 
-        /** @var int | null $previousValue */
         $previousValue = $associativeArrayMapObject->remove('foo');
 
         $this->assertNull($previousValue);
@@ -162,13 +161,11 @@ class AssociativeArrayMapTest extends TestCase
         /** @var AssociativeArrayMap<int> $associativeArrayMapObject */
         $associativeArrayMapObject = new AssociativeArrayMap($data);
 
-        /** @var int | null $previousValue */
         $previousValue = $associativeArrayMapObject->replace('foo', 456);
 
         $this->assertSame($data['foo'], $previousValue);
         $this->assertSame(456, $associativeArrayMapObject->get('foo'));
 
-        /** @var int | null $previousValue */
         $previousValue = $associativeArrayMapObject->replace('bar', 789);
         $this->assertNull($previousValue);
         $this->assertFalse($associativeArrayMapObject->containsKey('bar'));
