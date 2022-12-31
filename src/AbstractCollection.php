@@ -112,11 +112,8 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         $temp = [];
 
         foreach ($this->data as $item) {
-            /** @var mixed $value */
-            $value = $this->extractValue($item, $propertyOrMethod);
-
             /** @psalm-suppress MixedAssignment */
-            $temp[] = $value;
+            $temp[] = $this->extractValue($item, $propertyOrMethod);
         }
 
         return $temp;

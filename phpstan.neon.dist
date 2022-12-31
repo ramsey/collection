@@ -5,3 +5,7 @@ parameters:
     paths:
         - ./src
         - ./tests
+    ignoreErrors:
+        -
+            message: '#Declaring PHPStan namespace is not allowed in 3rd party packages\.#'
+            path: tests/stubs/phpstan.php
