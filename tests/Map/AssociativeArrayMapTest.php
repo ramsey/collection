@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace Ramsey\Collection\Test\Map;
 
+use ArrayIterator;
+use Ramsey\Collection\ArrayInterface;
 use Ramsey\Collection\Exception\InvalidArgumentException;
 use Ramsey\Collection\Map\AssociativeArrayMap;
 use Ramsey\Collection\Test\Mock\Foo;
 use Ramsey\Collection\Test\TestCase;
+
+use function serialize;
+use function unserialize;
 
 /**
  * Tests for AssociativeArrayMap, as well as coverage for AbstractMap
@@ -182,5 +187,32 @@ class AssociativeArrayMapTest extends TestCase
         $this->assertSame($data['foo'], $associativeArrayMapObject->get('foo'));
         $this->assertTrue($associativeArrayMapObject->replaceIf('foo', 123, 987));
         $this->assertSame(987, $associativeArrayMapObject->get('foo'));
+    }
+
+    public function testGetIterator(): void
+    {
+        $associativeArrayMapObject = new AssociativeArrayMap();
+
+        $this->assertInstanceOf(ArrayIterator::class, $associativeArrayMapObject->getIterator());
+    }
+
+    public function testSerializable(): void
+    {
+        $phpArray = ['foo' => 123, 'bar' => 456];
+        $associativeArrayMapObject = new AssociativeArrayMap($phpArray);
+
+        $associativeArrayMapObjectSerialized = serialize($associativeArrayMapObject);
+        $associativeArrayMapObject2 = unserialize($associativeArrayMapObjectSerialized);
+
+        $this->assertInstanceOf(ArrayInterface::class, $associativeArrayMapObject2);
+        $this->assertEquals($associativeArrayMapObject, $associativeArrayMapObject2);
+    }
+
+    public function testToArray(): void
+    {
+        $phpArray = ['foo' => 123, 'bar' => 456];
+        $associativeArrayMapObject = new AssociativeArrayMap($phpArray);
+
+        $this->assertSame($phpArray, $associativeArrayMapObject->toArray());
     }
 }
