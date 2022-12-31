@@ -13,7 +13,6 @@ use Ramsey\Collection\Map\TypedMap;
 use Ramsey\Collection\Test\Mock\Person;
 use function PHPStan\Testing\assertType;
 
-/** @var AssociativeArrayMap<scalar> $associativeArray */
 $associativeArray = new AssociativeArrayMap([
     'foo' => 1,
     'bar' => 'something',
@@ -21,28 +20,29 @@ $associativeArray = new AssociativeArrayMap([
     'qux' => 23.3,
 ]);
 
-assertType('Ramsey\Collection\Map\AssociativeArrayMap<bool|float|int|string>', $associativeArray);
+assertType('Ramsey\Collection\Map\AssociativeArrayMap', $associativeArray);
 
-assertType('bool|float|int|string', $associativeArray['foo']);
-assertType('bool|float|int|string', $associativeArray['bar']);
-assertType('bool|float|int|string', $associativeArray['baz']);
-assertType('bool|float|int|string', $associativeArray['qux']);
-assertType('bool|float|int|string', $associativeArray->offsetGet('foo'));
-assertType('array<string, bool|float|int|string>', $associativeArray->toArray());
-assertType('array<string, bool|float|int|string>', $associativeArray->__serialize());
-assertType('Traversable<string, bool|float|int|string>', $associativeArray->getIterator());
+assertType('mixed', $associativeArray['foo']);
+assertType('mixed', $associativeArray['bar']);
+assertType('mixed', $associativeArray['baz']);
+assertType('mixed', $associativeArray['qux']);
+assertType('mixed', $associativeArray->offsetGet('foo'));
+assertType('array<string, mixed>', $associativeArray->toArray());
+assertType('array<string, mixed>', $associativeArray->__serialize());
+assertType('Traversable<string, mixed>', $associativeArray->getIterator());
 
+/** @psalm-suppress MixedAssignment */
 foreach ($associativeArray as $key => $value) {
     assertType('string', $key);
-    assertType('bool|float|int|string', $value);
+    assertType('mixed', $value);
 }
 
 assertType('array<int, string>', $associativeArray->keys());
-assertType('bool|float|int|string|null', $associativeArray->get('foo'));
-assertType('bool|float|int|string|null', $associativeArray->put('foo', 'hello'));
-assertType('bool|float|int|string|null', $associativeArray->putIfAbsent('foo', 'hello'));
-assertType('bool|float|int|string|null', $associativeArray->remove('foo'));
-assertType('bool|float|int|string|null', $associativeArray->replace('foo', 'hello'));
+assertType('mixed', $associativeArray->get('foo'));
+assertType('mixed', $associativeArray->put('foo', 'hello'));
+assertType('mixed', $associativeArray->putIfAbsent('foo', 'hello'));
+assertType('mixed', $associativeArray->remove('foo'));
+assertType('mixed', $associativeArray->replace('foo', 'hello'));
 
 $namedParameterMap = new NamedParameterMap(
     [

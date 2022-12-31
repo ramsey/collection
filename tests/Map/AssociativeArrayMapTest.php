@@ -21,7 +21,6 @@ class AssociativeArrayMapTest extends TestCase
 {
     public function testOffsetSetWithEmptyOffsetThrowsException(): void
     {
-        /** @var AssociativeArrayMap<int> $associativeArrayMapObject */
         $associativeArrayMapObject = new AssociativeArrayMap();
 
         $this->expectException(InvalidArgumentException::class);
@@ -36,7 +35,6 @@ class AssociativeArrayMapTest extends TestCase
 
     public function testOffsetSetWithValidKey(): void
     {
-        /** @var AssociativeArrayMap<int> $associativeArrayMapObject */
         $associativeArrayMapObject = new AssociativeArrayMap();
         $associativeArrayMapObject['foo'] = 123;
 
@@ -45,7 +43,6 @@ class AssociativeArrayMapTest extends TestCase
 
     public function testContainsKey(): void
     {
-        /** @var AssociativeArrayMap<int | null> $associativeArrayMapObject */
         $associativeArrayMapObject = new AssociativeArrayMap();
         $associativeArrayMapObject['foo'] = null;
         $associativeArrayMapObject['bar'] = 123;
@@ -58,7 +55,6 @@ class AssociativeArrayMapTest extends TestCase
 
     public function testKeys(): void
     {
-        /** @var AssociativeArrayMap<int | null> $associativeArrayMapObject */
         $associativeArrayMapObject = new AssociativeArrayMap();
 
         // empty map returns empty array
@@ -74,7 +70,6 @@ class AssociativeArrayMapTest extends TestCase
     {
         $foo = new Foo();
 
-        /** @var AssociativeArrayMap<int | Foo | null> $associativeArrayMapObject */
         $associativeArrayMapObject = new AssociativeArrayMap();
         $associativeArrayMapObject['foo'] = null;
         $associativeArrayMapObject['bar'] = 123;
@@ -89,7 +84,6 @@ class AssociativeArrayMapTest extends TestCase
     public function testGet(): void
     {
         $data = ['foo' => 123];
-        /** @var AssociativeArrayMap<int> $associativeArrayMapObject */
         $associativeArrayMapObject = new AssociativeArrayMap($data);
 
         $this->assertSame($data['foo'], $associativeArrayMapObject->get('foo'));
@@ -98,7 +92,6 @@ class AssociativeArrayMapTest extends TestCase
 
     public function testPut(): void
     {
-        /** @var AssociativeArrayMap<int> $associativeArrayMapObject */
         $associativeArrayMapObject = new AssociativeArrayMap();
         $previousValue = $associativeArrayMapObject->put('foo', 123);
 
@@ -115,7 +108,6 @@ class AssociativeArrayMapTest extends TestCase
 
     public function testPutIfAbsent(): void
     {
-        /** @var AssociativeArrayMap<int> $associativeArrayMapObject */
         $associativeArrayMapObject = new AssociativeArrayMap();
         $currentValue = $associativeArrayMapObject->putIfAbsent('foo', 123);
 
@@ -134,12 +126,12 @@ class AssociativeArrayMapTest extends TestCase
     {
         $data = ['foo' => 123];
 
-        /** @var AssociativeArrayMap<int> $associativeArrayMapObject */
         $associativeArrayMapObject = new AssociativeArrayMap($data);
         $previousValue = $associativeArrayMapObject->remove('foo');
 
         $this->assertSame($data['foo'], $previousValue);
 
+        /** @var mixed $previousValue */
         $previousValue = $associativeArrayMapObject->remove('foo');
 
         $this->assertNull($previousValue);
@@ -150,7 +142,6 @@ class AssociativeArrayMapTest extends TestCase
     {
         $data = ['foo' => 123];
 
-        /** @var AssociativeArrayMap<int> $associativeArrayMapObject */
         $associativeArrayMapObject = new AssociativeArrayMap($data);
 
         $this->assertFalse($associativeArrayMapObject->removeIf('foo', 456));
@@ -163,7 +154,6 @@ class AssociativeArrayMapTest extends TestCase
     {
         $data = ['foo' => 123];
 
-        /** @var AssociativeArrayMap<int> $associativeArrayMapObject */
         $associativeArrayMapObject = new AssociativeArrayMap($data);
 
         $previousValue = $associativeArrayMapObject->replace('foo', 456);
@@ -171,7 +161,9 @@ class AssociativeArrayMapTest extends TestCase
         $this->assertSame($data['foo'], $previousValue);
         $this->assertSame(456, $associativeArrayMapObject->get('foo'));
 
+        /** @var mixed $previousValue */
         $previousValue = $associativeArrayMapObject->replace('bar', 789);
+
         $this->assertNull($previousValue);
         $this->assertFalse($associativeArrayMapObject->containsKey('bar'));
     }
@@ -180,7 +172,6 @@ class AssociativeArrayMapTest extends TestCase
     {
         $data = ['foo' => 123];
 
-        /** @var AssociativeArrayMap<int> $associativeArrayMapObject */
         $associativeArrayMapObject = new AssociativeArrayMap($data);
 
         $this->assertFalse($associativeArrayMapObject->replaceIf('foo', 456, 789));
