@@ -5,11 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## 2.0.0 - TBD
+## 2.0.0 - 2022-12-31
 
 ### Added
 
-* Add support for CollectionInterface::reduce().
+* Add support for `CollectionInterface::reduce()` ([#87](https://github.com/ramsey/collection/pull/87))
+* All exceptions now implement a base `CollectionException` interface
+* Introduce `Sort` enum
+* Support `column()`, `sort()`, and `where()` on non-object collection types
+
+### Changed
+
+* Minimum PHP version supported is 8.1
+* Every method now has parameter and return type hints; if extending classes or
+  implementing interfaces, you may need to change method signatures to upgrade
+* The second parameter of `CollectionInterface::sort()` now uses the new `Sort`
+  enum instead of a string
+* Audit all template annotations and clean up Psalm and PHPStan types for
+  correctness; if using static analysis in projects, this may require changes to
+  your type annotations
+* `ArrayInterface` no longer extends `\Serializable`, and the `serialize()` and
+  `unserialize()` methods have been removed from `AbstractArray`; however,
+  `AbstractArray` still supports serialization through implementing `__serialize()`
+  and `__unserialize()`
 
 ## 1.3.0 - 2022-12-27
 
