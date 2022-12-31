@@ -11,35 +11,32 @@ use PHPStan\TrinaryLogic;
 /**
  * @phpstan-pure
  * @param mixed $value
- * @return mixed
+ * @return void
  *
  * @psalm-suppress UnusedParam
  */
-function assertType(string $type, $value)
+function assertType(string $type, $value): void
 {
-    return null;
 }
 
 /**
  * @phpstan-pure
  * @param mixed $value
- * @return mixed
+ * @return void
  *
  * @psalm-suppress UnusedParam
  */
-function assertNativeType(string $type, $value)
+function assertNativeType(string $type, $value): void
 {
-    return null;
 }
 
 /**
  * @phpstan-pure
  * @param mixed $variable
- * @return mixed
+ * @return void
  *
  * @psalm-suppress UnusedParam
  */
-function assertVariableCertainty(TrinaryLogic $certainty, $variable)
+function assertVariableCertainty(TrinaryLogic $certainty, $variable): void
 {
-    return null;
 }

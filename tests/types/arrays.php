@@ -8,9 +8,9 @@ namespace Ramsey\Collection\Test\types;
 
 use DateTimeImmutable;
 use Ramsey\Collection\GenericArray;
-use Ramsey\Test\Generics\IntegerArray;
-use Ramsey\Test\Generics\MyArray;
-use Ramsey\Test\Generics\StringArray;
+use Ramsey\Collection\Test\Mock\IntegerArray;
+use Ramsey\Collection\Test\Mock\MyArray;
+use Ramsey\Collection\Test\Mock\StringArray;
 use stdClass;
 
 use function PHPStan\Testing\assertType;

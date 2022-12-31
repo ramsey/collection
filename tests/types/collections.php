@@ -7,7 +7,7 @@ declare(strict_types=1);
 namespace Ramsey\Collection\Test\types;
 
 use Ramsey\Collection\Collection;
-use Ramsey\Test\Generics\Person;
+use Ramsey\Collection\Test\Mock\Person;
 
 use function PHPStan\Testing\assertType;
 
@@ -18,8 +18,8 @@ $janice = new Person('Janice');
 $persons = new Collection(Person::class, [$jane, $john]);
 $morePersons = new Collection(Person::class, [$john, $janice]);
 
-assertType('Ramsey\Collection\Collection<Ramsey\Test\Generics\Person>', $persons);
-assertType('Ramsey\Collection\Collection<Ramsey\Test\Generics\Person>', $morePersons);
+assertType('Ramsey\Collection\Collection<Ramsey\Collection\Test\Mock\Person>', $persons);
+assertType('Ramsey\Collection\Collection<Ramsey\Collection\Test\Mock\Person>', $morePersons);
 
 assertType(Person::class, $persons[0]);
 assertType('array<int, mixed>', $persons->column('name'));
@@ -27,17 +27,17 @@ assertType(Person::class, $persons->first());
 assertType(Person::class, $persons->last());
 
 assertType(
-    'Ramsey\Collection\CollectionInterface<Ramsey\Test\Generics\Person>',
+    'Ramsey\Collection\CollectionInterface<Ramsey\Collection\Test\Mock\Person>',
     $persons->sort(),
 );
 
 assertType(
-    'Ramsey\Collection\CollectionInterface<Ramsey\Test\Generics\Person>',
+    'Ramsey\Collection\CollectionInterface<Ramsey\Collection\Test\Mock\Person>',
     $persons->filter(fn (Person $person): bool => $person->name === 'Jane'),
 );
 
 assertType(
-    'Ramsey\Collection\CollectionInterface<Ramsey\Test\Generics\Person>',
+    'Ramsey\Collection\CollectionInterface<Ramsey\Collection\Test\Mock\Person>',
     $persons->where('name', 'Jane'),
 );
 
@@ -62,16 +62,16 @@ assertType(
 );
 
 assertType(
-    'Ramsey\Collection\CollectionInterface<Ramsey\Test\Generics\Person>',
+    'Ramsey\Collection\CollectionInterface<Ramsey\Collection\Test\Mock\Person>',
     $persons->diff($morePersons),
 );
 
 assertType(
-    'Ramsey\Collection\CollectionInterface<Ramsey\Test\Generics\Person>',
+    'Ramsey\Collection\CollectionInterface<Ramsey\Collection\Test\Mock\Person>',
     $persons->intersect($morePersons),
 );
 
 assertType(
-    'Ramsey\Collection\CollectionInterface<Ramsey\Test\Generics\Person>',
+    'Ramsey\Collection\CollectionInterface<Ramsey\Collection\Test\Mock\Person>',
     $persons->merge($morePersons),
 );

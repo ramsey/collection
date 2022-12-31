@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ramsey\Test\Generics;
+namespace Ramsey\Collection\Test\Mock;
 
 class Person
 {
