@@ -24,8 +24,8 @@ use Ramsey\Collection\Tool\ValueToStringTrait;
  *
  * @template K of array-key
  * @template T
- * @extends AbstractMap<T>
- * @implements TypedMapInterface<T>
+ * @extends AbstractMap<K, T>
+ * @implements TypedMapInterface<K, T>
  */
 abstract class AbstractTypedMap extends AbstractMap implements TypedMapInterface
 {

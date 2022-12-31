@@ -16,6 +16,7 @@ namespace Ramsey\Collection\Map;
 
 use Ramsey\Collection\AbstractArray;
 use Ramsey\Collection\Exception\InvalidArgumentException;
+use Traversable;
 
 use function array_key_exists;
 use function array_keys;
@@ -26,14 +27,31 @@ use function var_export;
  * This class provides a basic implementation of `MapInterface`, to minimize the
  * effort required to implement this interface.
  *
+ * @template K of array-key
  * @template T
  * @extends AbstractArray<T>
- * @implements MapInterface<T>
+ * @implements MapInterface<K, T>
  */
 abstract class AbstractMap extends AbstractArray implements MapInterface
 {
     /**
-     * @param array-key $offset The offset to set
+     * @param array<K, T> $data The initial items to add to this map.
+     */
+    public function __construct(array $data = [])
+    {
+        parent::__construct($data);
+    }
+
+    /**
+     * @return Traversable<K, T>
+     */
+    public function getIterator(): Traversable
+    {
+        return parent::getIterator();
+    }
+
+    /**
+     * @param K $offset The offset to set
      * @param T $value The value to set at the given offset.
      *
      * @inheritDoc
@@ -70,7 +88,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
     }
 
     /**
-     * @param array-key $key The key to return from the map.
+     * @param K $key The key to return from the map.
      * @param T | null $defaultValue The default value to use if `$key` is not found.
      *
      * @return T | null the value or `null` if the key could not be found.
@@ -81,7 +99,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
     }
 
     /**
-     * @param array-key $key The key to put or replace in the map.
+     * @param K $key The key to put or replace in the map.
      * @param T $value The value to store at `$key`.
      *
      * @return T | null the previous value associated with key, or `null` if
@@ -96,7 +114,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
     }
 
     /**
-     * @param array-key $key The key to put in the map.
+     * @param K $key The key to put in the map.
      * @param T $value The value to store at `$key`.
      *
      * @return T | null the previous value associated with key, or `null` if
@@ -114,7 +132,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
     }
 
     /**
-     * @param array-key $key The key to remove from the map.
+     * @param K $key The key to remove from the map.
      *
      * @return T | null the previous value associated with key, or `null` if
      *     there was no mapping for `$key`.
@@ -139,7 +157,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
     }
 
     /**
-     * @param array-key $key The key to replace.
+     * @param K $key The key to replace.
      * @param T $value The value to set at `$key`.
      *
      * @return T | null the previous value associated with key, or `null` if
@@ -165,5 +183,21 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
         }
 
         return false;
+    }
+
+    /**
+     * @return array<K, T>
+     */
+    public function __serialize(): array
+    {
+        return parent::__serialize();
+    }
+
+    /**
+     * @return array<K, T>
+     */
+    public function toArray(): array
+    {
+        return parent::toArray();
     }
 }

@@ -26,7 +26,7 @@ use function is_int;
  * `NamedParameterMap` represents a mapping of values to a set of named keys
  * that may optionally be typed
  *
- * @extends AbstractMap<mixed>
+ * @extends AbstractMap<string, mixed>
  */
 class NamedParameterMap extends AbstractMap
 {
@@ -38,13 +38,13 @@ class NamedParameterMap extends AbstractMap
      *
      * @var array<string, string>
      */
-    protected array $namedParameters;
+    private readonly array $namedParameters;
 
     /**
      * Constructs a new `NamedParameterMap`.
      *
      * @param array<array-key, string> $namedParameters The named parameters defined for this map.
-     * @param array<array-key, mixed> $data An initial set of data to set on this map.
+     * @param array<string, mixed> $data An initial set of data to set on this map.
      */
     public function __construct(array $namedParameters, array $data = [])
     {

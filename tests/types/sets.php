@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 namespace Ramsey\Collection\Test\types;
 
-use Ramsey\Collection\Collection;
+use Ramsey\Collection\Set;
 use Ramsey\Collection\Test\Mock\Person;
 
 use function PHPStan\Testing\assertType;
@@ -15,11 +15,11 @@ $jane = new Person('Jane');
 $john = new Person('John');
 $janice = new Person('Janice');
 
-$persons = new Collection(Person::class, [$jane, $john]);
-$morePersons = new Collection(Person::class, [$john, $janice]);
+$persons = new Set(Person::class, [$jane, $john]);
+$morePersons = new Set(Person::class, [$john, $janice]);
 
-assertType('Ramsey\Collection\Collection<Ramsey\Collection\Test\Mock\Person>', $persons);
-assertType('Ramsey\Collection\Collection<Ramsey\Collection\Test\Mock\Person>', $morePersons);
+assertType('Ramsey\Collection\Set<Ramsey\Collection\Test\Mock\Person>', $persons);
+assertType('Ramsey\Collection\Set<Ramsey\Collection\Test\Mock\Person>', $morePersons);
 
 assertType(Person::class, $persons[0]);
 assertType('array<int, mixed>', $persons->column('name'));

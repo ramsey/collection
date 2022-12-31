@@ -32,6 +32,18 @@ use function array_unshift;
 class DoubleEndedQueue extends Queue implements DoubleEndedQueueInterface
 {
     /**
+     * Constructs a double-ended queue (dequeue) object of the specified type,
+     * optionally with the specified data.
+     *
+     * @param string $queueType The type or class name associated with this dequeue.
+     * @param array<array-key, T> $data The initial items to store in the dequeue.
+     */
+    public function __construct(private readonly string $queueType, array $data = [])
+    {
+        parent::__construct($this->queueType, $data);
+    }
+
+    /**
      * @throws InvalidArgumentException if $element is of the wrong type
      */
     public function addFirst(mixed $element): bool
