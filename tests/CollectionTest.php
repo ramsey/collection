@@ -75,6 +75,13 @@ class CollectionTest extends TestCase
         $this->assertTrue($collection->add($this->faker->numberBetween()));
     }
 
+    public function testMapWillReturnANewCollection(): void
+    {
+        $collection = (new Collection('integer', [4, 2]))->map(fn ($value) => $value);
+
+        $this->assertInstanceOf(Collection::class, $collection);
+    }
+
     public function testAddMayAddSameObjectMultipleTimes(): void
     {
         $expectedCount = 4;

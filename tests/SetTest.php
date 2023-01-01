@@ -104,6 +104,16 @@ class SetTest extends TestCase
         $this->assertSame([200], $set->toArray());
     }
 
+    public function testMapReturnsANewSet(): void
+    {
+        $this->assertTrue($this->set->add(100));
+        $this->assertTrue($this->set->add(200));
+
+        $set = $this->set->map(fn ($value) => $value);
+
+        $this->assertInstanceOf(Set::class, $set);
+    }
+
     public function testMergingSetsOfObjects(): void
     {
         $obj1 = new Foo();
