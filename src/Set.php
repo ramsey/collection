@@ -41,6 +41,11 @@ namespace Ramsey\Collection;
 class Set extends AbstractSet
 {
     /**
+     * @psalm-suppress NonInvariantDocblockPropertyType
+     */
+    protected string $collection = self::class;
+
+    /**
      * Constructs a set object of the specified type, optionally with the
      * specified data.
      *
