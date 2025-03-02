@@ -51,7 +51,6 @@ class DoubleEndedQueueTest extends TestCase
 
         /**
          * @phpstan-ignore-next-line
-         * @psalm-suppress InvalidArgument
          */
         $queue[] = 42;
     }
@@ -287,7 +286,6 @@ class DoubleEndedQueueTest extends TestCase
 
         /**
          * @phpstan-ignore-next-line
-         * @psalm-suppress InvalidArgument
          */
         $queue->addFirst(42);
     }

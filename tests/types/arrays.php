@@ -24,11 +24,10 @@ assertType('mixed', $genericArray[3]);
 assertType('mixed', $genericArray[4]);
 assertType('mixed', $genericArray[5]);
 assertType('mixed', $genericArray->offsetGet(0));
-assertType('array', $genericArray->toArray());
-assertType('array', $genericArray->__serialize());
+assertType('array<mixed>', $genericArray->toArray());
+assertType('array<mixed>', $genericArray->__serialize());
 assertType('Traversable<(int|string), mixed>', $genericArray->getIterator());
 
-/** @psalm-var mixed $value */
 foreach ($genericArray as $value) {
     assertType('mixed', $value);
 }

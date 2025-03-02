@@ -51,7 +51,6 @@ class QueueTest extends TestCase
 
         /**
          * @phpstan-ignore-next-line
-         * @psalm-suppress InvalidArgument
          */
         $queue[] = 42;
     }

@@ -453,7 +453,6 @@ class CollectionManipulationTest extends TestCase
 
         /**
          * @phpstan-ignore-next-line
-         * @psalm-suppress InvalidArgument
          */
         $barCollection->diff(new FooCollection());
     }
@@ -499,7 +498,6 @@ class CollectionManipulationTest extends TestCase
 
         /**
          * @phpstan-ignore-next-line
-         * @psalm-suppress InvalidArgument
          */
         $barCollection->diff($fooCollection);
     }
@@ -526,7 +524,6 @@ class CollectionManipulationTest extends TestCase
 
         /**
          * @phpstan-ignore-next-line
-         * @psalm-suppress InvalidArgument
          */
         $barCollection->intersect(new FooCollection());
     }
@@ -575,7 +572,6 @@ class CollectionManipulationTest extends TestCase
 
         /**
          * @phpstan-ignore-next-line
-         * @psalm-suppress InvalidArgument
          */
         $barCollection->intersect($fooCollection);
     }
@@ -604,7 +600,6 @@ class CollectionManipulationTest extends TestCase
 
         /**
          * @phpstan-ignore-next-line
-         * @psalm-suppress InvalidArgument
          */
         $barCollection->merge(new BarCollection(), new FooCollection());
     }
@@ -672,7 +667,6 @@ class CollectionManipulationTest extends TestCase
 
         /**
          * @phpstan-ignore-next-line
-         * @psalm-suppress InvalidArgument
          */
         $barCollection->merge($barCollection, $fooCollection);
     }
