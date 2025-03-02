@@ -8,29 +8,14 @@ namespace PHPStan\Testing;
 
 use PHPStan\TrinaryLogic;
 
-/**
- * @phpstan-pure
- * @param mixed $value
- * @return void
- */
-function assertType(string $type, $value): void
+function assertType(string $type, mixed $value): void
 {
 }
 
-/**
- * @phpstan-pure
- * @param mixed $value
- * @return void
- */
-function assertNativeType(string $type, $value): void
+function assertNativeType(string $type, mixed $value): void
 {
 }
 
-/**
- * @phpstan-pure
- * @param mixed $variable
- * @return void
- */
-function assertVariableCertainty(TrinaryLogic $certainty, $variable): void
+function assertVariableCertainty(TrinaryLogic $certainty, mixed $variable): void
 {
 }

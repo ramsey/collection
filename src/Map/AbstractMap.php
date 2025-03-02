@@ -83,6 +83,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
      */
     public function keys(): array
     {
+        /** @var list<K> */
         return array_keys($this->data);
     }
 
@@ -189,6 +190,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
      */
     public function __serialize(): array
     {
+        /** @var array<K, T> */
         return parent::__serialize();
     }
 
@@ -197,6 +199,7 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
      */
     public function toArray(): array
     {
+        /** @var array<K, T> */
         return parent::toArray();
     }
 }
