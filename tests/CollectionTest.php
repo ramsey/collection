@@ -50,7 +50,6 @@ class CollectionTest extends TestCase
 
         /**
          * @phpstan-ignore-next-line
-         * @psalm-suppress InvalidArgument
          */
         $collection[] = $this->faker->text();
     }
@@ -172,7 +171,6 @@ class CollectionTest extends TestCase
 
         /**
          * @phpstan-ignore-next-line
-         * @psalm-suppress InvalidArgument
          */
         $fooCollection[] = new stdClass();
     }

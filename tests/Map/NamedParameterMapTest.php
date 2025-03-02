@@ -137,7 +137,6 @@ class NamedParameterMapTest extends TestCase
 
         /**
          * @phpstan-ignore-next-line
-         * @psalm-suppress NullArgument
          */
         $namedParameterMap[] = 123;
     }

@@ -133,9 +133,8 @@ composer dev:lint:fix
 
 ### Static Analysis
 
-This project uses a combination of [PHPStan](https://github.com/phpstan/phpstan)
-and [Psalm](https://github.com/vimeo/psalm) to provide static analysis of PHP
-code.
+This project uses [PHPStan](https://github.com/phpstan/phpstan) to provide
+static analysis of PHP code.
 
 CaptainHook will run static analysis checks before pushing to the remote
 repository.

@@ -55,7 +55,6 @@ abstract class AbstractMap extends AbstractArray implements MapInterface
      * @param T $value The value to set at the given offset.
      *
      * @inheritDoc
-     * @psalm-suppress MoreSpecificImplementedParamType,DocblockTypeContradiction
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {

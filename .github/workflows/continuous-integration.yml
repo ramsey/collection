@@ -64,35 +64,6 @@ jobs:
       - name: "Statically analyze code (PHPStan)"
         run: "composer dev:analyze:phpstan"
 
-      - name: "Statically analyze code (Psalm)"
-        run: "composer dev:analyze:psalm -- --shepherd"
-
-  security-analysis:
-    name: "Security analysis"
-    needs: ["coding-standards", "static-analysis"]
-    runs-on: "ubuntu-latest"
-
-    steps:
-      - name: "Checkout repository"
-        uses: "actions/checkout@v3.3.0"
-
-      - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.23.0"
-        with:
-          php-version: "latest"
-          coverage: "none"
-
-      - name: "Install dependencies (Composer)"
-        uses: "ramsey/composer-install@2.2.0"
-
-      - name: "Analyze security of code (Psalm)"
-        run: "./vendor/bin/psalm --taint-analysis --report=build/logs/psalm.sarif"
-
-      - name: "Upload security analysis results to GitHub"
-        uses: "github/codeql-action/upload-sarif@v2"
-        with:
-          sarif_file: "build/logs/psalm.sarif"
-
   code-coverage:
     name: "Code coverage"
     needs: ["coding-standards", "static-analysis"]

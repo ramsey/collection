@@ -31,7 +31,6 @@ assertType('array<string, mixed>', $associativeArray->toArray());
 assertType('array<string, mixed>', $associativeArray->__serialize());
 assertType('Traversable<string, mixed>', $associativeArray->getIterator());
 
-/** @psalm-suppress MixedAssignment */
 foreach ($associativeArray as $key => $value) {
     assertType('string', $key);
     assertType('mixed', $value);
@@ -64,7 +63,6 @@ assertType('array<string, mixed>', $namedParameterMap->toArray());
 assertType('array<string, mixed>', $namedParameterMap->__serialize());
 assertType('Traversable<string, mixed>', $namedParameterMap->getIterator());
 
-/** @psalm-suppress MixedAssignment */
 foreach ($namedParameterMap as $key => $value) {
     assertType('string', $key);
     assertType('mixed', $value);
