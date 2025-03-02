@@ -48,16 +48,6 @@ contribution of external security researchers. If you believe you've found a
 security issue in software that is maintained in this repository, please read
 [SECURITY.md][] for instructions on submitting a vulnerability report.
 
-## ramsey/collection for Enterprise
-
-Available as part of the Tidelift Subscription.
-
-The maintainers of ramsey/collection and thousands of other packages are working
-with Tidelift to deliver commercial support and maintenance for the open source
-packages you use to build your applications. Save time, reduce risk, and improve
-code health, while paying the maintainers of the exact packages you use.
-[Learn more.](https://tidelift.com/subscription/pkg/packagist-ramsey-collection?utm_source=undefined&utm_medium=referral&utm_campaign=enterprise&utm_term=repo)
-
 ## Copyright and License
 
 The ramsey/collection library is copyright © [Ben Ramsey](https://benramsey.com)
