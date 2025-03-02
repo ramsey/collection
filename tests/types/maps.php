@@ -31,13 +31,12 @@ assertType('array<string, mixed>', $associativeArray->toArray());
 assertType('array<string, mixed>', $associativeArray->__serialize());
 assertType('Traversable<string, mixed>', $associativeArray->getIterator());
 
-/** @psalm-suppress MixedAssignment */
 foreach ($associativeArray as $key => $value) {
     assertType('string', $key);
     assertType('mixed', $value);
 }
 
-assertType('array<int, string>', $associativeArray->keys());
+assertType('list<string>', $associativeArray->keys());
 assertType('mixed', $associativeArray->get('foo'));
 assertType('mixed', $associativeArray->put('foo', 'hello'));
 assertType('mixed', $associativeArray->putIfAbsent('foo', 'hello'));
@@ -64,13 +63,12 @@ assertType('array<string, mixed>', $namedParameterMap->toArray());
 assertType('array<string, mixed>', $namedParameterMap->__serialize());
 assertType('Traversable<string, mixed>', $namedParameterMap->getIterator());
 
-/** @psalm-suppress MixedAssignment */
 foreach ($namedParameterMap as $key => $value) {
     assertType('string', $key);
     assertType('mixed', $value);
 }
 
-assertType('array<int, string>', $namedParameterMap->keys());
+assertType('list<string>', $namedParameterMap->keys());
 assertType('mixed', $namedParameterMap->get('foo'));
 assertType('mixed', $namedParameterMap->put('foo', 'goodbye'));
 assertType('mixed', $namedParameterMap->putIfAbsent('foo', 'goodbye'));
@@ -78,9 +76,6 @@ assertType('mixed', $namedParameterMap->remove('foo'));
 assertType('mixed', $namedParameterMap->replace('foo', 'goodbye'));
 
 assertType('array<string, string>', $namedParameterMap->getNamedParameters());
-
-
-
 
 $typedMap = new TypedMap('int', Person::class, [
     123 => new Person('Jason'),
@@ -101,7 +96,7 @@ foreach ($typedMap as $key => $value) {
     assertType(Person::class, $value);
 }
 
-assertType('array<int, int>', $typedMap->keys());
+assertType('list<int>', $typedMap->keys());
 assertType(Person::class . '|null', $typedMap->get(123));
 assertType(Person::class . '|null', $typedMap->put(123, new Person('Jeffrey')));
 assertType(Person::class . '|null', $typedMap->putIfAbsent(123, new Person('Jeffrey')));

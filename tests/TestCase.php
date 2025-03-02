@@ -10,7 +10,6 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class TestCase extends MockeryTestCase
 {
-    /** @psalm-suppress MissingConstructor */
     protected Generator $faker;
 
     protected function setUp(): void

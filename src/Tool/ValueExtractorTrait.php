@@ -82,6 +82,10 @@ trait ValueExtractorTrait
             return $element->{$propertyOrMethod}();
         }
 
+        if (isset($element->$propertyOrMethod)) {
+            return $element->$propertyOrMethod;
+        }
+
         throw new InvalidPropertyOrMethod(sprintf(
             'Method or property "%s" not defined in %s',
             $propertyOrMethod,

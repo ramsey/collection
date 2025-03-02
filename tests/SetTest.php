@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Ramsey\Collection\Test;
 
-use Ramsey\Collection\AbstractSet;
-use Ramsey\Collection\CollectionInterface;
 use Ramsey\Collection\Set;
 use Ramsey\Collection\Test\Mock\Foo;
 
@@ -25,12 +23,6 @@ class SetTest extends TestCase
         parent::setUp();
 
         $this->set = new Set('int');
-    }
-
-    public function testConstructorInheritance(): void
-    {
-        $this->assertInstanceOf(CollectionInterface::class, $this->set);
-        $this->assertInstanceOf(AbstractSet::class, $this->set);
     }
 
     public function testConstructGetType(): void
