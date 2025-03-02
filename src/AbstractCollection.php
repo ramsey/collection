@@ -218,6 +218,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      */
     public function map(callable $callback): CollectionInterface
     {
+        /** @var CollectionInterface<TCallbackReturn> */
         return new $this->collection('mixed', array_map($callback, $this->data));
     }
 
