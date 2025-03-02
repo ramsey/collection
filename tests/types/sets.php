@@ -22,7 +22,7 @@ assertType('Ramsey\Collection\Set<Ramsey\Collection\Test\Mock\Person>', $persons
 assertType('Ramsey\Collection\Set<Ramsey\Collection\Test\Mock\Person>', $morePersons);
 
 assertType(Person::class, $persons[0]);
-assertType('array<int, mixed>', $persons->column('name'));
+assertType('list<Ramsey\Collection\Test\Mock\Person>', $persons->column('name'));
 assertType(Person::class, $persons->first());
 assertType(Person::class, $persons->last());
 assertType(Person::class, $persons->offsetGet(0));
