@@ -30,6 +30,11 @@ use function sprintf;
 trait ValueExtractorTrait
 {
     /**
+     * Returns the type associated with this collection.
+     */
+    abstract public function getType(): string;
+
+    /**
      * Extracts the value of the given property, method, or array key from the
      * element.
      *

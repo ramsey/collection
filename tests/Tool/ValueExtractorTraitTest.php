@@ -18,10 +18,7 @@ class ValueExtractorTraitTest extends TestCase
         $test = new class {
             use ValueExtractorTrait;
 
-            /**
-             * @return mixed
-             */
-            public function __invoke(string $propertyOrMethod)
+            public function __invoke(string $propertyOrMethod): mixed
             {
                 return $this->extractValue($this, $propertyOrMethod);
             }
@@ -43,10 +40,7 @@ class ValueExtractorTraitTest extends TestCase
         $test = new class {
             use ValueExtractorTrait;
 
-            /**
-             * @return mixed
-             */
-            public function __invoke(string $propertyOrMethod)
+            public function __invoke(string $propertyOrMethod): mixed
             {
                 return $this->extractValue($this, $propertyOrMethod);
             }
@@ -72,10 +66,7 @@ class ValueExtractorTraitTest extends TestCase
 
             public string $testProperty = 'works!';
 
-            /**
-             * @return mixed
-             */
-            public function __invoke(string $propertyOrMethod)
+            public function __invoke(string $propertyOrMethod): mixed
             {
                 return $this->extractValue($this, $propertyOrMethod);
             }
@@ -94,10 +85,7 @@ class ValueExtractorTraitTest extends TestCase
         $test = new class {
             use ValueExtractorTrait;
 
-            /**
-             * @return mixed
-             */
-            public function __invoke(string $propertyOrMethod)
+            public function __invoke(string $propertyOrMethod): mixed
             {
                 return $this->extractValue($this, $propertyOrMethod);
             }
@@ -130,10 +118,7 @@ class ValueExtractorTraitTest extends TestCase
         $test = new class {
             use ValueExtractorTrait;
 
-            /**
-             * @return mixed
-             */
-            public function __invoke(mixed $element, string $propertyOrMethod)
+            public function __invoke(mixed $element, string $propertyOrMethod): mixed
             {
                 return $this->extractValue($element, $propertyOrMethod);
             }
@@ -161,10 +146,7 @@ class ValueExtractorTraitTest extends TestCase
         $test = new class {
             use ValueExtractorTrait;
 
-            /**
-             * @return mixed
-             */
-            public function __invoke(mixed $element, string $propertyOrMethod)
+            public function __invoke(mixed $element, string $propertyOrMethod): mixed
             {
                 return $this->extractValue($element, $propertyOrMethod);
             }
