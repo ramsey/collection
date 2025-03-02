@@ -16,6 +16,7 @@ namespace Ramsey\Collection\Tool;
 
 use Ramsey\Collection\Exception\InvalidPropertyOrMethod;
 use Ramsey\Collection\Exception\UnsupportedOperationException;
+use ReflectionProperty;
 
 use function is_array;
 use function is_object;
@@ -62,6 +63,15 @@ trait ValueExtractorTrait
                 'Key or index "%s" not found in collection elements',
                 $propertyOrMethod,
             ));
+        }
+
+        if (property_exists($element, $propertyOrMethod) && method_exists($element, $propertyOrMethod)) {
+            $reflectionProperty = new ReflectionProperty($element, $propertyOrMethod);
+            if ($reflectionProperty->isPublic()) {
+                return $element->$propertyOrMethod;
+            }
+
+            return $element->{$propertyOrMethod}();
         }
 
         if (property_exists($element, $propertyOrMethod)) {

@@ -124,4 +124,67 @@ class ValueExtractorTraitTest extends TestCase
 
         $this->assertSame('value', $test('magic_property'), 'Could not extract value by magic method');
     }
+
+    public function testShouldExtractValueByMethodWhenPrivatePropertyExistsWithSameName(): void
+    {
+        $test = new class {
+            use ValueExtractorTrait;
+
+            /**
+             * @return mixed
+             */
+            public function __invoke(mixed $element, string $propertyOrMethod)
+            {
+                return $this->extractValue($element, $propertyOrMethod);
+            }
+
+            public function getType(): string
+            {
+                return 'fudge';
+            }
+        };
+
+        $element = new class {
+            private string $testProperty = 'works!';
+
+            public function testProperty(): string
+            {
+                return $this->testProperty;
+            }
+        };
+
+        $this->assertSame('works!', $test($element, 'testProperty'), 'Could not extract value by method');
+    }
+
+    public function testShouldExtractValueByPropertyWhenPrivateMethodExistsWithSameName(): void
+    {
+        $test = new class {
+            use ValueExtractorTrait;
+
+            /**
+             * @return mixed
+             */
+            public function __invoke(mixed $element, string $propertyOrMethod)
+            {
+                return $this->extractValue($element, $propertyOrMethod);
+            }
+
+            public function getType(): string
+            {
+                return 'fudge';
+            }
+        };
+
+        $element = new class {
+            public string $testProperty = 'works!';
+
+            /** @phpstan-ignore-next-line */
+            private function testProperty(): string
+            {
+                return 'does not work!';
+            }
+        };
+
+        $this->assertSame('works!', $test($element, 'testProperty'), 'Could not extract value by property');
+    }
 }
