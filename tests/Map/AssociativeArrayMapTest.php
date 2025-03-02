@@ -28,7 +28,6 @@ class AssociativeArrayMapTest extends TestCase
 
         /**
          * @phpstan-ignore-next-line
-         * @psalm-suppress NullArgument
          */
         $associativeArrayMapObject[] = 123;
     }

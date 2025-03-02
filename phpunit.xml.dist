@@ -2,9 +2,8 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="./vendor/autoload.php"
-         cacheResultFile="./build/cache/phpunit.result.cache"
          colors="true"
-         verbose="true">
+         cacheDirectory="./build/cache/phpunit">
 
     <testsuites>
         <testsuite name="Unit Tests">
@@ -12,10 +11,10 @@
         </testsuite>
     </testsuites>
 
-    <coverage processUncoveredFiles="true">
+    <source>
         <include>
-            <directory suffix=".php">./src</directory>
+            <directory>./src</directory>
         </include>
-    </coverage>
+    </source>
 
 </phpunit>

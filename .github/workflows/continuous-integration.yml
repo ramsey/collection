@@ -27,16 +27,16 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - name: "Checkout repository"
-        uses: "actions/checkout@v3.2.0"
+        uses: "actions/checkout@v3"
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.22.0"
+        uses: "shivammathur/setup-php@v2"
         with:
           php-version: "latest"
           coverage: "none"
 
       - name: "Install dependencies (Composer)"
-        uses: "ramsey/composer-install@2.2.0"
+        uses: "ramsey/composer-install@v3"
 
       - name: "Check syntax (php-parallel-lint)"
         run: "composer dev:lint:syntax"
@@ -50,48 +50,19 @@ jobs:
 
     steps:
       - name: "Checkout repository"
-        uses: "actions/checkout@v3.2.0"
+        uses: "actions/checkout@v4"
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.22.0"
+        uses: "shivammathur/setup-php@v2"
         with:
           php-version: "latest"
           coverage: "none"
 
       - name: "Install dependencies (Composer)"
-        uses: "ramsey/composer-install@2.2.0"
+        uses: "ramsey/composer-install@v3"
 
       - name: "Statically analyze code (PHPStan)"
         run: "composer dev:analyze:phpstan"
-
-      - name: "Statically analyze code (Psalm)"
-        run: "composer dev:analyze:psalm -- --shepherd"
-
-  security-analysis:
-    name: "Security analysis"
-    needs: ["coding-standards", "static-analysis"]
-    runs-on: "ubuntu-latest"
-
-    steps:
-      - name: "Checkout repository"
-        uses: "actions/checkout@v3.2.0"
-
-      - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.22.0"
-        with:
-          php-version: "latest"
-          coverage: "none"
-
-      - name: "Install dependencies (Composer)"
-        uses: "ramsey/composer-install@2.2.0"
-
-      - name: "Analyze security of code (Psalm)"
-        run: "./vendor/bin/psalm --taint-analysis --report=build/logs/psalm.sarif"
-
-      - name: "Upload security analysis results to GitHub"
-        uses: "github/codeql-action/upload-sarif@v2"
-        with:
-          sarif_file: "build/logs/psalm.sarif"
 
   code-coverage:
     name: "Code coverage"
@@ -100,23 +71,22 @@ jobs:
 
     steps:
       - name: "Checkout repository"
-        uses: "actions/checkout@v3.2.0"
+        uses: "actions/checkout@v4"
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.22.0"
+        uses: "shivammathur/setup-php@v2"
         with:
           php-version: "latest"
-          coverage: "pcov"
-          ini-values: "memory_limit=-1"
+          coverage: "xdebug"
 
       - name: "Install dependencies (Composer)"
-        uses: "ramsey/composer-install@2.2.0"
+        uses: "ramsey/composer-install@v3"
 
       - name: "Run unit tests (PHPUnit)"
         run: "composer dev:test:coverage:ci"
 
       - name: "Publish coverage report to Codecov"
-        uses: "codecov/codecov-action@v3.1.1"
+        uses: "codecov/codecov-action@v5"
 
   unit-tests:
     name: "Unit tests"
@@ -129,27 +99,21 @@ jobs:
         php:
           - "8.1"
           - "8.2"
-        composer-deps: ["lowest", "highest"]
+          - "8.3"
+          - "8.4"
 
     steps:
       - name: "Checkout repository"
-        uses: "actions/checkout@v3.2.0"
+        uses: "actions/checkout@v4"
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.22.0"
+        uses: "shivammathur/setup-php@v2"
         with:
           php-version: "${{ matrix.php }}"
           coverage: "none"
 
       - name: "Install dependencies (Composer)"
-        uses: "ramsey/composer-install@2.2.0"
-        with:
-          dependency-versions: "${{ matrix.composer-deps }}"
+        uses: "ramsey/composer-install@v3"
 
       - name: "Run unit tests (PHPUnit)"
-        if: "${{ matrix.composer-deps == 'highest' }}"
         run: "composer dev:test:unit"
-
-      - name: "Run unit tests, with deprecation notices turned off (PHPUnit)"
-        if: "${{ matrix.composer-deps == 'lowest' }}"
-        run: "composer dev:test:unit -- -d 'error_reporting=E_ALL & ~E_DEPRECATED'"

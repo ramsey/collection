@@ -117,7 +117,6 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         $temp = [];
 
         foreach ($this->data as $item) {
-            /** @psalm-suppress MixedAssignment */
             $temp[] = $this->extractValue($item, $propertyOrMethod);
         }
 
@@ -170,15 +169,8 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
 
         usort(
             $collection->data,
-            /**
-             * @param T $a
-             * @param T $b
-             */
             function (mixed $a, mixed $b) use ($propertyOrMethod, $order): int {
-                /** @var mixed $aValue */
                 $aValue = $this->extractValue($a, $propertyOrMethod);
-
-                /** @var mixed $bValue */
                 $bValue = $this->extractValue($b, $propertyOrMethod);
 
                 return ($aValue <=> $bValue) * ($order === Sort::Descending ? -1 : 1);
@@ -212,15 +204,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     public function where(?string $propertyOrMethod, mixed $value): CollectionInterface
     {
         return $this->filter(
-            /**
-             * @param T $item
-             */
-            function (mixed $item) use ($propertyOrMethod, $value): bool {
-                /** @var mixed $accessorValue */
-                $accessorValue = $this->extractValue($item, $propertyOrMethod);
-
-                return $accessorValue === $value;
-            },
+            fn (mixed $item): bool => $this->extractValue($item, $propertyOrMethod) === $value,
         );
     }
 
@@ -234,7 +218,6 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      */
     public function map(callable $callback): CollectionInterface
     {
-        /** @var Collection<TCallbackReturn> */
         return new $this->collection('mixed', array_map($callback, $this->data));
     }
 
@@ -249,7 +232,6 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      */
     public function reduce(callable $callback, mixed $initial): mixed
     {
-        /** @var TCarry */
         return array_reduce($this->data, $callback, $initial);
     }
 
@@ -269,11 +251,8 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
         $diffAtoB = array_udiff($this->data, $other->toArray(), $this->getComparator());
         $diffBtoA = array_udiff($other->toArray(), $this->data, $this->getComparator());
 
-        /** @var array<array-key, T> $diff */
-        $diff = array_merge($diffAtoB, $diffBtoA);
-
         $collection = clone $this;
-        $collection->data = $diff;
+        $collection->data = array_merge($diffAtoB, $diffBtoA);
 
         return $collection;
     }
@@ -291,11 +270,8 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     {
         $this->compareCollectionTypes($other);
 
-        /** @var array<array-key, T> $intersect */
-        $intersect = array_uintersect($this->data, $other->toArray(), $this->getComparator());
-
         $collection = clone $this;
-        $collection->data = $intersect;
+        $collection->data = array_uintersect($this->data, $other->toArray(), $this->getComparator());
 
         return $collection;
     }
@@ -364,23 +340,19 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
 
     private function getComparator(): Closure
     {
-        return /**
-             * @param T $a
-             * @param T $b
-             */
-            function (mixed $a, mixed $b): int {
-                // If the two values are object, we convert them to unique scalars.
-                // If the collection contains mixed values (unlikely) where some are objects
-                // and some are not, we leave them as they are.
-                // The comparator should still work and the result of $a < $b should
-                // be consistent but unpredictable since not documented.
-                if (is_object($a) && is_object($b)) {
-                    $a = spl_object_id($a);
-                    $b = spl_object_id($b);
-                }
+        return function (mixed $a, mixed $b): int {
+            // If the two values are object, we convert them to unique scalars.
+            // If the collection contains mixed values (unlikely) where some are objects
+            // and some are not, we leave them as they are.
+            // The comparator should still work and the result of $a < $b should
+            // be consistent but unpredictable since not documented.
+            if (is_object($a) && is_object($b)) {
+                $a = spl_object_id($a);
+                $b = spl_object_id($b);
+            }
 
-                return $a === $b ? 0 : ($a < $b ? 1 : -1);
-            };
+            return $a === $b ? 0 : ($a < $b ? 1 : -1);
+        };
     }
 
     /**
