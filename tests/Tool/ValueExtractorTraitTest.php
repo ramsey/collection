@@ -115,6 +115,11 @@ class ValueExtractorTraitTest extends TestCase
             {
                 return $name === 'magic_property';
             }
+
+            public function getType(): string
+            {
+                return 'qux';
+            }
         };
 
         $this->assertSame('value', $test('magic_property'), 'Could not extract value by magic method');
