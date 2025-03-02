@@ -6,23 +6,22 @@ namespace Ramsey\Collection\Test;
 
 use Generator;
 use PHPStan\Testing\TypeInferenceTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 use function glob;
 
 class TypesTest extends TypeInferenceTestCase
 {
-    public function typeFileAsserts(): Generator
+    public static function typeFileAsserts(): Generator
     {
         $typeTests = glob(__DIR__ . '/types/*.php') ?: [];
 
         foreach ($typeTests as $typeTest) {
-            yield from $this->gatherAssertTypes($typeTest);
+            yield from static::gatherAssertTypes($typeTest);
         }
     }
 
-    /**
-     * @dataProvider typeFileAsserts
-     */
+    #[DataProvider('typeFileAsserts')]
     public function testFileAsserts(string $assertType, string $file, mixed ...$args): void
     {
         $this->assertFileAsserts($assertType, $file, ...$args);
