@@ -76,6 +76,11 @@ namespace Ramsey\Collection;
 class Collection extends AbstractCollection
 {
     /**
+     * @psalm-suppress NonInvariantDocblockPropertyType
+     */
+    protected string $collection = self::class;
+
+    /**
      * Constructs a collection object of the specified type, optionally with the
      * specified data.
      *
