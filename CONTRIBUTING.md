@@ -117,7 +117,7 @@ composer list dev
 ### Coding Standards
 
 This project follows a superset of [PSR-12](https://www.php-fig.org/psr/psr-12/)
-coding standards, enforced by [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer).
+coding standards, enforced by [PHP_CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer).
 
 CaptainHook will run coding standards checks before committing.
 
