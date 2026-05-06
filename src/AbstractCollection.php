@@ -55,6 +55,11 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     use ValueExtractorTrait;
 
     /**
+     * @var class-string<CollectionInterface<T>>
+     */
+    protected string $collection = Collection::class;
+
+    /**
      * @throws InvalidArgumentException if $element is of the wrong type.
      */
     public function add(mixed $element): bool
@@ -213,7 +218,8 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      */
     public function map(callable $callback): CollectionInterface
     {
-        return new Collection('mixed', array_map($callback, $this->data));
+        /** @var CollectionInterface<TCallbackReturn> */
+        return new $this->collection('mixed', array_map($callback, $this->data));
     }
 
     /**
