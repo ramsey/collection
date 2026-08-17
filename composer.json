@@ -25,7 +25,7 @@
         "captainhook/plugin-composer": "^5.3",
         "ergebnis/composer-normalize": "^2.45",
         "fakerphp/faker": "^1.24",
-        "hamcrest/hamcrest-php": "^2.0",
+        "hamcrest/hamcrest-php": "^3.0",
         "jangregor/phpstan-prophecy": "^2.1",
         "mockery/mockery": "^1.6",
         "php-parallel-lint/php-console-highlighter": "^1.0",
