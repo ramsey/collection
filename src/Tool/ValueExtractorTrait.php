@@ -18,6 +18,7 @@ use Ramsey\Collection\Exception\InvalidPropertyOrMethod;
 use Ramsey\Collection\Exception\UnsupportedOperationException;
 use ReflectionProperty;
 
+use function array_key_exists;
 use function is_array;
 use function is_object;
 use function method_exists;
@@ -64,10 +65,14 @@ trait ValueExtractorTrait
         }
 
         if (is_array($element)) {
-            return $element[$propertyOrMethod] ?? throw new InvalidPropertyOrMethod(sprintf(
-                'Key or index "%s" not found in collection elements',
-                $propertyOrMethod,
-            ));
+            if (!array_key_exists($propertyOrMethod, $element)) {
+                throw new InvalidPropertyOrMethod(sprintf(
+                    'Key or index "%s" not found in collection elements',
+                    $propertyOrMethod,
+                ));
+            }
+
+            return $element[$propertyOrMethod];
         }
 
         if (property_exists($element, $propertyOrMethod) && method_exists($element, $propertyOrMethod)) {
