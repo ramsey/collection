@@ -208,6 +208,17 @@ class CollectionTest extends TestCase
         $this->assertSame(['a', 'b', 'c'], $collection->column('name'));
     }
 
+    public function testColumnByArrayKeyWithNullValue(): void
+    {
+        /** @var Collection<array{id: int, deletedAt: string | null}> $collection */
+        $collection = new Collection('array', [
+            ['id' => 1, 'deletedAt' => null],
+            ['id' => 2, 'deletedAt' => '2026-11-01'],
+        ]);
+
+        $this->assertSame([null, '2026-11-01'], $collection->column('deletedAt'));
+    }
+
     public function testColumnShouldRaiseExceptionOnUndefinedPropertyOrMethod(): void
     {
         $bar1 = new Bar(1, 'a');

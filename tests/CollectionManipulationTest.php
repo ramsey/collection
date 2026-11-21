@@ -286,6 +286,20 @@ class CollectionManipulationTest extends TestCase
         );
     }
 
+    public function testWhereWithNullArrayValue(): void
+    {
+        /** @var Collection<array{id: int, deletedAt: string | null}> $collection */
+        $collection = new Collection('array', [
+            ['id' => 1, 'deletedAt' => null],
+            ['id' => 2, 'deletedAt' => '2026-11-01'],
+        ]);
+
+        $this->assertSame(
+            [['id' => 1, 'deletedAt' => null]],
+            $collection->where('deletedAt', null)->toArray(),
+        );
+    }
+
     public function testWhereWithoutPropertyOrMethod(): void
     {
         /** @var Collection<array{id: int, name: string}> $collection */
